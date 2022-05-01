@@ -1,0 +1,40 @@
+/* .modal.fade .modal-dialog {
+  transition: transform 0.3s ease-out;
+}
+
+.fade {
+  transition: opacity 0.15s linear;
+} */
+
+.modal-content {
+  border-radius: 25px 25px 0 0;
+}
+
+.modal-dialog {
+  position: fixed;
+  width: 100vw;
+  margin: 0;
+  pointer-events: none;
+  bottom: 0;
+}
+
+/* .modal.fade .modal-dialog {
+  transform: translate3d(0, 57vh, 0);
+} */
+/* .modal.in .modal-dialog {
+  transform: translate3d(0, 0, 0);
+} */
+/* .modal.fade .modal-dialog {
+  -webkit-transform: translate3d(0, 57vh, 0);
+  transform: translate3d(0, 57vh, 0);
+} */
+
+body {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
