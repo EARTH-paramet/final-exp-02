@@ -49,13 +49,14 @@ const ListProduct = ({ data }) => {
   }
 const DateFunc = ({date,item})=>{
   const timeStampNow = firebase.firestore.Timestamp.fromDate(new Date()).seconds
-  console.log("date now=>",parseInt(timeStampNow / 86400) * 86400 )
-  const dateToday = parseInt(timeStampNow / 86400) * 86400
-  if(date < dateToday){
+  const dateToday = (parseInt(timeStampNow / 86400) * 86400) - (60 * 60 * 7)
+  console.log("date=>",dateToday)
+  if(date < (dateToday)){
     return (<small className='opacity-50 text-nowrap' style={{color:"red"}}>{item.date.toDate().toLocaleString().split(',')[0]}</small>)
-  }else if(date < (dateToday + 86400)) {
+  }else if(date < dateToday + 86400) {
+    console.log(dateToday + 86400)
     return(<small className='opacity-50 text-nowrap'>Today</small>)
-  }else{
+  }else if(date >= (dateToday + 86400)){
     return(<small className='opacity-50 text-nowrap'>{item.date.toDate().toLocaleString().split(',')[0]}</small>)
   }
  
