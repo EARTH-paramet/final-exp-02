@@ -17,7 +17,7 @@ function Category() {
           </div>
           <div className='col-6 '>
             <h2 className='text-end'>
-              <FontAwesomeIcon icon='fa-solid fa-filter' />
+              {/* <FontAwesomeIcon icon='fa-solid fa-filter' /> */}
             </h2>
           </div>
         </div>

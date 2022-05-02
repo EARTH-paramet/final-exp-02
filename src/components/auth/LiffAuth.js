@@ -1,28 +1,38 @@
-// import React, { useState } from 'react';
-
-// import { LineLogin } from 'reactjs-line-login';
-// import 'reactjs-line-login/dist/index.css';
-
-// const LiffAuth = () => {
-//   const [payload, setPayload] = useState(null);
-//   const [idToken, setIdToken] = useState(null);
-
-//   /*
-//   Example:
-//     clientID='1654553430'
-//     clientSecret='deee1b60ae8de8658e214b67b25f6ec3'
-//     state='b41c8fd15b895f0fc28bf3b9d7da89054d931e7s'
-//     nonce='d78a51235f6ee189e831q9c68523cfa336917ada'
-//     redirectURI='http://localhost:3000/callback"
-//     scope='profile openid email'
-//   recommend : save secret in .env
-//   */
-
-//   return (
-//     <div>
+import React, { useEffect, useState } from 'react';
+import firebase from "../../services/firebase";
+import { connect } from 'react-redux';
+import Auth from './Auth';
+const LiffAuth = (props) => {
+  const userFire = firebase.firestore().collection("users");
+    
+    useEffect(()=>{
+        firebase.auth().onAuthStateChanged((userData) => {
+            // setUser(userData);
+            console.log("userData", userData);
+            if (!userData) {
+                
+            } else {
+              userFire
+                .where("uid", "==", userData.uid)
+                .onSnapshot((querySnapshot) => {
+                  console.log(querySnapshot.data);
+                  querySnapshot.forEach((doc) => {
+                    console.log("data", doc.data());
+                    props.dispatch({
+                      type: "SIGN_IN",
+                      payload: doc.data(),
+                    });
+                  });
+                });
+            }
+          });
+    },[])
+ 
+  return (
+    <div>
       
-//     </div>
-//   );
-// };
+    </div>
+  );
+};
 
-// export default LiffAuth;
+export default connect()(LiffAuth);

@@ -3,7 +3,8 @@ const initialState = {
   email: "",
   name: "",
   image: "",
-  // phone: "",
+  sub: "",
+  scanner: false,
   status:false
 };
 export default (state = initialState, action) => {
@@ -18,10 +19,20 @@ export default (state = initialState, action) => {
         sub: action.payload.sub,
         status:true
       };
-      case "SIGN_OUT":
+    case "SIGN_OUT":
           return{
             ...state,
               status:false
+          }
+    case "SCANNER_ON":
+          return{
+            ...state,
+              scanner:true
+          }
+    case "SCANNER_OFF":
+          return{
+            ...state,
+              scanner:false
           }
     default:
       return state;

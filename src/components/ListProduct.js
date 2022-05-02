@@ -47,15 +47,18 @@ const ListProduct = ({ data }) => {
   } else {
     console.log('null')
   }
-const TesterFunc = ({date})=>{
-  const dateNow = firebase.firestore.Timestamp.fromDate(new Date()).seconds
-  console.log(dateNow + (60 * 60 * 24))
- return (
-   <div>
-     {/* <p>{date}</p> */}
-     {/* <p>{firebase.firestore.Timestamp.fromDate(new Date())}</p> */}
-   </div>
- )
+const DateFunc = ({date,item})=>{
+  const timeStampNow = firebase.firestore.Timestamp.fromDate(new Date()).seconds
+  console.log("date now=>",parseInt(timeStampNow / 86400) * 86400 )
+  const dateToday = parseInt(timeStampNow / 86400) * 86400
+  if(date < dateToday){
+    return (<small className='opacity-50 text-nowrap' style={{color:"red"}}>{item.date.toDate().toLocaleString().split(',')[0]}</small>)
+  }else if(date < (dateToday + 86400)) {
+    return(<small className='opacity-50 text-nowrap'>Today</small>)
+  }else{
+    return(<small className='opacity-50 text-nowrap'>{item.date.toDate().toLocaleString().split(',')[0]}</small>)
+  }
+ 
 }
   
   return (
@@ -63,7 +66,6 @@ const TesterFunc = ({date})=>{
       {dataProduct.map((item, index) => (
         <div style={{ borderRadius: '18px' }} className='row py-2' key={index}>
           {console.log(item.date.seconds)}
-          {<TesterFunc date={item.date.seconds}/>}
           <a
             href='#'
             className={`list-group-item d-flex gap-3 ${styles.item}`}
@@ -86,7 +88,7 @@ const TesterFunc = ({date})=>{
               <div>
                 <p className='mb-0'>{item.name}</p>
               </div>
-              <small className='opacity-50 text-nowrap'>{item.date.toDate().toLocaleString().split(',')[0]}</small>
+          {<DateFunc date={item.date.seconds} item={item}/>}
             </div>
           </a>
         </div>
@@ -101,9 +103,9 @@ const TesterFunc = ({date})=>{
           <ModalBody>
             <div className='container'>
               <h6 className='fw-bold my-4'>Name : {modalData.name}</h6>
-              <h6 className='fw-bold my-4'>EXP : {modalData.exp}</h6>
-              <h6 className='fw-bold my-4'>Category : {modalData.cat}</h6>
-              <h6 className='fw-bold my-4'>รายละเอียด</h6>
+              <h6 className='fw-bold my-4'>EXP : {modalData.date?modalData.date.toDate().toLocaleString().split(',')[0]:""}</h6>
+              <h6 className='fw-bold my-4'>Category : {modalData.category}</h6>
+              <h6 className='fw-bold my-4'>รายละเอียด : {modalData.note}</h6>
               <p>{modalData.des}</p>
               <div className='row py-2'>
                 <NavLink to={`/edit/1`}>

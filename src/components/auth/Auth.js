@@ -25,6 +25,7 @@ const Auth = (props) => {
   const lineFire = firebase.firestore().collection("lineConfig");
   
   const [user, setUser] = useState({});
+  const [loading, setLoading] = useState(true);
   const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),
   });
@@ -80,6 +81,7 @@ const Auth = (props) => {
           // setUser(userData);
           console.log("userData", userData);
           if (!userData) {
+            setLoading(false)
           } else {
             userFire
               .where("uid", "==", userData.uid)
@@ -217,7 +219,11 @@ const Auth = (props) => {
   console.log("state=>", params.state);
   console.log("LINE=>", line_configRef.current);
   return (
-    <div className="wrapper">
+   <div>
+     {loading ? (
+<div></div>
+     ):(<div>
+        <div className="wrapper">
       <div className="page">
         <div className="container ">
           <div className="row position-absolute top-50 start-50 translate-middle m-0">
@@ -227,44 +233,6 @@ const Auth = (props) => {
               <h2 className="text-center">Welcome to</h2>
               <h2 className="text-center ">APP NAME</h2>
               <div className="text-center mt-3">
-                {/* <button className="btn btn-primary" onClick={signInWithGoogle}>
-                  Continue with Google
-                </button>
-                <button
-                  className="btn btn-primary"
-                  onClick={async () => {
-                    try {
-                      const user = await createUserWithEmailAndPassword(
-                        auth,
-                        "tester@gmail.com",
-                        "123456"
-                      );
-                      console.log(user);
-                    } catch (error) {
-                      console.log(error.message);
-                    }
-                  }}
-                >
-                  Continue with Some
-                </button>
-                <br />
-                <button
-                  className="btn btn-primary"
-                  onClick={async () => {
-                    try {
-                      const user = await signInWithEmailAndPassword(
-                        auth,
-                        "teste2323r@gmail.com",
-                        "123456"
-                      );
-                      console.log(user);
-                    } catch (error) {
-                      console.log(error.message);
-                    }
-                  }}
-                >
-                  Continue with Login
-                </button> */}
                 <br />
                 <button
                   className="btn mt-2" style={{backgroundColor:"#07E30A",color:"white"}}
@@ -278,6 +246,8 @@ const Auth = (props) => {
         </div>
       </div>
     </div>
+     </div>)}
+   </div>
   );
 };
 const mapStateToProps = (state) => {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import BarcodeScannerComponent from 'react-qr-barcode-scanner'
 import { useState } from 'react'
 import { connect } from 'react-redux'
@@ -6,9 +6,21 @@ import { NavLink } from 'react-router-dom'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const Scanner = ({ master }) => {
+const Scanner = (props) => {
   const [checked, setChecked] = useState('Not_Found')
   const [data, setData] = useState('Not Found')
+
+  useEffect(()=>{
+    props.dispatch({
+      type: "SCANNER_ON"
+    });
+  },[])
+
+  const closeScanner = ()=>{
+    props.dispatch({
+      type: "SCANNER_OFF"
+    });
+  }
   if (checked == 'Not_Found') {
     return (
       <div style={{ backgroundColor:"#1083C1", height: '100vh' }}>
@@ -16,7 +28,7 @@ const Scanner = ({ master }) => {
           <div className='container'>
             <div className='row'>
               <div className='col-2'>
-                <NavLink to='/'>
+                <NavLink to='/' onClick={closeScanner}>
                   <FontAwesomeIcon
                     icon='fa-solid fa-arrow-left-long'
                     size='xl'
@@ -42,7 +54,7 @@ const Scanner = ({ master }) => {
                   height={'100%'}
                   onUpdate={(err, result) => {
                     if (result) {
-                      master.masterProduct.map((val) => {
+                      props.master.masterProduct.map((val) => {
                         if (val.barcode == result.text) {
                           setChecked('Master_Data')
                           setData(result.text)
@@ -60,17 +72,17 @@ const Scanner = ({ master }) => {
             
             </div>
 
-            <div className='bg-success row'>
+            {/* <div className='bg-success row'>
               <div className='col'>GGGG</div>
               <div className='col'>GGGG</div>
-            </div>
+            </div> */}
 
           </div>
 
-          <div className='bg-success row'>
+          {/* <div className='bg-success row'>
               <div className='col'>GGGG</div>
               <div className='col'>GGGG</div>
-            </div>
+            </div> */}
             
         </section>
       </div>
