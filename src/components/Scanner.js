@@ -24,7 +24,7 @@ const Scanner = (props) => {
   }
   if (checked == 'Not_Found') {
     return (
-      <div style={{ backgroundColor: '#FCCF50', height: '100vh' }}>
+      <div style={{ backgroundColor: '#fff', height: '100vh' }}>
         <header>
           <div className='container'>
             <div className='row pt-3'>
