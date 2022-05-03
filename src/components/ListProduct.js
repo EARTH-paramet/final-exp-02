@@ -26,16 +26,17 @@ const ListProduct = ({ data }) => {
       ref.doc(data.uid).collection(`group${group}`).onSnapshot((querySnapshot) => {
         const items = []
         querySnapshot.forEach((doc) => {
-          if(doc.data().barcode==""){
+          console.log(doc.data())
+          // if(doc.data().barcode==""){
   
-          }else{
-            items.push(doc.data())
-            console.log("items",doc.data())
-          }
+          // }else{
+          //   items.push(doc.data())
+          //   console.log("items",doc.data())
+          // }
          
         })
         
-          setDataProduct(items)
+          // setDataProduct(items)
         // console.log('Output_dataUser', dataUser)
       })
     })
@@ -61,9 +62,35 @@ const DateFunc = ({date,item})=>{
   }
  
 }
+const handleChange = (e)=>{
+  console.log(e.target.value)
+  ref.where("uid","==",data.uid).get().then(querySnapshot => {
+    let group = "null"
+    querySnapshot.forEach(doc => {
+      console.log(doc.data());
+     group = doc.data().defaultGroup
+    });
+    ref.doc(data.uid).collection(`group${group}`).onSnapshot((querySnapshot) => {
+      const items = []
+      querySnapshot.forEach((doc) => {
+        if(doc.data().barcode==""){
+
+        }else{
+          items.push(doc.data())
+          console.log("items",doc.data())
+        }
+       
+      })
+      
+        setDataProduct(items)
+      // console.log('Output_dataUser', dataUser)
+    })
+  })
+}
   
   return (
     <div className='container'>
+      <input className='mt-5 mb-3' onChange={handleChange}/>
       {dataProduct.map((item, index) => (
         <div style={{ borderRadius: '18px' }} className='row py-2' key={index}>
           {console.log(item.date.seconds)}
