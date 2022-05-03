@@ -2,12 +2,19 @@ import ListProduct from './ListProduct'
 import Search from './Search'
 import Profile from './Profile'
 import NavBottomBar from './navigation/NavBottomBar'
-
+import { connect } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from './css/Page.module.css'
 import ListCategory from './ListCategory'
+import { useEffect } from 'react'
 
-function Category() {
+const Category = (props)=>{
+  useEffect(()=>{
+    props.dispatch({
+      type: 'SCANNER_OFF',
+    })
+  },[])
+
   return (
     <>
       <header className={styles.navbar}>
@@ -33,4 +40,4 @@ function Category() {
   )
 }
 
-export default Category
+export default connect()(Category)

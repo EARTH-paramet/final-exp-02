@@ -1,155 +1,189 @@
-import React, { useState, useEffect } from 'react'
-import { connect } from 'react-redux'
-import { NavLink } from 'react-router-dom'
-import { Button, Modal, ModalBody } from 'reactstrap'
-import firebase from '../services/firebase'
-import {Timestamp} from 'firebase/firestore'
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { Button, Modal, ModalBody } from "reactstrap";
+import firebase from "../services/firebase";
+import { Timestamp } from "firebase/firestore";
 
-import styles from './css/Page.module.css'
-import './css/MyBootstrap.css'
+import styles from "./css/Page.module.css";
+import "./css/MyBootstrap.css";
+import stylesSearch from "./css/Searchbar.module.css";
+import Search from "./Search";
 
-const ListProduct = ({ data }) => {
-  const [modalOpen, setModalOpen] = useState(false)
-  const [modalData, setModalData] = useState({})
-  const toggle = () => setModalOpen(!modalOpen)
-  const ref = firebase
-    .firestore()
-    .collection('product')
-  const [dataProduct, setDataProduct] = useState([])
+const ListProduct = ({ data, product }) => {
+  let group = "null";
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalData, setModalData] = useState({});
+  const toggle = () => setModalOpen(!modalOpen);
+  const ref = firebase.firestore().collection("product");
+  const [dataProduct, setDataProduct] = useState([]);
+
   useEffect(() => {
-    ref.where("uid","==",data.uid).get().then(querySnapshot => {
-      let group = "null"
-      querySnapshot.forEach(doc => {
-        console.log(doc.data());
-       group = doc.data().defaultGroup
-      });
-      ref.doc(data.uid).collection(`group${group}`).onSnapshot((querySnapshot) => {
-        const items = []
+    ref
+      .where("uid", "==", data.uid)
+      .get()
+      .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          console.log(doc.data())
-          // if(doc.data().barcode==""){
-  
-          // }else{
-          //   items.push(doc.data())
-          //   console.log("items",doc.data())
-          // }
-         
-        })
-        
-          // setDataProduct(items)
-        // console.log('Output_dataUser', dataUser)
-      })
-    })
-   
-  }, [])
+          console.log(doc.data());
+          group = doc.data().defaultGroup;
+        });
+        ref
+          .doc(data.uid)
+          .collection(`group${group}`)
+          .onSnapshot((querySnapshot) => {
+            const items = [];
+            querySnapshot.forEach((doc) => {
+              console.log(doc.data());
+              if (doc.data().barcode == "") {
+                items.push("null");
+              } else {
+                items.push(doc.data());
+                console.log("items", doc.data());
+              }
+            });
+
+            setDataProduct(items);
+            // console.log('Output_dataUser', dataUser)
+          });
+      });
+  }, []);
   //   console.log("Output",ref)
   if (dataProduct.length !== 0) {
-    console.log('Output_dataProduct', dataProduct)
+    console.log("Output_dataProduct", dataProduct);
   } else {
-    console.log('null')
+    console.log("null");
   }
-const DateFunc = ({date,item})=>{
-  const timeStampNow = firebase.firestore.Timestamp.fromDate(new Date()).seconds
-  const dateToday = (parseInt(timeStampNow / 86400) * 86400) - (60 * 60 * 7)
-  console.log("date=>",dateToday)
-  if(date < (dateToday)){
-    return (<small className='opacity-50 text-nowrap' style={{color:"red"}}>{item.date.toDate().toLocaleString().split(',')[0]}</small>)
-  }else if(date < dateToday + 86400) {
-    console.log(dateToday + 86400)
-    return(<small className='opacity-50 text-nowrap'>Today</small>)
-  }else if(date >= (dateToday + 86400)){
-    return(<small className='opacity-50 text-nowrap'>{item.date.toDate().toLocaleString().split(',')[0]}</small>)
-  }
- 
-}
-const handleChange = (e)=>{
-  console.log(e.target.value)
-  ref.where("uid","==",data.uid).get().then(querySnapshot => {
-    let group = "null"
-    querySnapshot.forEach(doc => {
-      console.log(doc.data());
-     group = doc.data().defaultGroup
-    });
-    ref.doc(data.uid).collection(`group${group}`).onSnapshot((querySnapshot) => {
-      const items = []
-      querySnapshot.forEach((doc) => {
-        if(doc.data().barcode==""){
+  const DateFunc = ({ date, item }) => {
+    const timeStampNow = firebase.firestore.Timestamp.fromDate(
+      new Date()
+    ).seconds;
+    const dateToday = parseInt(timeStampNow / 86400) * 86400 - 60 * 60 * 7;
+    console.log("date=>", dateToday);
+    if (date < dateToday) {
+      return (
+        <small className="opacity-50 text-nowrap" style={{ color: "red" }}>
+          {item.date.toDate().toLocaleString().split(",")[0]}
+        </small>
+      );
+    } else if (date < dateToday + 86400) {
+      console.log(dateToday + 86400);
+      return <small className="opacity-50 text-nowrap">Today</small>;
+    } else if (date >= dateToday + 86400) {
+      return (
+        <small className="opacity-50 text-nowrap">
+          {item.date.toDate().toLocaleString().split(",")[0]}
+        </small>
+      );
+    }else{
+      return(<></>)
+    }
+  };
 
-        }else{
-          items.push(doc.data())
-          console.log("items",doc.data())
-        }
-       
-      })
-      
-        setDataProduct(items)
-      // console.log('Output_dataUser', dataUser)
-    })
-  })
-}
+  const handleChange = (e) => {
+    console.log(e.target.value);
+    // ref.where("uid","==",data.uid).get().then(querySnapshot => {
+    //   // let group = "null"
+    //   querySnapshot.forEach(doc => {
+    //     console.log(doc.data());
+    //    group = doc.data().defaultGroup
+    //   });
+    ref
+      .doc(data.uid)
+      .collection(`group1`)
+      .orderBy("name")
+      .startAt(e.target.value)
+      .endAt(e.target.value + "\uf8ff")
+      .onSnapshot((querySnapshot) => {
+        const items = [];
+        querySnapshot.forEach((doc) => {
+          if (doc.data().barcode == "") {
+            items.push(null);
+          } else {
+            items.push(doc.data());
+          }
+          console.log("items", doc.data());
+        });
+
+        setDataProduct(items);
+      });
+    // })
+  };
+const TextAddData = ()=>{
+  if(dataProduct=="null"){
+    return(<div><h1>เพิ่มรายการอาหาร</h1></div>)
+  }else{
+    return(<></>)
+  }
   
+}
   return (
-    <div className='container'>
-      <input className='mt-5 mb-3' onChange={handleChange}/>
-      {dataProduct.map((item, index) => (
-        <div style={{ borderRadius: '18px' }} className='row py-2' key={index}>
+    <div className="container">
+      
+      <TextAddData/>
+      {product.productData.map((item, index) => (
+        <div style={{ borderRadius: "18px" }} className="row py-2" key={index}>
           {console.log(item.date.seconds)}
           <a
-            href='#'
+            href="#"
             className={`list-group-item d-flex gap-3 ${styles.item}`}
-            aria-current='true'
+            aria-current="true"
             onClick={() => {
-              setModalData(item)
-              toggle()
+              setModalData(item);
+              toggle();
             }}
           >
             <img
               src={item.image}
-              alt='twbs'
-              width='40'
-              height='40'
-              className='rounded-circle flex-shrink-0'
+              alt="twbs"
+              width="40"
+              height="40"
+              className="rounded-circle flex-shrink-0"
             />
             <div
               className={`d-flex w-100 justify-content-between ${styles.itemText}`}
             >
               <div>
-                <p className='mb-0'>{item.name}</p>
+                <p className="mb-0">{item.name}</p>
               </div>
-          {<DateFunc date={item.date.seconds} item={item}/>}
+              {<DateFunc date={item.date.seconds} item={item} />}
             </div>
           </a>
         </div>
       ))}
       <div>
         <Modal
-          className='right'
-          size='sm'
+          className="right"
+          size="sm"
           isOpen={modalOpen}
           toggle={() => toggle()}
         >
           <ModalBody>
-            <div className='container'>
-              <h6 className='fw-bold my-4'>Name : {modalData.name}</h6>
-              <h6 className='fw-bold my-4'>EXP : {modalData.date?modalData.date.toDate().toLocaleString().split(',')[0]:""}</h6>
-              <h6 className='fw-bold my-4'>Category : {modalData.category}</h6>
-              <h6 className='fw-bold my-4'>รายละเอียด : {modalData.note}</h6>
+            <div className="container">
+              <h6 className="fw-bold my-4">Name : {modalData.name}</h6>
+              <h6 className="fw-bold my-4">
+                EXP :{" "}
+                {modalData.date
+                  ? modalData.date.toDate().toLocaleString().split(",")[0]
+                  : ""}
+              </h6>
+              <h6 className="fw-bold my-4">Category : {modalData.category}</h6>
+              <h6 className="fw-bold my-4">รายละเอียด : {modalData.note}</h6>
               <p>{modalData.des}</p>
-              <div className='row py-2'>
+              <div className="row py-2">
                 <NavLink to={`/edit/1`}>
                   <Button
-                    className='w-100 py-3 fw-bold'
-                    color='light text-dark'
+                    className="w-100 py-3 fw-bold"
+                    color="light text-dark"
                   >
                     Edit
                   </Button>
                 </NavLink>
               </div>
-              <div className='row py-2'>
+              <div className="row py-2">
                 <Button
-                  className='w-100 py-3'
-                  color='warning text-white fw-bold'
-                  style={{ borderRadius: '16px' }}
+                  className="w-100 py-3"
+                  color="warning text-white fw-bold"
+                  style={{ borderRadius: "16px" }}
                 >
                   Remove
                 </Button>
@@ -159,12 +193,13 @@ const handleChange = (e)=>{
         </Modal>
       </div>
     </div>
-  )
-}
+  );
+};
 const mapStateToProps = (state) => {
   return {
     data: state.dataUser,
-  }
-}
+    product: state.dataProduct,
+  };
+};
 
-export default connect(mapStateToProps)(ListProduct)
+export default connect(mapStateToProps)(ListProduct);

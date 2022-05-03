@@ -12,23 +12,28 @@ const ListCategory = ({ data }) => {
   const [modalOpen, setModalOpen] = useState(false)
   const [modalData, setModalData] = useState({})
   const toggle = () => setModalOpen(!modalOpen)
+  let group = 1
 
   const ref = firebase
     .firestore()
     .collection('product')
-    .doc(data.uid)
-    .collection('category')
   const [dataCategory, setDataCategory] = useState([])
   useEffect(() => {
-    ref.onSnapshot((querySnapshot) => {
+    ref.where("uid","==",data.uid).get().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        console.log(doc.data());
+       group = doc.data().defaultGroup
+      });
+    })
+    ref.doc(data.uid).collection('category').where("group","==",group).onSnapshot((querySnapshot) => {
       const items = []
       querySnapshot.forEach((doc) => {
         items.push(doc.data())
         // console.log("items",doc.data())
       })
       setDataCategory(items)
-      // console.log('Output_dataUser', dataUser)
     })
+  
   }, [])
   //   console.log("Output",ref)
   if (dataCategory.length !== 0) {

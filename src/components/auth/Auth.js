@@ -9,6 +9,18 @@ import {
 } from "firebase/auth";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import {
+  addGroup,
+  categoryFruit_one,
+  categoryMeat_one,
+  categoryVeget_one,
+  categoryFruit_two,
+  categoryMeat_two,
+  categoryVeget_two,
+  categoryFruit_three,
+  categoryMeat_three,
+  categoryVeget_three,
+} from "../../dataDefault";
 
 const Auth = (props) => {
   const [line_config, setLine_config, line_configRef] = useStateRef({
@@ -23,7 +35,7 @@ const Auth = (props) => {
   const userFire = firebase.firestore().collection("users");
   const productFire = firebase.firestore().collection("product");
   const lineFire = firebase.firestore().collection("lineConfig");
-  
+
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
   const params = new Proxy(new URLSearchParams(window.location.search), {
@@ -48,15 +60,14 @@ const Auth = (props) => {
         client_secret: "10b64197e0054249ea4497198acc6ace",
       });
       if (params.code) {
-
         // window.open(`https://api.line.me/oauth2/v2.1/token?grant_type=authorization_code&code=${params.code}&redirect_uri=${line_configRef.current.redirect_uri}&client_id=${line_configRef.current.client_id}&client_secret=${line_configRef.current.client_secret}`);
         // window.open("https://api.line.me/oauth2/v2.1/token",`grant_type=authorization_code&code=${params.code}&redirect_uri=${line_configRef.current.redirect_uri}&client_id=${line_configRef.current.client_id}&client_secret=${line_configRef.current.client_secret}`,function(d){
         //   setUser(d)
         //   console.log(d)
         //   console.log(user)
         // })
-       
-          axios
+
+        axios
           .post(
             "https://api.line.me/oauth2/v2.1/token",
             `grant_type=authorization_code&code=${params.code}&redirect_uri=${line_configRef.current.redirect_uri}&client_id=${line_configRef.current.client_id}&client_secret=${line_configRef.current.client_secret}`
@@ -81,7 +92,7 @@ const Auth = (props) => {
           // setUser(userData);
           console.log("userData", userData);
           if (!userData) {
-            setLoading(false)
+            setLoading(false);
           } else {
             userFire
               .where("uid", "==", userData.uid)
@@ -97,11 +108,8 @@ const Auth = (props) => {
               });
           }
         });
-      
-    }
+      }
     });
-
-  
   }, []);
 
   const handleClick_lineLogin = () => {
@@ -114,56 +122,63 @@ const Auth = (props) => {
         auth,
         decoded.email,
         decoded.sub
-      )
-      
-          const userID = "userID"
-          var date = new Date().getTime()
-          const addGroup = {
-            barcode: "",
-            name: "",
-            category: "",
-            date: "",
-            note: "",
-          }
-          const categoryMeat ={
-            name: "Meat",
-            qty: 0
-          }
-          const categoryFruit ={
-            name: "Fruit",
-            qty: 0
-          }
-          const categoryVeget ={
-            name: "Veget",
-            qty: 0
-          }
-          const groupFire = productFire.doc(`${user.user.uid}`)
-          const categoryFire = productFire.doc(`${user.user.uid}`).collection("category")
-          groupFire.set({defaultGroup:"1",uid:user.user.uid})
-          groupFire.collection("group1").doc(`${date}`).set(addGroup)
-          groupFire.collection("group2").doc(`${date}`).set(addGroup)
-          groupFire.collection("group3").doc(`${date}`).set(addGroup)
-          categoryFire.doc(`${date}`).set(categoryMeat)
-          categoryFire.doc(`${date+1}`).set(categoryFruit)
-          categoryFire.doc(`${date+2}`).set(categoryVeget)
-          
-      
+      );
+
+      const userID = "userID";
+      var date = new Date().getTime();
+      // const addGroup = {
+      //   barcode: "",
+      //   name: "",
+      //   category: "",
+      //   date: "",
+      //   note: "",
+      // }
+      // const categoryMeat ={
+      //   name: "Meat",
+      //   qty: 0,
+      //   group: 1
+      // }
+      // const categoryFruit ={
+      //   name: "Fruit",
+      //   qty: 0,
+      //   group: 1
+      // }
+      // const categoryVeget ={
+      //   name: "Veget",
+      //   qty: 0,
+      //   group: 1
+      // }
+      const groupFire = productFire.doc(`${user.user.uid}`);
+      const categoryFire = productFire
+        .doc(`${user.user.uid}`)
+        .collection("category");
+      groupFire.set({ defaultGroup: "1", uid: user.user.uid });
+      groupFire.collection("group1").doc(`${date}`).set(addGroup);
+      groupFire.collection("group2").doc(`${date}`).set(addGroup);
+      groupFire.collection("group3").doc(`${date}`).set(addGroup);
+      categoryFire.doc(`${date}`).set(categoryMeat_one);
+      categoryFire.doc(`${date + 1}`).set(categoryFruit_one);
+      categoryFire.doc(`${date + 2}`).set(categoryVeget_one);
+      categoryFire.doc(`${date + 3}`).set(categoryMeat_two);
+      categoryFire.doc(`${date + 4}`).set(categoryFruit_two);
+      categoryFire.doc(`${date + 5}`).set(categoryVeget_two);
+      categoryFire.doc(`${date + 6}`).set(categoryMeat_three);
+      categoryFire.doc(`${date + 7}`).set(categoryFruit_three);
+      categoryFire.doc(`${date + 8}`).set(categoryVeget_three);
       console.log("CREATE", user.user.uid);
       var data = {
         email: decoded.email,
         image: decoded.picture,
         name: decoded.name,
         uid: user.user.uid,
-        sub: decoded.sub
+        sub: decoded.sub,
       };
       userFire.doc(user.user.uid).set(data);
       props.dispatch({
         type: "SIGN_IN",
         payload: data,
       });
-     
 
-     
       // window.location.replace("/");
     } catch (error) {
       console.log(error.message);
@@ -196,7 +211,7 @@ const Auth = (props) => {
     }
   };
 
-  const getLineConfig = () =>{
+  const getLineConfig = () => {
     lineFire.onSnapshot((querySnapshot) => {
       var url = "";
       console.log(querySnapshot.data);
@@ -213,41 +228,44 @@ const Auth = (props) => {
         client_secret: "10b64197e0054249ea4497198acc6ace",
       });
     });
-  }
+  };
 
   console.log("code=>", params.code);
   console.log("state=>", params.state);
   console.log("LINE=>", line_configRef.current);
   return (
-   <div>
-     {loading ? (
-<div></div>
-     ):(<div>
-        <div className="wrapper">
-      <div className="page">
-        <div className="container ">
-          <div className="row position-absolute top-50 start-50 translate-middle m-0">
-            <div className="col">
-              {/* <img src="logo.png" className="rounded mx-auto d-block" alt="..." /> */}
+    <div>
+      {loading ? (
+        <div></div>
+      ) : (
+        <div>
+          <div className="wrapper">
+            <div className="page">
+              <div className="container ">
+                <div className="row position-absolute top-50 start-50 translate-middle m-0">
+                  <div className="col">
+                    {/* <img src="logo.png" className="rounded mx-auto d-block" alt="..." /> */}
 
-              <h2 className="text-center">Welcome to</h2>
-              <h2 className="text-center ">APP NAME</h2>
-              <div className="text-center mt-3">
-                <br />
-                <button
-                  className="btn mt-2" style={{backgroundColor:"#07E30A",color:"white"}}
-                  onClick={handleClick_lineLogin}
-                >
-                  LINE Login
-                </button>
+                    <h2 className="text-center">Welcome to</h2>
+                    <h2 className="text-center ">APP NAME</h2>
+                    <div className="text-center mt-3">
+                      <br />
+                      <button
+                        className="btn mt-2"
+                        style={{ backgroundColor: "#07E30A", color: "white" }}
+                        onClick={handleClick_lineLogin}
+                      >
+                        LINE Login
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
-     </div>)}
-   </div>
   );
 };
 const mapStateToProps = (state) => {
