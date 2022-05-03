@@ -4,30 +4,31 @@ import { useState } from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
+import AddProduct from './AddProduct'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Scanner = (props) => {
   const [checked, setChecked] = useState('Not_Found')
   const [data, setData] = useState('Not Found')
 
-  useEffect(()=>{
+  useEffect(() => {
     props.dispatch({
-      type: "SCANNER_ON"
-    });
-  },[])
+      type: 'SCANNER_ON',
+    })
+  }, [])
 
-  const closeScanner = ()=>{
+  const closeScanner = () => {
     props.dispatch({
-      type: "SCANNER_OFF"
-    });
+      type: 'SCANNER_OFF',
+    })
   }
   if (checked == 'Not_Found') {
     return (
-      <div style={{ backgroundColor:"#1083C1", height: '100vh' }}>
+      <div style={{ backgroundColor: '#FCCF50', height: '100vh' }}>
         <header>
           <div className='container'>
-            <div className='row'>
-              <div className='col-2'>
+            <div className='row pt-3'>
+              <div className='col-2 py-1'>
                 <NavLink to='/' onClick={closeScanner}>
                   <FontAwesomeIcon
                     icon='fa-solid fa-arrow-left-long'
@@ -68,22 +69,19 @@ const Scanner = (props) => {
                 />
               </div>
 
-              <p>{data}</p>
-            
+              {/* <p>{data}</p> */}
             </div>
 
             {/* <div className='bg-success row'>
               <div className='col'>GGGG</div>
               <div className='col'>GGGG</div>
             </div> */}
-
           </div>
 
           {/* <div className='bg-success row'>
               <div className='col'>GGGG</div>
               <div className='col'>GGGG</div>
             </div> */}
-            
         </section>
       </div>
     )
@@ -91,12 +89,14 @@ const Scanner = (props) => {
     return (
       <div>
         <h1>มีข้อมูลเก่า map หา master</h1>
+        <AddProduct />
       </div>
     )
   } else if (checked == 'New_Data') {
     return (
       <div>
         <h1>ไม่มีข้อมูลเก่า สร้างใหม่เลย</h1>
+        <AddProduct />
       </div>
     )
   } else {
