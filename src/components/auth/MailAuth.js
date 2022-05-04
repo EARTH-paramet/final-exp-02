@@ -10,7 +10,6 @@ import Auth from './Auth'
 import Category from '../Category'
 import NavBottomBar from '../navigation/NavBottomBar'
 import Fridge from '../Fridge'
-import LiffAuth from './LiffAuth'
 import firebase from "../../services/firebase";
 
 const MailAuth = (props) => {
@@ -47,6 +46,11 @@ const MailAuth = (props) => {
         <NavBottomBar />
       </footer>
     )
+    // return(
+    //   <footer>
+    //     <NavBottomBar />
+    //   </footer>
+    // )
   }
   return (
     <div className=''>

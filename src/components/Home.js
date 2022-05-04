@@ -3,15 +3,18 @@ import Search from './Search'
 import Profile from './Profile'
 import NavBottomBar from './navigation/NavBottomBar'
 import Filter from './Filter'
-import Test from './test/Test'
-
+import { connect } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from './css/Page.module.css'
-
-function Home() {
+import { useEffect } from 'react'
+const Home=(props) =>{
+  useEffect(()=>{
+    props.dispatch({
+      type: 'SCANNER_OFF',
+    })
+  },[])
   return (
     <>
-      {/* <Test /> */}
       <header className={styles.navbar}>
         <div className='row mt-2'>
           <div className='col-6'>
@@ -32,4 +35,4 @@ function Home() {
   )
 }
 
-export default Home
+export default connect()(Home)

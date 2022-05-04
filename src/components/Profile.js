@@ -11,8 +11,14 @@ const Profile = (props) => {
   const [dataProfile, setDataProfile] = useState()
   const [loading, setLoading] = useState(false)
   useEffect(() => {
+   
+      props.dispatch({
+        type: 'SCANNER_OFF',
+      })
+
     setDataProfile(props.data)
     setLoading(true)
+    
   }, [])
   console.log(dataProfile)
   return (
