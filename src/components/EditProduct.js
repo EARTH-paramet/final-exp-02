@@ -1,4 +1,3 @@
-// import "./Home.scss";
 import { NavLink } from 'react-router-dom'
 import { Button } from 'reactstrap'
 import { connect } from 'react-redux'
@@ -6,9 +5,11 @@ import { useParams } from 'react-router-dom'
 import { useState } from 'react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styles from './css/Page.module.css'
+import styles from './css/AddEditProduct.module.css'
 
-import Inputs from './input/Inputs'
+import ImageUpload from './input/ImageUpload'
+
+// import Inputs from './input/Inputs'
 const mapStateToProps = (state) => {
   return {
     data: state.dataProduct,
@@ -17,6 +18,21 @@ const mapStateToProps = (state) => {
 
 function EditProduct({ data }) {
   const [editData, setEditData] = useState(data.productData[useParams().id])
+
+  const [dataform, setDataform] = useState({
+    Name: editData.name,
+    Category: editData.category,
+    Description: editData.note,
+    Date: editData.date.toDate().toLocaleDateString('en-CA'),
+  })
+
+  const handle = (e) => {
+    const newdata = { ...dataform }
+    newdata[e.target.id] = e.target.value
+    setDataform(newdata)
+    console.log(newdata)
+  }
+
   return (
     <>
       <header>
@@ -40,10 +56,8 @@ function EditProduct({ data }) {
       <section style={{ marginBottom: '100px' }}>
         <div className='container'>
           <div className='text-center mt-5'>
-            {/* <div className={styles.avatar}>
-              <img alt='' src={props.data.image} />
-            </div> */}
-            <svg
+            <ImageUpload />
+            {/* <svg
               className='bd-placeholder-img rounded-circle'
               width='140'
               height='140'
@@ -58,17 +72,68 @@ function EditProduct({ data }) {
               <text x='50%' y='50%' fill='#777' dy='.3em'>
                 140x140
               </text>
-            </svg>
+            </svg> */}
 
             <h2 className='mt-3'>Food Details</h2>
           </div>
           <div className='mx-3 mb-3'>
-            <form action='/' method='POST'>
-              <Inputs type='text' topic='Name' value={editData.name} />
-              <Inputs type='text' topic='Category' value={editData.cat} />
-              <Inputs type='text' topic='Description' value={editData.des} />
-              <Inputs type='date' topic='Date' value={editData.exp} />
-              {/* <Inputs type='time' topic='Time' value={editData.time} /> */}
+            <form>
+              <div className='mb-3'>
+                <label className='form-label fw-bold'>Name</label>
+                <input
+                  onChange={(e) => handle(e)}
+                  id='Name'
+                  type='text'
+                  defaultValue={dataform.Name}
+                  className='form-control'
+                  style={{
+                    borderRadius: '20px',
+                    border: '1px solid rgb(255 195 0)',
+                  }}
+                />
+              </div>
+              <div className='mb-3'>
+                <label className='form-label fw-bold'>Category</label>
+                <input
+                  onChange={(e) => handle(e)}
+                  id='Category'
+                  type='text'
+                  defaultValue={dataform.Category}
+                  className='form-control'
+                  style={{
+                    borderRadius: '20px',
+                    border: '1px solid rgb(255 195 0)',
+                  }}
+                />
+              </div>
+              <div className='mb-3'>
+                <label className='form-label fw-bold'>Description</label>
+                <input
+                  onChange={(e) => handle(e)}
+                  id='Description'
+                  type='text'
+                  defaultValue={dataform.Description}
+                  className='form-control'
+                  style={{
+                    borderRadius: '20px',
+                    border: '1px solid rgb(255 195 0)',
+                  }}
+                />
+              </div>
+              <div className='mb-3'>
+                <label className='form-label fw-bold'>Date</label>
+                <input
+                  onChange={(e) => handle(e)}
+                  id='Date'
+                  type='date'
+                  defaultValue={dataform.Date}
+                  className='form-control'
+                  style={{
+                    borderRadius: '20px',
+                    border: '1px solid rgb(255 195 0)',
+                  }}
+                />
+              </div>
               <Button
                 className='w-100 py-3'
                 color='warning text-white'
