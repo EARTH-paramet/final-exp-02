@@ -9,9 +9,9 @@
   padding: 10px 10px 0px 10px;
 }
 
-.SectionListProduct {
+.SectionList {
   padding: 16px;
-  margin-top: 100px;
+  margin-top: 90px;
   margin-bottom: 80px;
 }
 /* in ListProduct */
@@ -21,7 +21,7 @@
 }
 
 .item {
-  background: #d2d2d0;
+  background-color: #d2d2d0;
   border: 1px solid #ffe087;
   box-sizing: border-box;
   border-radius: 12px;
@@ -30,4 +30,14 @@
 .itemText {
   font-weight: 700;
   font-size: 15px;
+}
+
+.textCenter {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 500px;
+  text-align: center;
+  transform: translate(-50%, -50%);
 }

@@ -1,18 +1,18 @@
+import { useEffect } from 'react'
+import { connect } from 'react-redux'
+
+import styles from './css/Home.module.css'
+
 import ListProduct from './ListProduct'
 import Search from './Search'
-import Profile from './Profile'
-import NavBottomBar from './navigation/NavBottomBar'
 import Filter from './Filter'
-import { connect } from 'react-redux'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styles from './css/Page.module.css'
-import { useEffect } from 'react'
-const Home=(props) =>{
-  useEffect(()=>{
+
+const Home = (props) => {
+  useEffect(() => {
     props.dispatch({
       type: 'SCANNER_OFF',
     })
-  },[])
+  }, [])
   return (
     <>
       <header className={styles.navbar}>
@@ -28,7 +28,12 @@ const Home=(props) =>{
         </div>
         <Search />
       </header>
-      <section className={`${styles.itembox} 'container'`}>
+      <section className={styles.SectionList}>
+        <ListProduct />
+        <ListProduct />
+        <ListProduct />
+        <ListProduct />
+        <ListProduct />
         <ListProduct />
       </section>
     </>
