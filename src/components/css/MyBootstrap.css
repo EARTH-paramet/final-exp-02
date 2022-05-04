@@ -18,6 +18,9 @@
   bottom: 0;
 }
 
+a:hover {
+  color: inherit;
+}
 /* .modal.fade .modal-dialog {
   transform: translate3d(0, 57vh, 0);
 } */
