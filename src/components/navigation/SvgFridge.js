@@ -6,7 +6,7 @@ export default function SvgFridge(props) {
         focusable='false'
         data-prefix='fas'
         data-icon='refrigerator'
-        class={`svg-inline--fa fa-refrigerator fa-${props.size} icon`}
+        className={`svg-inline--fa fa-refrigerator fa-${props.size} icon`}
         role='img'
         xmlns='http://www.w3.org/2000/svg'
         viewBox='0 0 430 412'

@@ -11,7 +11,7 @@ import './css/MyBootstrap.css'
 
 import SvgFridge from './navigation/SvgFridge'
 
-const ListFridge = ({ data }) => {
+const ListFridge = (props) => {
   const [modalOpen, setModalOpen] = useState(false)
   const [modalData, setModalData] = useState({})
   const toggle = () => setModalOpen(!modalOpen)
@@ -19,6 +19,7 @@ const ListFridge = ({ data }) => {
   const ref = firebase.firestore().collection('product')
 
   const [loading, setLoading] = useState(true)
+  const [edit, setEdit] = useState(false)
   const [dataFridge, setDataFridge] = useState([
     {
       group: '1',
@@ -35,7 +36,7 @@ const ListFridge = ({ data }) => {
   ])
   useEffect(() => {
     ref
-      .where('uid', '==', data.uid)
+      .where('uid', '==', props.data.uid)
       .get()
       .then((querySnapshot) => {
         let group = 'null'
@@ -50,13 +51,16 @@ const ListFridge = ({ data }) => {
                   group: val.group,
                   default: true,
                 }
-              : val
+              : {
+                group: val.group,
+                default: false,
+              }
           })
         )
         setLoading(false)
         console.log(dataFridge)
       })
-  }, [])
+  }, [edit])
   //   console.log("Output",ref)
   if (dataFridge.length !== 0) {
     console.log('Output_dataUser', dataFridge)
@@ -117,13 +121,13 @@ const ListFridge = ({ data }) => {
               <div className='row my-4'>
                 <h6 className='col-8 fw-bold'>Name :</h6>
                 <h6 className='col-4 text-end text-warning'>
-                  {modalData.name}
+                  Fridge {modalData.group}
                 </h6>
               </div>
               <div className='row my-4'>
                 <h6 className='col-8 fw-bold'>Total Food :</h6>
                 <h6 className='col-4 text-end text-warning'>
-                  {modalData.totalfood} 14 {/*test */}
+                  {modalData.group}  {/*test */}
                 </h6>
               </div>
               <div className='row my-4'>
@@ -136,13 +140,25 @@ const ListFridge = ({ data }) => {
                       id='switch'
                       className={styles.switchInput}
                     />
-                    <label className={styles.switchLabel} for='switch' />
+                    <label className={styles.switchLabel}  />
                   </div>
                 </h6>
               </div>
 
               <div className='row py-2'>
-                <Button
+              <Button
+                  className='w-100 py-3 fw-bold'
+                  color='warning text-white'
+                  style={{ borderRadius: '16px' }}
+                  onClick={()=>{
+                    ref.doc(props.data.uid).set({defaultGroup:`${modalData.group}`,uid:props.data.uid})
+                    setEdit(!edit)
+                    toggle()
+                  }}
+                >
+                  Default
+                </Button>
+                {/* <Button
                   className='w-100 py-3 fw-bold'
                   color='warning text-white'
                   style={{ borderRadius: '16px' }}
@@ -153,7 +169,7 @@ const ListFridge = ({ data }) => {
                     size='xl'
                     style={{ color: 'black' }}
                   />
-                </Button>
+                </Button> */}
               </div>
             </div>
           </ModalBody>
