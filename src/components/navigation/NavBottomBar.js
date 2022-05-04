@@ -1,5 +1,4 @@
-import { NavLink } from 'react-router-dom'
-import { useState } from 'react'
+import { NavLink } from './NavLink'
 
 import styles from '../css/NavBottomBar.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -7,26 +6,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import SvgFridge from './SvgFridge'
 
 export default function NavBottomBar() {
-  const [option, setOption] = useState('home')
-
-  console.log(option)
   return (
     <div className={styles.bottomAppbar}>
       <div className={styles.tabs}>
         <div className={`${styles.tab} ${styles.tabLeft}`}>
           <div className='row'>
-            <div
-              className={`col-6 ${styles.menuNav}`}
-              onClick={() => setOption('home')}
-            >
-              <NavLink
-                to='/'
-                className={
-                  option == 'home'
-                    ? `${styles.barLink} ${styles.isHere}`
-                    : `${styles.barLink}`
-                }
-              >
+            <div className={`col-6 ${styles.menuNav}`}>
+              <NavLink to='/'>
                 <div className={styles.iconsBar}>
                   <FontAwesomeIcon
                     className='icon'
@@ -37,18 +23,8 @@ export default function NavBottomBar() {
                 <span>Home</span>
               </NavLink>
             </div>
-            <div
-              className={`col-6 ${styles.menuNav}`}
-              onClick={() => setOption('fridge')}
-            >
-              <NavLink
-                to='/fridge'
-                className={
-                  option == 'fridge'
-                    ? `${styles.barLink} ${styles.isHere}`
-                    : `${styles.barLink}`
-                }
-              >
+            <div className={`col-6 ${styles.menuNav}`}>
+              <NavLink to='/fridge'>
                 <div className={styles.iconsBar}>
                   {/* <FontAwesomeIcon icon='fa-solid fa-snowflake' size='xl' /> */}
                   <SvgFridge size='xl' />
@@ -58,10 +34,7 @@ export default function NavBottomBar() {
             </div>
           </div>
         </div>
-        <div
-          className={`${styles.tab} ${styles.tabFab}`}
-          onClick={() => setOption('scan')}
-        >
+        <div className={`${styles.tab} ${styles.tabFab}`}>
           <div className={styles.top}>
             <NavLink to='/scan' className={styles.additem}>
               <div className={styles.fab}>
@@ -72,18 +45,8 @@ export default function NavBottomBar() {
         </div>
         <div className={`${styles.tab} ${styles.tabRight}`}>
           <div className='row'>
-            <div
-              className={`col-6 ${styles.menuNav}`}
-              onClick={() => setOption('category')}
-            >
-              <NavLink
-                to='/category'
-                className={
-                  option == 'category'
-                    ? `${styles.barLink} ${styles.isHere}`
-                    : `${styles.barLink}`
-                }
-              >
+            <div className={`col-6 ${styles.menuNav}`}>
+              <NavLink to='/category'>
                 <div
                   className={styles.iconsBar}
                   style={{ transform: 'translateX(15%)' }}
@@ -93,18 +56,8 @@ export default function NavBottomBar() {
                 <span>CATEGORY</span>
               </NavLink>
             </div>
-            <div
-              className={`col-6 ${styles.menuNav}`}
-              onClick={() => setOption('profile')}
-            >
-              <NavLink
-                to='/profile'
-                className={
-                  option == 'profile'
-                    ? `${styles.barLink} ${styles.isHere}`
-                    : `${styles.barLink}`
-                }
-              >
+            <div className={`col-6 ${styles.menuNav}`}>
+              <NavLink to='/profile'>
                 <div className={styles.iconsBar}>
                   <FontAwesomeIcon icon='fa-solid fa-user' size='xl' />
                 </div>
