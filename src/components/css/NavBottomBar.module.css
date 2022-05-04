@@ -92,8 +92,10 @@ span {
 }
 
 .menuNav {
+  color: rgb(152, 152, 152);
   text-align: center;
 }
+
 /* .iconsBar {
   text-align: center;
   font-size: 25px;

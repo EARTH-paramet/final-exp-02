@@ -19,6 +19,7 @@ const Search = (props) => {
         ref
           .doc(props.data.uid)
           .collection(`group${group}`)
+          .orderBy("date")
           .onSnapshot((querySnapshot) => {
             const items = [];
             querySnapshot.forEach((doc) => {
@@ -49,7 +50,27 @@ const Search = (props) => {
        group = doc.data().defaultGroup
       });
     })
-    ref
+    if(e.target.value==""){
+      ref
+      .doc(props.data.uid)
+      .collection(`group${group}`)
+      .orderBy("date")
+      .onSnapshot((querySnapshot) => {
+        const items = [];
+        querySnapshot.forEach((doc) => {
+          if (doc.data().barcode == "") {
+          } else {
+            items.push(doc.data());
+          }
+          console.log("itemsSEARC", doc.data());
+        });
+        props.dispatch({
+          type: "ADD_PRODUCT",
+          payload: items,
+        });
+      });
+    }else{
+      ref
       .doc(props.data.uid)
       .collection(`group${group}`)
       .orderBy("name")
@@ -62,15 +83,15 @@ const Search = (props) => {
           } else {
             items.push(doc.data());
           }
-          console.log("items", doc.data());
+          console.log("itemsSEARC", doc.data());
         });
         props.dispatch({
           type: "ADD_PRODUCT",
           payload: items,
         });
       });
-  };
-
+    }
+  }
   return (
     <div className="mt-1 mb-3">
       <input

@@ -5,6 +5,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 
 import MailAuth from './components/auth/MailAuth'
+import NavBottomBar from './components/navigation/NavBottomBar'
 
 library.add(fas)
 
@@ -17,6 +18,7 @@ const App = () => {
         <Route exact path="/edit/:id" element={<EditProduct />} />
         <Route path="/scan" element={<Scanner />} />
       </Routes> */}
+      <NavBottomBar/>
     </div>
   )
 }
