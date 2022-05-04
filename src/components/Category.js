@@ -1,20 +1,16 @@
-import ListProduct from './ListProduct'
-import Search from './Search'
-import Profile from './Profile'
-import NavBottomBar from './navigation/NavBottomBar'
-import { connect } from 'react-redux'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styles from './css/Page.module.css'
-import ListCategory from './ListCategory'
 import { useEffect } from 'react'
+import { connect } from 'react-redux'
 
-const Category = (props)=>{
-  useEffect(()=>{
+import styles from './css/Category.module.css'
+
+import ListCategory from './ListCategory'
+
+const Category = (props) => {
+  useEffect(() => {
     props.dispatch({
       type: 'SCANNER_OFF',
     })
-  },[])
-
+  }, [])
   return (
     <>
       <header className={styles.navbar}>
@@ -23,19 +19,13 @@ const Category = (props)=>{
             <h2>APP NAME</h2>
           </div>
           <div className='col-6 '>
-            <h2 className='text-end'>
-              {/* <FontAwesomeIcon icon='fa-solid fa-filter' /> */}
-            </h2>
+            <h2 className='text-end'></h2>
           </div>
         </div>
-        {/* <Search /> */}
       </header>
-      <section className={`${styles.itembox} 'container'`}>
+      <section className={styles.SectionList}>
         <ListCategory />
       </section>
-      {/* <footer>
-        <NavBottomBar />
-      </footer> */}
     </>
   )
 }

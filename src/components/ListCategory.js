@@ -5,46 +5,41 @@ import { Button, Modal, ModalBody } from 'reactstrap'
 import firebase from '../services/firebase'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styles from './css/Page.module.css'
+import styles from './css/Category.module.css'
 import './css/MyBootstrap.css'
 
 const ListCategory = ({ data }) => {
   const [modalOpen, setModalOpen] = useState(false)
   const [modalData, setModalData] = useState({})
   const toggle = () => setModalOpen(!modalOpen)
-  let group = 1
 
   const ref = firebase
     .firestore()
     .collection('product')
-  const [dataCategory, setDataCategory] = useState([])
+    .doc('userID')
+    .collection('category')
+  const [dataUser, setDataUser] = useState([{}])
   useEffect(() => {
-    ref.where("uid","==",data.uid).get().then(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        console.log(doc.data());
-       group = doc.data().defaultGroup
-      });
-    })
-    ref.doc(data.uid).collection('category').where("group","==",group).onSnapshot((querySnapshot) => {
+    ref.onSnapshot((querySnapshot) => {
       const items = []
       querySnapshot.forEach((doc) => {
         items.push(doc.data())
         // console.log("items",doc.data())
       })
-      setDataCategory(items)
+      setDataUser(items)
+      // console.log('Output_dataUser', dataUser)
     })
-  
   }, [])
   //   console.log("Output",ref)
-  if (dataCategory.length !== 0) {
-    console.log('Output_dataUser', dataCategory)
+  if (dataUser.length !== 0) {
+    console.log('Output_dataUser', dataUser)
   } else {
     console.log('null')
   }
   return (
     <div className='container'>
-      {dataCategory.map((item, index) => (
-        <div style={{ borderRadius: '18px' }} className='row py-2' key={index}>
+      {dataUser.map((item, index) => (
+        <div className={`row mb-3 ${styles.boxItem}`} key={index}>
           <a
             href='#'
             className={`list-group-item d-flex gap-3 ${styles.item}`}
@@ -55,7 +50,11 @@ const ListCategory = ({ data }) => {
             }}
           >
             <img
-              src="https://www.iconbunny.com/icons/media/catalog/product/3/7/3737.4-loaf-of-bread-icon-iconbunny.jpg"
+              src={
+                item.image
+                  ? item.image
+                  : 'https://www.suzukijember.com/gallery/gambar_product/default.jpg'
+              }
               alt='twbs'
               width='64'
               height='64'
@@ -80,7 +79,7 @@ const ListCategory = ({ data }) => {
           </a>
         </div>
       ))}
-      <div>
+      {/* <div>
         <Modal size='sm' isOpen={modalOpen} toggle={() => toggle()}>
           <ModalBody>
             <div className='container'>
@@ -104,13 +103,13 @@ const ListCategory = ({ data }) => {
             </div>
           </ModalBody>
         </Modal>
-      </div>
+      </div> */}
     </div>
   )
 }
 const mapStateToProps = (state) => {
   return {
-    data: state.dataUser,
+    data: state.dataCategory,
   }
 }
 
