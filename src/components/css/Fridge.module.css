@@ -1,0 +1,77 @@
+.itemFridge {
+  background: #fffefe;
+  border: 3px solid #fccf50;
+  box-sizing: border-box;
+  border-radius: 12px;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+.itemText {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.btnDefault {
+  border-radius: 10px;
+  width: 115px;
+  height: 36px;
+  color: black;
+  background-color: hsla(44, 100%, 77%, 0.5);
+  border: none;
+}
+
+:root {
+  --switch-width: 50px;
+  --switch-height: 30px;
+  --circle-size: 22px;
+  --circle-padding: 4px;
+  --circle-bg: #fff;
+  --circle-on-bg: #fff;
+  --switch-bg: #c9c9c9;
+  --switch-on-bg: #fccf50;
+}
+/* switch */
+.switch {
+  float: right;
+  position: relative;
+  top: -5px;
+}
+
+.switchLabel {
+  width: var(--switch-width);
+  height: var(--switch-height);
+  border-radius: 100px;
+  cursor: pointer;
+  background: var(--switch-bg);
+  display: flex;
+  position: relative;
+  align-items: center;
+  transition: all 0.5s;
+}
+
+.switchLabel::before {
+  content: '';
+  display: block;
+  background: var(--circle-bg);
+  width: var(--circle-size);
+  height: var(--circle-size);
+  border-radius: 50%;
+  position: absolute;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  left: var(--circle-padding);
+}
+
+.switchInput {
+  display: none;
+}
+
+.switchInput:checked + .switchLabel {
+  background: var(--switch-on-bg);
+}
+
+.switchInput:checked + .switchLabel::before {
+  background: #fff;
+  left: calc(var(--switch-width) - var(--circle-size) - var(--circle-padding));
+}
