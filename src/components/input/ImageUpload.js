@@ -10,7 +10,9 @@ const ImageUpload = () => {
     }
   }
   const handleClick = () => {
-    const uploadTask = storage.ref(`product/images/${image.name}`).put(image)
+    const uploadTask = storage
+      .ref(`product/images/${Date.now() + '_' + image.name}`)
+      .put(image)
     uploadTask.on(
       'state_changed',
       (snapshot) => {},
