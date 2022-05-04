@@ -30,11 +30,6 @@ const Home = (props) => {
       </header>
       <section className={styles.SectionList}>
         <ListProduct />
-        <ListProduct />
-        <ListProduct />
-        <ListProduct />
-        <ListProduct />
-        <ListProduct />
       </section>
     </>
   )
