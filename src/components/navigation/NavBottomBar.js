@@ -4,6 +4,8 @@ import { useState } from 'react'
 import styles from '../css/NavBottomBar.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+import SvgFridge from './SvgFridge'
+
 export default function NavBottomBar() {
   const [option, setOption] = useState('home')
 
@@ -48,7 +50,8 @@ export default function NavBottomBar() {
                 }
               >
                 <div className={styles.iconsBar}>
-                  <FontAwesomeIcon icon='fa-solid fa-snowflake' size='xl' />
+                  {/* <FontAwesomeIcon icon='fa-solid fa-snowflake' size='xl' /> */}
+                  <SvgFridge size='xl' />
                 </div>
                 <span>Fridge</span>
               </NavLink>
