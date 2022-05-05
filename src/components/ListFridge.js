@@ -67,6 +67,11 @@ const ListFridge = (props) => {
   } else {
     console.log('null')
   }
+
+  const [test, setTest] = useState(true)
+  const handleNoti = (e) => {
+    setTest(!test)
+  }
   return (
     <div className='container'>
       {loading ? (
@@ -82,6 +87,7 @@ const ListFridge = (props) => {
               <a
                 href='#'
                 className={`list-group-item d-flex gap-2 ${styles.itemFridge}`}
+                style={item.default ? {} : { border: '3px solid #c6c6c6' }}
                 aria-current='true'
                 onClick={() => {
                   setModalData(item)
@@ -127,7 +133,7 @@ const ListFridge = (props) => {
               <div className='row my-4'>
                 <h6 className='col-8 fw-bold'>Total Food :</h6>
                 <h6 className='col-4 text-end text-warning'>
-                  {modalData.group} {/*test */}
+                  {modalData.group}
                 </h6>
               </div>
               <div className='row my-4'>
@@ -139,8 +145,10 @@ const ListFridge = (props) => {
                       type='checkbox'
                       id='switch'
                       className={styles.switchInput}
+                      onClick={(e) => handleNoti()}
+                      checked={test ? true : false}
                     />
-                    <label className={styles.switchLabel} />
+                    <label for='switch' className={styles.switchLabel} />
                   </div>
                 </h6>
               </div>
@@ -151,12 +159,10 @@ const ListFridge = (props) => {
                   color='warning text-white'
                   style={{ borderRadius: '16px' }}
                   onClick={() => {
-                    ref
-                      .doc(props.data.uid)
-                      .set({
-                        defaultGroup: `${modalData.group}`,
-                        uid: props.data.uid,
-                      })
+                    ref.doc(props.data.uid).set({
+                      defaultGroup: `${modalData.group}`,
+                      uid: props.data.uid,
+                    })
                     setEdit(!edit)
                     toggle()
                   }}
