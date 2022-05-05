@@ -7,7 +7,7 @@ import { Firestore } from 'firebase/firestore'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from './css/Fridge.module.css'
-import './css/MyBootstrap.css'
+// import './css/MyBootstrap.css'
 
 import SvgFridge from './navigation/SvgFridge'
 
@@ -52,9 +52,9 @@ const ListFridge = (props) => {
                   default: true,
                 }
               : {
-                group: val.group,
-                default: false,
-              }
+                  group: val.group,
+                  default: false,
+                }
           })
         )
         setLoading(false)
@@ -127,7 +127,7 @@ const ListFridge = (props) => {
               <div className='row my-4'>
                 <h6 className='col-8 fw-bold'>Total Food :</h6>
                 <h6 className='col-4 text-end text-warning'>
-                  {modalData.group}  {/*test */}
+                  {modalData.group} {/*test */}
                 </h6>
               </div>
               <div className='row my-4'>
@@ -140,18 +140,23 @@ const ListFridge = (props) => {
                       id='switch'
                       className={styles.switchInput}
                     />
-                    <label className={styles.switchLabel}  />
+                    <label className={styles.switchLabel} />
                   </div>
                 </h6>
               </div>
 
               <div className='row py-2'>
-              <Button
+                <Button
                   className='w-100 py-3 fw-bold'
                   color='warning text-white'
                   style={{ borderRadius: '16px' }}
-                  onClick={()=>{
-                    ref.doc(props.data.uid).set({defaultGroup:`${modalData.group}`,uid:props.data.uid})
+                  onClick={() => {
+                    ref
+                      .doc(props.data.uid)
+                      .set({
+                        defaultGroup: `${modalData.group}`,
+                        uid: props.data.uid,
+                      })
                     setEdit(!edit)
                     toggle()
                   }}

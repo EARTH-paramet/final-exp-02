@@ -64,9 +64,6 @@
   justify-content: center;
   /* z-index: 0; */
 }
-span {
-  font-size: 10px;
-}
 
 .fab {
   border-radius: 50%;
@@ -96,6 +93,14 @@ span {
   text-align: center;
 }
 
+.menuNav span {
+  font-size: 10px;
+}
+
+.menuNav a {
+  color: rgb(152, 152, 152);
+}
+
 /* .iconsBar {
   text-align: center;
   font-size: 25px;
@@ -103,8 +108,8 @@ span {
 } */
 /* .menuNav .iconsBar :hover {
   color: #f4d03f;
-}*/
-.barLink {
+} */
+/* .barLink {
   text-decoration: none;
   color: rgb(152, 152, 152);
 }
@@ -112,12 +117,12 @@ span {
 .barLink:hover {
   color: #f4d03f;
 }
-/* .barLink:active {
+.barLink:active {
   color: #f4d03f;
-} */
+}
 .isHere {
   color: #f4d03f;
 }
 .isHere span {
   color: rgb(152, 152, 152);
-}
+} */

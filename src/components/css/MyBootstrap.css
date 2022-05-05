@@ -18,7 +18,13 @@
   bottom: 0;
 }
 
+a {
+  color: #000;
+}
 
+a:hover {
+  color: #000;
+}
 /* .modal.fade .modal-dialog {
   transform: translate3d(0, 57vh, 0);
 } */
@@ -30,6 +36,7 @@
   transform: translate3d(0, 57vh, 0);
 } */
 
+/* block zoom page */
 body {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */

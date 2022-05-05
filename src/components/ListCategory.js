@@ -5,8 +5,8 @@ import { Button, Modal, ModalBody } from 'reactstrap'
 import firebase from '../services/firebase'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styles from './css/Page.module.css'
-import './css/MyBootstrap.css'
+import styles from './css/Category.module.css'
+// import './css/MyBootstrap.css'
 
 const ListCategory = ({ data }) => {
   const [modalOpen, setModalOpen] = useState(false)
@@ -14,26 +14,30 @@ const ListCategory = ({ data }) => {
   const toggle = () => setModalOpen(!modalOpen)
   let group = 1
 
-  const ref = firebase
-    .firestore()
-    .collection('product')
+  const ref = firebase.firestore().collection('product')
   const [dataCategory, setDataCategory] = useState([])
   useEffect(() => {
-    ref.where("uid","==",data.uid).get().then(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        console.log(doc.data());
-       group = doc.data().defaultGroup
-      });
-    })
-    ref.doc(data.uid).collection('category').where("group","==",group).onSnapshot((querySnapshot) => {
-      const items = []
-      querySnapshot.forEach((doc) => {
-        items.push(doc.data())
-        // console.log("items",doc.data())
+    ref
+      .where('uid', '==', data.uid)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log(doc.data())
+          group = doc.data().defaultGroup
+        })
       })
-      setDataCategory(items)
-    })
-  
+    ref
+      .doc(data.uid)
+      .collection('category')
+      .where('group', '==', group)
+      .onSnapshot((querySnapshot) => {
+        const items = []
+        querySnapshot.forEach((doc) => {
+          items.push(doc.data())
+          // console.log("items",doc.data())
+        })
+        setDataCategory(items)
+      })
   }, [])
   //   console.log("Output",ref)
   if (dataCategory.length !== 0) {
@@ -55,7 +59,7 @@ const ListCategory = ({ data }) => {
             }}
           >
             <img
-              src="https://www.iconbunny.com/icons/media/catalog/product/3/7/3737.4-loaf-of-bread-icon-iconbunny.jpg"
+              src='https://www.iconbunny.com/icons/media/catalog/product/3/7/3737.4-loaf-of-bread-icon-iconbunny.jpg'
               alt='twbs'
               width='64'
               height='64'
