@@ -12,7 +12,7 @@
 
 .modal-dialog {
   position: fixed;
-  width: 100vw;
+  width: 100%;
   margin: 0;
   pointer-events: none;
   bottom: 0;
@@ -25,16 +25,47 @@ a {
 a:hover {
   color: #000;
 }
-/* .modal.fade .modal-dialog {
-  transform: translate3d(0, 57vh, 0);
-} */
-/* .modal.in .modal-dialog {
-  transform: translate3d(0, 0, 0);
-} */
-/* .modal.fade .modal-dialog {
-  -webkit-transform: translate3d(0, 57vh, 0);
-  transform: translate3d(0, 57vh, 0);
-} */
+
+.modal.show .modal-content {
+  position: relative;
+  animation: animatebottom 0.4s;
+}
+
+@keyframes animatebottom {
+  from {
+    bottom: -300px;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 1;
+  }
+}
+
+.modal.fade.show {
+  transition: opacity 0.15s linear;
+}
+.modal.fade {
+  transition: opacity 1s linear;
+}
+
+.modal .modal-content {
+  position: relative;
+  animation: animateclose 0.5s;
+}
+
+@keyframes animateclose {
+  from {
+    bottom: 0;
+    opacity: 1;
+  }
+
+  to {
+    bottom: -300px;
+    opacity: 0;
+  }
+}
 
 /* block zoom page */
 body {
@@ -47,6 +78,7 @@ body {
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
+/* block Rotate page*/
 @media screen and (orientation: landscape) {
   html {
     /* Rotate the content container */

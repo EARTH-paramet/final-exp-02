@@ -134,12 +134,7 @@ const ListProduct = ({ data, product }) => {
         </div>
       ))}
       <div>
-        <Modal
-          className='right'
-          size='sm'
-          isOpen={modalOpen}
-          toggle={() => toggle()}
-        >
+        <Modal size='xl' isOpen={modalOpen} toggle={() => toggle()}>
           <ModalBody>
             <div className='container'>
               <div className='row my-4'>

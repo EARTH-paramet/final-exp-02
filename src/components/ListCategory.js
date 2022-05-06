@@ -84,8 +84,8 @@ const ListCategory = ({ data }) => {
           </a>
         </div>
       ))}
-      <div>
-        <Modal size='sm' isOpen={modalOpen} toggle={() => toggle()}>
+      {/* <div>
+        <Modal size='xl' isOpen={modalOpen} toggle={() => toggle()}>
           <ModalBody>
             <div className='container'>
               <h6 className='font-weight-bold'>Name: {modalData.name}</h6>
@@ -108,7 +108,7 @@ const ListCategory = ({ data }) => {
             </div>
           </ModalBody>
         </Modal>
-      </div>
+      </div> */}
     </div>
   )
 }
