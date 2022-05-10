@@ -18,7 +18,7 @@ const App = () => {
         <Route exact path="/edit/:id" element={<EditProduct />} />
         <Route path="/scan" element={<Scanner />} />
       </Routes> */}
-      <NavBottomBar/>
+      {/* <NavBottomBar/> */}
     </div>
   )
 }

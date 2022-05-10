@@ -1,9 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { storage } from '../../services/firebase'
 import styles from '../css/AddEditProduct.module.css'
 
-const ImageUpload = () => {
+const ImageUpload = (props) => {
   const [image, setImage] = useState(null)
+  const [imageDefault, setImageDefault] = useState('https://via.placeholder.com/140')
+  useEffect(()=>{
+  console.log(imageDefault)
+  if(props.image){
+    setImageDefault(props.image)
+  }else{
+
+  }
+    
+  },[])
   const handleChange = (e) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0])
@@ -42,7 +52,7 @@ const ImageUpload = () => {
             src={
               image
                 ? URL.createObjectURL(image)
-                : 'https://via.placeholder.com/140'
+                : imageDefault
             }
             alt='upload'
             width='140'

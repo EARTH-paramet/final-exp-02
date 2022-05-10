@@ -39,14 +39,9 @@ const MailAuth = (props) => {
   },[])
 
   const BarButtom = ()=>{
-    // if(props.data.scanner){
-    //   return(<></>)
-    // }else return(
-    //   <footer>
-    //     <NavBottomBar />
-    //   </footer>
-    // )
-    return(
+    if(props.data.scanner){
+      return(<></>)
+    }else return(
       <footer>
         <NavBottomBar />
       </footer>
@@ -77,7 +72,7 @@ const MailAuth = (props) => {
         <Route path='/scan' element={<Scanner />} />
         <Route path='/profile' element={<Profile />} />
       </Routes>
-      {/* <NavBottomBar /> */}
+      <BarButtom />
       {/* {props.data.status ? (
        <BarButtom/>
       ) : (

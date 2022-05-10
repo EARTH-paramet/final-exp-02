@@ -43,6 +43,9 @@ const Auth = (props) => {
   });
 
   useEffect(() => {
+      props.dispatch({
+        type: 'SCANNER_ON',
+      })
     getLineConfig();
     lineFire.onSnapshot((querySnapshot) => {
       var url = "";
@@ -60,12 +63,6 @@ const Auth = (props) => {
         client_secret: "10b64197e0054249ea4497198acc6ace",
       });
       if (params.code) {
-        // window.open(`https://api.line.me/oauth2/v2.1/token?grant_type=authorization_code&code=${params.code}&redirect_uri=${line_configRef.current.redirect_uri}&client_id=${line_configRef.current.client_id}&client_secret=${line_configRef.current.client_secret}`);
-        // window.open("https://api.line.me/oauth2/v2.1/token",`grant_type=authorization_code&code=${params.code}&redirect_uri=${line_configRef.current.redirect_uri}&client_id=${line_configRef.current.client_id}&client_secret=${line_configRef.current.client_secret}`,function(d){
-        //   setUser(d)
-        //   console.log(d)
-        //   console.log(user)
-        // })
 
         axios
           .post(
@@ -80,16 +77,11 @@ const Auth = (props) => {
             } else {
               console.log(decoded.email);
               setUser(decoded);
-              // props.dispatch({
-              //   type: "SIGN_IN",
-              //   payload: decoded,
-              // });
               signIn(decoded);
             }
           });
       } else {
         firebase.auth().onAuthStateChanged((userData) => {
-          // setUser(userData);
           console.log("userData", userData);
           if (!userData) {
             setLoading(false);
@@ -126,28 +118,7 @@ const Auth = (props) => {
 
       const userID = "userID";
       var date = new Date().getTime();
-      // const addGroup = {
-      //   barcode: "",
-      //   name: "",
-      //   category: "",
-      //   date: "",
-      //   note: "",
-      // }
-      // const categoryMeat ={
-      //   name: "Meat",
-      //   qty: 0,
-      //   group: 1
-      // }
-      // const categoryFruit ={
-      //   name: "Fruit",
-      //   qty: 0,
-      //   group: 1
-      // }
-      // const categoryVeget ={
-      //   name: "Veget",
-      //   qty: 0,
-      //   group: 1
-      // }
+    
       const groupFire = productFire.doc(`${user.user.uid}`);
       const categoryFire = productFire
         .doc(`${user.user.uid}`)
@@ -229,7 +200,7 @@ const Auth = (props) => {
       });
     });
   };
-
+// POP-UP
   console.log("code=>", params.code);
   console.log("state=>", params.state);
   console.log("LINE=>", line_configRef.current);

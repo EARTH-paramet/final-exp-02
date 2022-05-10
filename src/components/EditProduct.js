@@ -18,12 +18,15 @@ const mapStateToProps = (state) => {
 
 function EditProduct({ data }) {
   const [editData, setEditData] = useState(data.productData[useParams().id])
-
+console.log("editData",editData)
+console.log("editData",editData.date.toDate().toLocaleString('en-CA').split(',')[0])
   const [dataform, setDataform] = useState({
-    Name: editData.name,
-    Category: editData.category,
-    Description: editData.note,
-    Date: editData.date.toDate().toLocaleDateString('en-CA'),
+    barcode: editData.barcode,
+    category: editData.category,
+    date: editData.date.toDate().toLocaleString('en-CA').split(',')[0],
+    image: editData.image,
+    name: editData.name,
+    note: editData.note
   })
 
   const handle = (e) => {
@@ -56,7 +59,7 @@ function EditProduct({ data }) {
       <section style={{ marginBottom: '100px' }}>
         <div className='container'>
           <div className='text-center mt-5'>
-            <ImageUpload />
+            <ImageUpload image={dataform.image}/>
 
             <h2 className='mt-3'>Food Details</h2>
           </div>
@@ -68,7 +71,7 @@ function EditProduct({ data }) {
                   onChange={(e) => handle(e)}
                   id='Name'
                   type='text'
-                  defaultValue={dataform.Name}
+                  defaultValue={dataform.name}
                   className='form-control'
                   style={{
                     borderRadius: '20px',
@@ -82,7 +85,7 @@ function EditProduct({ data }) {
                   onChange={(e) => handle(e)}
                   id='Category'
                   type='text'
-                  defaultValue={dataform.Category}
+                  defaultValue={dataform.category}
                   className='form-control'
                   style={{
                     borderRadius: '20px',
@@ -96,7 +99,7 @@ function EditProduct({ data }) {
                   onChange={(e) => handle(e)}
                   id='Description'
                   type='text'
-                  defaultValue={dataform.Description}
+                  defaultValue={dataform.note}
                   className='form-control'
                   style={{
                     borderRadius: '20px',
@@ -110,7 +113,7 @@ function EditProduct({ data }) {
                   onChange={(e) => handle(e)}
                   id='Date'
                   type='date'
-                  defaultValue={dataform.Date}
+                  defaultValue={dataform.date}
                   className='form-control'
                   style={{
                     borderRadius: '20px',

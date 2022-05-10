@@ -20,6 +20,8 @@ const Search = (props) => {
       setSortSelect({ field: "date", sort: "asc" });
     } else if (props.dataFilter.sort == "descAdd") {
       setSortSelect({ field: "date", sort: "desc" });
+    }else if(props.dataFilter.sort == "ascDate"){
+      setSortSelect({ field: "date", sort: "asc" });
     }
     ref
       .where("uid", "==", props.data.uid)

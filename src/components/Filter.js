@@ -49,7 +49,12 @@ const Filter = (props) => {
       setClassZa(classDefault);
       setClassNew(classDefault);
       setClassOld(classActive);
-    } else;
+    } else{
+      setClassAz(classDefault);
+      setClassZa(classDefault);
+      setClassNew(classDefault);
+      setClassOld(classDefault);
+    };
   }, [props.dataFilter.sort]);
   // console.log(sortSelect)
   const handleClick_apply = () => {
@@ -76,7 +81,9 @@ const Filter = (props) => {
               <div className="row my-4">
                 <h6 className="col-8 fw-bold pt-2">Filter</h6>
                 <h6 className="col-4">
-                  <Button className={`${styles.btnReset} w-100 fw-bold`}>
+                  <Button className={`${styles.btnReset} w-100 fw-bold`}
+                  onClick={() => setSortSelect("ascDate")}
+                  >
                     Reset
                   </Button>
                 </h6>

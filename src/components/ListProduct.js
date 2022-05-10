@@ -12,6 +12,7 @@ const ListProduct = ({ data, product }) => {
   let group = 'null'
   const [modalOpen, setModalOpen] = useState(false)
   const [modalData, setModalData] = useState({})
+  const [modalIndex, setModalIndex] = useState()
   const toggle = () => setModalOpen(!modalOpen)
   const ref = firebase.firestore().collection('product')
   const [dataProduct, setDataProduct] = useState([])
@@ -108,6 +109,7 @@ const ListProduct = ({ data, product }) => {
             aria-current='true'
             onClick={() => {
               setModalData(item)
+              setModalIndex(index)
               toggle()
             }}
           >
@@ -159,10 +161,11 @@ const ListProduct = ({ data, product }) => {
               </div>
 
               <div className='row py-2'>
-                <NavLink to={`/edit/1`}>
+                <NavLink to={`/edit/${modalIndex}`}>
                   <Button
                     className='w-100 py-3 fw-bold'
                     color='light text-dark'
+
                   >
                     Edit
                   </Button>
