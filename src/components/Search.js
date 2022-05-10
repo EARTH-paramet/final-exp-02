@@ -42,11 +42,11 @@ const Search = (props) => {
               console.log(doc.data());
               if (doc.data().barcode == "") {
               } else {
-                items.push(doc.data());
+                items.push({id: doc.id, value: doc.data()});
                 console.log("items", doc.data());
               }
             });
-
+// console.log("items",items)
             props.dispatch({
               type: "ADD_PRODUCT",
               payload: items,
@@ -77,7 +77,7 @@ const Search = (props) => {
           querySnapshot.forEach((doc) => {
             if (doc.data().barcode == "") {
             } else {
-              items.push(doc.data());
+              items.push({id: doc.id, value: doc.data()});
             }
             console.log("itemsSEARC", doc.data());
           });
@@ -98,7 +98,7 @@ const Search = (props) => {
           querySnapshot.forEach((doc) => {
             if (doc.data().barcode == "") {
             } else {
-              items.push(doc.data());
+              items.push({id: doc.id, value: doc.data()});
             }
             console.log("itemsSEARC", doc.data());
           });
