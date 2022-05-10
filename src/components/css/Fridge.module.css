@@ -37,6 +37,15 @@
   border: none;
 }
 
+.btnDefault:hover {
+  color: black;
+}
+.btnDefault:focus {
+  color: black;
+  background-color: rgba(255, 224, 138, 0.5);
+  border: none;
+  box-shadow: none;
+}
 :root {
   --switch-width: 50px;
   --switch-height: 30px;
