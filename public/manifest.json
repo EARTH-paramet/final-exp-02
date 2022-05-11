@@ -1,6 +1,6 @@
 {
   "short_name": "Exp App",
-  "name": "",
+  "name": "Exp App",
   "icons": [
     {
       "src": "icons.ico",
@@ -19,7 +19,22 @@
     }
   ],
   "start_url": ".",
+  "scope": ".",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#FFE333"
+  "background_color": "#FFE333",
+  "shortcuts": [
+    {
+      "name": "fridge-page",
+      "short_name": "fridge",
+      "url": "/fridge",
+      "icons": [
+        {
+          "src": "logo.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
 }
