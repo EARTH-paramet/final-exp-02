@@ -1,135 +1,132 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { NavLink } from "react-router-dom";
-import { Button, Modal, ModalBody } from "reactstrap";
-import firebase from "../services/firebase";
-import { Timestamp } from "firebase/firestore";
+import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
+import { NavLink } from 'react-router-dom'
+import { Button, Modal, ModalBody } from 'reactstrap'
+import firebase from '../services/firebase'
+import { Timestamp } from 'firebase/firestore'
 
-import styles from "./css/Home.module.css";
+import defaultImg from './assets/default-img-product.jpg'
+import styles from './css/Home.module.css'
 // import "./css/MyBootstrap.css";
 
 const ListProduct = ({ data, product }) => {
-  let group = "null";
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalData, setModalData] = useState({});
-  const [modalIndex, setModalIndex] = useState();
-  const toggle = () => setModalOpen(!modalOpen);
-  const ref = firebase.firestore().collection("product");
-  const [dataProduct, setDataProduct] = useState([]);
+  let group = 'null'
+  const [modalOpen, setModalOpen] = useState(false)
+  const [modalData, setModalData] = useState({})
+  const [modalIndex, setModalIndex] = useState()
+  const toggle = () => setModalOpen(!modalOpen)
+  const ref = firebase.firestore().collection('product')
+  const [dataProduct, setDataProduct] = useState([])
 
   // date format
   const options = {
-    year: "2-digit",
-    month: "2-digit",
-    day: "2-digit",
-  };
+    year: '2-digit',
+    month: '2-digit',
+    day: '2-digit',
+  }
   useEffect(() => {
     ref
-      .where("uid", "==", data.uid)
+      .where('uid', '==', data.uid)
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          console.log("group data=> ", doc.data());
-          group = doc.data().defaultGroup;
-        });
+          console.log('group data=> ', doc.data())
+          group = doc.data().defaultGroup
+        })
         ref
           .doc(data.uid)
           .collection(`group${group}`)
           .onSnapshot((querySnapshot) => {
-            const items = [];
+            const items = []
             querySnapshot.forEach((doc) => {
-              console.log(doc.id);
-              if (doc.data().barcode == "") {
-                items.push("null");
+              console.log(doc.id)
+              if (doc.data().barcode == '') {
+                items.push('null')
               } else {
-                items.push(doc.data());
+                items.push(doc.data())
                 // items.push(doc.data())
-                console.log("items", doc.data());
+                console.log('items', doc.data())
               }
-            });
+            })
 
-            setDataProduct(items);
+            setDataProduct(items)
             // console.log('Output_dataUser', dataUser)
-          });
-      });
-  }, []);
+          })
+      })
+  }, [])
   //   console.log("Output",ref)
   if (dataProduct.length !== 0) {
-    console.log("Output_dataProduct", dataProduct);
+    console.log('Output_dataProduct', dataProduct)
   } else {
-    console.log("null");
+    console.log('null')
   }
   const DateFunc = ({ date, item }) => {
     const timeStampNow = firebase.firestore.Timestamp.fromDate(
       new Date()
-    ).seconds;
-    const dateToday = parseInt(timeStampNow / 86400) * 86400 - 60 * 60 * 7;
-    console.log("date=>", dateToday);
+    ).seconds
+    const dateToday = parseInt(timeStampNow / 86400) * 86400 - 60 * 60 * 7
+    console.log('date=>', dateToday)
     if (date < dateToday) {
       return (
-        <small className="opacity-50 text-nowrap" style={{ color: "red" }}>
+        <small className='opacity-50 text-nowrap' style={{ color: 'red' }}>
           {/* {item.date.toDate().toLocaleString().split(',')[0]} */}
-          {item.date.toDate().toLocaleString("en-AU", options)}
+          {item.date.toDate().toLocaleString('en-AU', options)}
         </small>
-      );
+      )
     } else if (date < dateToday + 86400) {
-      console.log(dateToday + 86400);
-      return <small className="opacity-50 text-nowrap">Today</small>;
+      console.log(dateToday + 86400)
+      return <small className='opacity-50 text-nowrap'>Today</small>
     } else if (date >= dateToday + 86400) {
       return (
-        <small className="opacity-50 text-nowrap">
+        <small className='opacity-50 text-nowrap'>
           {/* {item.date.toDate().toLocaleString().split(',')[0]} */}
-          {item.date.toDate().toLocaleString("en-AU", options)}
+          {item.date.toDate().toLocaleString('en-AU', options)}
         </small>
-      );
+      )
     } else {
-      return <></>;
+      return <></>
     }
-  };
+  }
 
   const TextAddData = () => {
-    if (dataProduct == "null") {
+    if (dataProduct == 'null') {
       return (
         <div className={styles.textCenter}>
           <h1>เพิ่มรายการอาหาร</h1>
         </div>
-      );
+      )
     } else {
-      return <></>;
+      return <></>
     }
-  };
+  }
   return (
-    <div className="container">
+    <div className='container'>
       <TextAddData />
       {product.productData.map((item, index) => (
         <div className={`row my-3 ${styles.boxProduct}`} key={index}>
-          {console.log("log item=>", item.value)}
+          {console.log('log item=>', item.value)}
           <a
-            href="#"
+            href='#'
             className={`list-group-item d-flex gap-3 ${styles.item}`}
-            aria-current="true"
+            aria-current='true'
             onClick={() => {
-              setModalData(item.value);
-              setModalIndex(index);
-              toggle();
+              setModalData(item.value)
+              setModalIndex(index)
+              toggle()
             }}
           >
             <img
-              src={
-                item.value.image
-                  ? item.value.image
-                  : "https://www.suzukijember.com/gallery/gambar_product/default.jpg"
-              }
-              alt="twbs"
-              width="40"
-              height="40"
-              className="rounded-circle flex-shrink-0"
+              src={item.value.image ? item.value.image : defaultImg}
+              alt='twbs'
+              width='40'
+              height='40'
+              className='rounded-circle flex-shrink-0'
             />
             <div
               className={`d-flex w-100 justify-content-between ${styles.itemText}`}
             >
               <div>
-                <p className="mb-0">{item.value.name}</p>
+                <p className='mb-0'>{item.value.name}</p>
               </div>
               {<DateFunc date={item.value.date.seconds} item={item.value} />}
             </div>
@@ -137,45 +134,45 @@ const ListProduct = ({ data, product }) => {
         </div>
       ))}
       <div>
-        <Modal size="xl" isOpen={modalOpen} toggle={() => toggle()}>
+        <Modal size='xl' isOpen={modalOpen} toggle={() => toggle()}>
           <ModalBody>
-            <div className="container">
-              <div className="row my-4">
-                <h6 className="fw-bold col-4">Name :</h6>
-                <h6 className="col-8 text-end">{modalData.name}</h6>
+            <div className='container'>
+              <div className='row my-4'>
+                <h6 className='fw-bold col-4'>Name :</h6>
+                <h6 className='col-8 text-end'>{modalData.name}</h6>
               </div>
-              <div className="row my-4">
-                <h6 className="fw-bold col-4">EXP :</h6>
-                <h6 className="col-8 text-end">
+              <div className='row my-4'>
+                <h6 className='fw-bold col-4'>EXP :</h6>
+                <h6 className='col-8 text-end'>
                   {modalData.date
-                    ? modalData.date.toDate().toLocaleString("en-AU", options)
-                    : ""}
+                    ? modalData.date.toDate().toLocaleString('en-AU', options)
+                    : ''}
                 </h6>
               </div>
-              <div className="row my-4">
-                <h6 className="fw-bold col-5">Category :</h6>
-                <h6 className="col-7 text-end">{modalData.category}</h6>
+              <div className='row my-4'>
+                <h6 className='fw-bold col-5'>Category :</h6>
+                <h6 className='col-7 text-end'>{modalData.category}</h6>
               </div>
-              <div className="row my-4">
-                <h6 className="fw-bold col-5">รายละเอียด :</h6>
-                <h6 className="col-7 text-end">{modalData.note}</h6>
+              <div className='row my-4'>
+                <h6 className='fw-bold col-5'>รายละเอียด :</h6>
+                <h6 className='col-7 text-end'>{modalData.note}</h6>
               </div>
 
-              <div className="row py-2">
+              <div className='row py-2'>
                 <NavLink to={`/edit/${modalIndex}`}>
                   <Button
-                    className="w-100 py-3 fw-bold"
-                    color="light text-dark"
+                    className='w-100 py-3 fw-bold'
+                    color='light text-dark'
                   >
                     Edit
                   </Button>
                 </NavLink>
               </div>
-              <div className="row py-2">
+              <div className='row py-2'>
                 <Button
-                  className="w-100 py-3"
-                  color="warning text-white fw-bold"
-                  style={{ borderRadius: "16px" }}
+                  className='w-100 py-3'
+                  color='warning text-white fw-bold'
+                  style={{ borderRadius: '16px' }}
                 >
                   Remove
                 </Button>
@@ -185,13 +182,13 @@ const ListProduct = ({ data, product }) => {
         </Modal>
       </div>
     </div>
-  );
-};
+  )
+}
 const mapStateToProps = (state) => {
   return {
     data: state.dataUser,
     product: state.dataProduct,
-  };
-};
+  }
+}
 
-export default connect(mapStateToProps)(ListProduct);
+export default connect(mapStateToProps)(ListProduct)

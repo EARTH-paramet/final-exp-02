@@ -5,6 +5,7 @@ import { Button, Modal, ModalBody } from 'reactstrap'
 import firebase from '../services/firebase'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import defaultImg from './assets/default-img-category.jpg'
 import styles from './css/Category.module.css'
 // import './css/MyBootstrap.css'
 
@@ -59,7 +60,7 @@ const ListCategory = ({ data }) => {
             }}
           >
             <img
-              src='https://www.iconbunny.com/icons/media/catalog/product/3/7/3737.4-loaf-of-bread-icon-iconbunny.jpg'
+              src={defaultImg}
               alt='twbs'
               width='64'
               height='64'
