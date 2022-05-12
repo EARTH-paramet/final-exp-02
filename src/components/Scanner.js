@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom'
 
 import AddProduct from './AddProduct'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import styles from './css/AddEditProduct.module.css'
 
 const Scanner = (props) => {
   const [checked, setChecked] = useState('Not_Found')
@@ -24,8 +25,9 @@ const Scanner = (props) => {
   }
   if (checked == 'Not_Found') {
     return (
-      <div style={{ backgroundColor: '#fff', height: '100vh' }}>
-        <header>
+      // <div style={{ backgroundColor: '#fff', height: '100vh' }}>
+      <div>
+        <header className={styles.navbar}>
           <div className='container'>
             <div className='row pt-3'>
               <div className='col-2 py-1'>
@@ -46,13 +48,14 @@ const Scanner = (props) => {
             </div>
           </div>
         </header>
-        <section>
+        <section className={styles.SectionForm}>
           <div className='container'>
-            <div className='row bg-white m-2 mt-5 p-3'>
-              <div className='px-0'>
+            {/* <div className='row bg-white m-2 mt-5 p-3'> */}
+            <div className='row'>
+              <div className={styles.boxscan}>
                 <BarcodeScannerComponent
-                  width={'100%'}
-                  height={'100%'}
+                  // width={'100%'}
+                  // height={'100%'}
                   onUpdate={(err, result) => {
                     if (result) {
                       props.master.masterProduct.map((val) => {
@@ -68,14 +71,12 @@ const Scanner = (props) => {
                   }}
                 />
               </div>
-
               {/* <p>{data}</p> */}
             </div>
 
-            {/* <div className='bg-success row'>
-              <div className='col'>GGGG</div>
-              <div className='col'>GGGG</div>
-            </div> */}
+            <div className='row'>
+              <div className='col text-center'>ข้อความแนะนำ</div>
+            </div>
           </div>
 
           {/* <div className='bg-success row'>
@@ -95,7 +96,7 @@ const Scanner = (props) => {
   } else if (checked == 'New_Data') {
     return (
       <div>
-        <h1>ไม่มีข้อมูลเก่า สร้างใหม่เลย</h1>
+        {/* <h1>ไม่มีข้อมูลเก่า สร้างใหม่เลย</h1> */}
         <AddProduct />
       </div>
     )

@@ -1,3 +1,28 @@
+.navbar {
+  overflow: hidden;
+  background-color: rgb(255, 255, 255);
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  width: 100%;
+  padding: 10px 10px 0px 10px;
+}
+
+.SectionForm {
+  /* padding: 16px; */
+  margin-top: 65px;
+  margin-bottom: 100px;
+}
+
+.boxscan {
+  /* width: 100vw; */
+  height: 50vh;
+  text-align: center;
+}
+
+.boxscan video {
+  object-fit: cover;
+}
 .wrapper {
   display: inline-block;
   position: relative;
