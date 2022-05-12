@@ -155,7 +155,12 @@ const ListProduct = ({ data, product }) => {
               </div>
               <div className='row my-4'>
                 <h6 className='fw-bold col-5'>รายละเอียด :</h6>
-                <h6 className='col-7 text-end'>{modalData.note}</h6>
+                <div
+                  className='col-7 text-end'
+                  style={{ wordWrap: 'break-word' }}
+                >
+                  <h6 className='text-start'>{modalData.note}</h6>
+                </div>
               </div>
 
               <div className='row py-2'>
