@@ -7,7 +7,10 @@ import SvgFridge from './SvgFridge'
 
 export default function NavBottomBar() {
   return (
-    <div className={styles.bottomAppbar}>
+    <div
+      className={styles.bottomAppbar}
+      onContextMenu={(e) => e.preventDefault()}
+    >
       <div className={styles.tabs}>
         <div className={`${styles.tab} ${styles.tabLeft}`}>
           <div className='row'>
