@@ -26,7 +26,7 @@ const Scanner = (props) => {
   }
   if (checked == 'Not_Found') {
     return (
-      <div style={{ backgroundColor: '#000', height: '100vh' }}>
+      <div style={{ backgroundColor: '#000', height: '100vh', color: '#fff' }}>
         {/* <div> */}
         <header className={styles.navbar}>
           <div className='container'>
@@ -36,6 +36,7 @@ const Scanner = (props) => {
                   <FontAwesomeIcon
                     icon='fa-solid fa-arrow-left-long'
                     size='xl'
+                    style={{ color: '#fff' }}
                   />
                 </NavLink>
               </div>
@@ -100,7 +101,7 @@ const Scanner = (props) => {
             </div>
 
             <div className='row'>
-              <div className='col text-center'>ข้อความแนะนำ</div>
+              <div className='col text-center text-white'>ข้อความแนะนำ</div>
             </div>
           </div>
 

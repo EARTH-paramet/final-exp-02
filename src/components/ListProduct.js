@@ -139,11 +139,13 @@ const ListProduct = ({ data, product }) => {
             <div className='container'>
               <div className='row my-4'>
                 <h6 className='fw-bold col-4'>Name :</h6>
-                <h6 className='col-8 text-end'>{modalData.name}</h6>
+                <h6 className={`col-8 text-end ${styles.textStyle}`}>
+                  {modalData.name}
+                </h6>
               </div>
               <div className='row my-4'>
                 <h6 className='fw-bold col-4'>EXP :</h6>
-                <h6 className='col-8 text-end'>
+                <h6 className={`col-8 text-end ${styles.textStyle}`}>
                   {modalData.date
                     ? modalData.date.toDate().toLocaleString('en-AU', options)
                     : ''}
@@ -151,15 +153,19 @@ const ListProduct = ({ data, product }) => {
               </div>
               <div className='row my-4'>
                 <h6 className='fw-bold col-5'>Category :</h6>
-                <h6 className='col-7 text-end'>{modalData.category}</h6>
+                <h6 className={`col-7 text-end ${styles.textStyle}`}>
+                  {modalData.category}
+                </h6>
               </div>
               <div className='row my-4'>
-                <h6 className='fw-bold col-5'>รายละเอียด :</h6>
+                <h6 className='fw-bold col-12'>รายละเอียด :</h6>
                 <div
-                  className='col-7 text-end'
+                  className='col-12 text-end'
                   style={{ wordWrap: 'break-word' }}
                 >
-                  <h6 className='text-start'>{modalData.note}</h6>
+                  <h6 className={`text-start ${styles.textStyle}`}>
+                    {modalData.note}
+                  </h6>
                 </div>
               </div>
 
