@@ -1,0 +1,143 @@
+.navbar {
+  overflow: hidden;
+  background-color: rgb(255, 255, 255);
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  width: 100%;
+  padding: 10px 10px 0px 10px;
+}
+.SectionForm {
+  /* padding: 16px; */
+  margin-top: 65px;
+  margin-bottom: 100px;
+}
+
+.boxscan {
+  /* width: 100vw; */
+  height: 50vh;
+  text-align: center;
+}
+
+.boxscan video {
+  object-fit: cover;
+}
+
+/* .ocrloader p::before {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #18c89b;
+  position: relative;
+  right: 4px;
+}
+.ocrloader p {
+  color: #18c89b;
+  position: absolute;
+  bottom: -30px;
+  left: 38%;
+  font-size: 16px;
+  font-weight: 600;
+  animation: blinker 1.5s linear infinite;
+  font-family: sans-serif;
+  text-transform: uppercase;
+} */
+/* .square {
+  width: 50%;
+}
+.square:after {
+  content: '';
+  display: block;
+  padding-bottom: 100%;
+} */
+.ocrloader video {
+  object-fit: cover;
+}
+.ocrloader {
+  /* width: 100vw; */
+  height: 50vh;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  top: 20%;
+  backface-visibility: hidden;
+}
+
+/* .ocrloader span {
+  position: absolute;
+  left: 35px;
+  top: 0;
+  width: 85%;
+  height: 5px;
+  background-color: #18c89b;
+  box-shadow: 0 0 10px 1px #18c89b, 0 0 1px 1px #18c89b;
+  z-index: 1;
+  transform: translateY(95px);
+  animation: move 1.7s cubic-bezier(0.15, 0.54, 0.76, 0.74);
+  animation-iteration-count: infinite;
+} */
+
+.ocrloader:before,
+.ocrloader:after,
+.ocrloader em:after,
+.ocrloader em:before {
+  margin: 20px;
+  border-color: #ffffff;
+  /* border-color: #fccf50; */
+  content: '';
+  position: absolute;
+  width: 45px;
+  height: 46px;
+  border-style: solid;
+  border-width: 0px;
+}
+.ocrloader:before {
+  left: 0;
+  top: 0;
+  border-left-width: 5px;
+  border-top-width: 5px;
+  border-radius: 5px 0 0 0;
+}
+.ocrloader:after {
+  right: 0;
+  top: 0;
+  border-right-width: 5px;
+  border-top-width: 5px;
+  border-radius: 0 5px 0 0;
+}
+.ocrloader em:before {
+  left: 0;
+  bottom: 0;
+  border-left-width: 5px;
+  border-bottom-width: 5px;
+  border-radius: 0 0 0 5px;
+}
+.ocrloader em:after {
+  right: 0;
+  bottom: 0;
+  border-right-width: 5px;
+  border-bottom-width: 5px;
+  border-radius: 0 0 5px 0;
+}
+/* 
+@keyframes move {
+  0%,
+  100% {
+    transform: translateY(190px);
+  }
+  50% {
+    transform: translateY(0%);
+  }
+  75% {
+    transform: translateY(160px);
+  }
+} */
+/* 
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+} */

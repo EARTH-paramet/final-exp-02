@@ -14,15 +14,6 @@
   margin-bottom: 100px;
 }
 
-.boxscan {
-  /* width: 100vw; */
-  height: 50vh;
-  text-align: center;
-}
-
-.boxscan video {
-  object-fit: cover;
-}
 .wrapper {
   display: inline-block;
   position: relative;

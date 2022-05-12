@@ -6,7 +6,8 @@ import { NavLink } from 'react-router-dom'
 
 import AddProduct from './AddProduct'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styles from './css/AddEditProduct.module.css'
+// import styles from './css/AddEditProduct.module.css'
+import styles from './css/Scanner.module.css'
 
 const Scanner = (props) => {
   const [checked, setChecked] = useState('Not_Found')
@@ -25,8 +26,8 @@ const Scanner = (props) => {
   }
   if (checked == 'Not_Found') {
     return (
-      // <div style={{ backgroundColor: '#fff', height: '100vh' }}>
-      <div>
+      <div style={{ backgroundColor: '#000', height: '100vh' }}>
+        {/* <div> */}
         <header className={styles.navbar}>
           <div className='container'>
             <div className='row pt-3'>
@@ -51,7 +52,7 @@ const Scanner = (props) => {
         <section className={styles.SectionForm}>
           <div className='container'>
             {/* <div className='row bg-white m-2 mt-5 p-3'> */}
-            <div className='row'>
+            {/* <div className='row'>
               <div className={styles.boxscan}>
                 <BarcodeScannerComponent
                   // width={'100%'}
@@ -71,7 +72,31 @@ const Scanner = (props) => {
                   }}
                 />
               </div>
-              {/* <p>{data}</p> */}
+            </div> */}
+            <div className='row'>
+              <div className={styles.ocrloader}>
+                {/* <p>Scanning</p> */}
+                <em>
+                  <BarcodeScannerComponent
+                    // width={'100%'}
+                    // height={'100%'}
+                    onUpdate={(err, result) => {
+                      if (result) {
+                        props.master.masterProduct.map((val) => {
+                          if (val.barcode == result.text) {
+                            setChecked('Master_Data')
+                            setData(result.text)
+                          } else {
+                            setChecked('New_Data')
+                            setData(result.text)
+                          }
+                        })
+                      } else setData('Not Found')
+                    }}
+                  />
+                </em>
+                <span></span>
+              </div>
             </div>
 
             <div className='row'>
