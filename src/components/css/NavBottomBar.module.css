@@ -3,10 +3,23 @@
       background-color: rgb(255, 4, 4);
     }
 } */
-
+.boxbar {
+  background: linear-gradient(180deg, #ffffff00 2%, #ffffff 12%);
+  /* border: 1px solid #ffe087; */
+  height: 95px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+}
 .bottomAppbar {
-  /* width: 100vw; */
-  background-color: white;
+  /* width: 10vw; */
+  /* background-image: linear-gradient(#ffffff 1%, #ffffff 20%); */
+  /* background-image: linear-gradient(#ffffff, #ffffff);
+  background-repeat: no-repeat;
+  background-size: 100vw 68px;
+  background-position: center bottom; */
   height: 70px;
   position: fixed;
   bottom: 0;
