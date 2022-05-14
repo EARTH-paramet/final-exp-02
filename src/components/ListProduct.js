@@ -17,6 +17,7 @@ const ListProduct = ({ data, product }) => {
   const toggle = () => setModalOpen(!modalOpen)
   const ref = firebase.firestore().collection('product')
   const [dataProduct, setDataProduct] = useState([])
+  const [loading, setLoading] = useState(false)
 
   // date format
   const options = {
@@ -30,7 +31,7 @@ const ListProduct = ({ data, product }) => {
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          console.log('group data=> ', doc.data())
+          // console.log('group data=> ', doc.data())
           group = doc.data().defaultGroup
         })
         ref
@@ -39,13 +40,13 @@ const ListProduct = ({ data, product }) => {
           .onSnapshot((querySnapshot) => {
             const items = []
             querySnapshot.forEach((doc) => {
-              console.log(doc.id)
+              // console.log(doc.id)
               if (doc.data().barcode == '') {
                 items.push('null')
               } else {
                 items.push(doc.data())
                 // items.push(doc.data())
-                console.log('items', doc.data())
+                // console.log('items', doc.data())
               }
             })
 
@@ -55,11 +56,11 @@ const ListProduct = ({ data, product }) => {
       })
   }, [])
   //   console.log("Output",ref)
-  if (dataProduct.length !== 0) {
-    console.log('Output_dataProduct', dataProduct)
-  } else {
-    console.log('null')
-  }
+  // if (dataProduct.length !== 0) {
+  //   console.log('Output_dataProduct', dataProduct)
+  // } else {
+  //   console.log('null')
+  // }
   const DateFunc = ({ date, item }) => {
     const timeStampNow = firebase.firestore.Timestamp.fromDate(
       new Date()
@@ -101,10 +102,11 @@ const ListProduct = ({ data, product }) => {
   }
   return (
     <div className='container'>
-      <TextAddData />
+      {product.productData?(<div>
+        <TextAddData />
       {product.productData.map((item, index) => (
         <div className={`row my-3 ${styles.boxProduct}`} key={index}>
-          {console.log('log item=>', item.value)}
+          { console.log("item.value.date.seconds",item.value)}
           <a
             href='#'
             className={`list-group-item d-flex gap-3 ${styles.item}`}
@@ -128,7 +130,7 @@ const ListProduct = ({ data, product }) => {
               <div>
                 <p className='mb-0'>{item.value.name}</p>
               </div>
-              {<DateFunc date={item.value.date.seconds} item={item.value} />}
+              <DateFunc date={item.value.date.seconds} item={item.value} />
             </div>
           </a>
         </div>
@@ -192,6 +194,9 @@ const ListProduct = ({ data, product }) => {
           </ModalBody>
         </Modal>
       </div>
+      </div>):(<div>
+        LOADING
+      </div>)}
     </div>
   )
 }

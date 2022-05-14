@@ -28,7 +28,7 @@ const Search = (props) => {
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          console.log(doc.data());
+          console.log("search group=> ",doc.data());
           setGroup(doc.data().defaultGroup)
         });
 
@@ -39,14 +39,18 @@ const Search = (props) => {
           .onSnapshot((querySnapshot) => {
             const items = [];
             querySnapshot.forEach((doc) => {
-              console.log(doc.data());
+              console.log("search item=> ",doc.data());
               if (doc.data().barcode == "") {
-              } else {
+              }
+              else if(doc.data().date == null){
+              }
+               else {
                 items.push({id: doc.id, value: doc.data()});
-                console.log("items", doc.data());
+                console.log("search add items", doc.data());
               }
             });
 // console.log("items",items)
+console.log("TOTAL=> ",items)
             props.dispatch({
               type: "ADD_PRODUCT",
               payload: items,

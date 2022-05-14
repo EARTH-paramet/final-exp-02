@@ -11,9 +11,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from './css/AddEditProduct.module.css'
 
 import ImageUpload from './input/ImageUpload'
+import { Timestamp } from 'firebase/firestore'
 
 function AddProduct(props) {
-  // let navigate = useNavigate()
+  let navigate = useNavigate()
   // const [editData, setEditData] = useState(
   //   props.data.productData[useParams().id]
   // )
@@ -23,104 +24,109 @@ function AddProduct(props) {
   //   'editData',
   //   editData.value.date.toDate().toLocaleString('en-CA').split(',')[0]
   // )
-  // const [urlUpload, setUrlUpload, urlUploadRef] = useStateRef(
-  //   editData.value.image
-  // )
+  const [urlUpload, setUrlUpload, urlUploadRef] = useStateRef("")
   const [dataform, setDataform, dataformRef] = useStateRef({
     id: '',
-    barcode: '',
+    barcode: props.barcode,
     category: '',
     date: '',
     image: '',
     name: '',
     note: '',
   })
-  // const dateName = Date.now()
-  // const [image, setImage] = useState(null)
+  const dateName = Date.now()
+  const [image, setImage] = useState(null)
   const [imageDefault, setImageDefault] = useState(
     'https://via.placeholder.com/140'
   )
-  // const [group, setGroup, groupRef] = useStateRef('null')
-  // const ref = firebase.firestore().collection('product')
+  const [group, setGroup, groupRef] = useStateRef('null')
+  const ref = firebase.firestore().collection('product')
 
-  // useEffect(() => {
-  //   console.log(imageDefault)
-  //   if (dataform.image) {
-  //     setImageDefault(dataform.image)
-  //   } else {
-  //     console.log('image not found')
-  //   }
+  useEffect(() => {
+    console.log(imageDefault)
+    console.log(String(Timestamp.fromDate(new Date()).seconds))
+    // if (dataform.image) {
+    //   setImageDefault(dataform.image)
+    // } else {
+    //   console.log('image not found')
+    // }
 
-  //   ref
-  //     .where('uid', '==', props.dataUser.uid)
-  //     .get()
-  //     .then((querySnapshot) => {
-  //       querySnapshot.forEach((doc) => {
-  //         console.log(doc.data())
-  //         setGroup(doc.data().defaultGroup)
-  //       })
-  //     })
+    ref
+      .where('uid', '==', props.dataUser.uid)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log(doc.data())
+          setGroup(doc.data().defaultGroup)
+        })
+      })
 
-  //   console.log('id', dataform.id)
-  // }, [])
+    // console.log('id', dataform.id)
+  }, [])
 
-  // const handleChange = (e) => {
-  //   if (e.target.files[0]) {
-  //     setImage(e.target.files[0])
-  //   }
-  // }
-  // const updateUrlImage = () => {
-  //   ref
-  //     .doc(props.dataUser.uid)
-  //     .collection(`group${groupRef.current}`)
-  //     .doc(dataform.id)
-  //     .set({
-  //       barcode: dataformRef.current.barcode,
-  //       category: dataformRef.current.category,
-  //       date: editData.value.date,
-  //       image: urlUploadRef.current,
-  //       name: dataformRef.current.name,
-  //       note: dataformRef.current.note,
-  //     })
-  //   navigate('/')
-  // }
-  // const handleClick = () => {
-  //   if (image) {
-  //     const uploadTask = storage
-  //       .ref(`product/images/${dateName + image.name}`)
-  //       .put(image)
-  //     uploadTask.on(
-  //       'state_changed',
-  //       (snapshot) => {},
-  //       (error) => {
-  //         console.log(error)
-  //       },
-  //       () => {
-  //         storage
-  //           .ref('product/images')
-  //           .child(`${dateName + image.name}`)
-  //           .getDownloadURL()
-  //           .then((url) => {
-  //             console.log('url', url)
-  //             setUrlUpload(url)
-  //             updateUrlImage()
-  //           })
-  //       }
-  //     )
-  //   } else {
-  //     updateUrlImage()
-  //   }
-  // }
-  // if (image) {
-  //   console.log('image', URL.createObjectURL(image))
-  // }
+  const handleChange = (e) => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0])
+    }
+  }
+  const updateFirebase = () => {
+    ref
+      .doc(props.dataUser.uid)
+      .collection(`group${groupRef.current}`)
+      .doc(String(Timestamp.fromDate(new Date()).seconds))
+      .set({
+        barcode: dataformRef.current.barcode,
+        category: dataformRef.current.category,
+        date: dataformRef.current.date,
+        image: urlUploadRef.current,
+        name: dataformRef.current.name,
+        note: dataformRef.current.note,
+      })
+    navigate('/')
+  }
+  const handleClick = () => {
+    if (image) {
+      const uploadTask = storage
+        .ref(`product/images/${dateName + image.name}`)
+        .put(image)
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {},
+        (error) => {
+          console.log(error)
+        },
+        () => {
+          storage
+            .ref('product/images')
+            .child(`${dateName + image.name}`)
+            .getDownloadURL()
+            .then((url) => {
+              console.log('url', url)
+              setUrlUpload(url)
+              updateFirebase()
+            })
+        }
+      )
+    } else {
+      updateFirebase()
+    }
+  }
+  if (image) {
+    console.log('image', URL.createObjectURL(image))
+  }
 
   const handle = (e) => {
-    const newdata = { ...dataform }
-    newdata[e.target.id] = e.target.value
-    setDataform(newdata)
-    console.log('newdata', newdata)
-  }
+    const newdata = { ...dataform };
+    if(e.target.id == "date"){
+      newdata[e.target.id] = Timestamp.fromDate(new Date(e.target.value))
+      console.log(Timestamp.fromDate(new Date(e.target.value)))
+    }else{
+      newdata[e.target.id] = e.target.value;
+    }
+    
+    setDataform(newdata);
+    console.log("newdata=> ", newdata);
+  };
 
   return (
     <>
@@ -150,7 +156,7 @@ function AddProduct(props) {
               <div class={`rounded-circle ${styles.btnimg}`}>
                 <img
                   src={
-                    // image ? URL.createObjectURL(image) :
+                    image ? URL.createObjectURL(image) :
                     imageDefault
                   }
                   alt='upload'
@@ -162,7 +168,7 @@ function AddProduct(props) {
               <input
                 type='file'
                 accept='image/*'
-                //  onChange={handleChange}
+                 onChange={handleChange}
               />
             </div>
 
@@ -232,7 +238,7 @@ function AddProduct(props) {
                 className='w-100 py-3'
                 color='warning text-white'
                 style={{ borderRadius: '16px' }}
-                // onClick={handleClick}
+                onClick={handleClick}
               >
                 Add New Porduct
               </Button>
