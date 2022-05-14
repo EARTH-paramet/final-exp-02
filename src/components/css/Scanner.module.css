@@ -22,6 +22,7 @@
 
 .boxscan video {
   object-fit: cover;
+  border-radius: 250px;
 }
 
 /* .ocrloader p::before {
@@ -101,6 +102,8 @@
   border-left-width: 5px;
   border-top-width: 5px;
   border-radius: 5px 0 0 0;
+  animation: move_topleft 1.7s cubic-bezier(0.15, 0.54, 0.76, 0.74);
+  animation-iteration-count: infinite;
 }
 .ocrloader:after {
   right: 0;
@@ -108,6 +111,8 @@
   border-right-width: 5px;
   border-top-width: 5px;
   border-radius: 0 5px 0 0;
+  animation: move_topright 1.7s cubic-bezier(0.15, 0.54, 0.76, 0.74);
+  animation-iteration-count: infinite;
 }
 .ocrloader em:before {
   left: 0;
@@ -115,6 +120,8 @@
   border-left-width: 5px;
   border-bottom-width: 5px;
   border-radius: 0 0 0 5px;
+  animation: move_bottomleft 1.7s cubic-bezier(0.15, 0.54, 0.76, 0.74);
+  animation-iteration-count: infinite;
 }
 .ocrloader em:after {
   right: 0;
@@ -122,6 +129,45 @@
   border-right-width: 5px;
   border-bottom-width: 5px;
   border-radius: 0 0 5px 0;
+  animation: move_bottomright 1.7s cubic-bezier(0.15, 0.54, 0.76, 0.74);
+  animation-iteration-count: infinite;
+}
+
+@keyframes move_topleft {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translate(20px, 20px);
+  }
+}
+@keyframes move_topright {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translate(-20px, 20px);
+  }
+}
+@keyframes move_bottomleft {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translate(20px, -20px);
+  }
+}
+@keyframes move_bottomright {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translate(-20px, -20px);
+  }
 }
 /* 
 @keyframes move {
@@ -140,5 +186,47 @@
 @keyframes blinker {
   50% {
     opacity: 0;
+  }
+} */
+
+.description {
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  bottom: 20%;
+}
+/* 
+.popupAddProduct {
+  height: 50px;
+  width: 200px;
+  background-color: #8c8c8c;
+  border-radius: 25px;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  bottom: 10%;
+  animation: animatebottom 0.4s;
+}
+
+.popupAddProduct > .center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+@keyframes animatebottom {
+  from {
+    bottom: -300px;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 1;
   }
 } */

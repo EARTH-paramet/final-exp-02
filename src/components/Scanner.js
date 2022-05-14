@@ -3,7 +3,6 @@ import BarcodeScannerComponent from 'react-qr-barcode-scanner'
 import { useState } from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-
 import AddProduct from './AddProduct'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import styles from './css/AddEditProduct.module.css'
@@ -101,14 +100,22 @@ const Scanner = (props) => {
             </div>
 
             <div className='row'>
-              <div className='col text-center text-white'>ข้อความแนะนำ</div>
+              <div
+                className={`col text-center text-white ${styles.description}`}
+              >
+                <FontAwesomeIcon icon='fa-solid fa-camera' /> point your camera
+                at barcode
+              </div>
             </div>
           </div>
 
-          {/* <div className='bg-success row'>
-              <div className='col'>GGGG</div>
-              <div className='col'>GGGG</div>
-            </div> */}
+          {/* {checked == 'New_Data' ? (
+          <div className='row'>
+            <div className={styles.popupAddProduct}>
+              <div className={`col-12 ${styles.center}`}>ไปเพิ่มข้อมูล</div>
+            </div>
+          </div>
+        ) : checked == 'Master_Data' ? null : null} */}
         </section>
       </div>
     )
@@ -122,7 +129,7 @@ const Scanner = (props) => {
   } else if (checked == 'New_Data') {
     return (
       <div>
-        {/* <h1>ไม่มีข้อมูลเก่า สร้างใหม่เลย</h1> */}
+        <h1>ไม่มีข้อมูลเก่า สร้างใหม่เลย</h1>
         <AddProduct />
       </div>
     )
