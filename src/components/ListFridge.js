@@ -163,6 +163,10 @@ const ListFridge = (props) => {
                       defaultGroup: `${modalData.group}`,
                       uid: props.data.uid,
                     })
+                    props.dispatch({
+                      type: "ADD_PRODUCT",
+                      payload: [],
+                    });
                     setEdit(!edit)
                     toggle()
                   }}

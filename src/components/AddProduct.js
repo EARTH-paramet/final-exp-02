@@ -152,8 +152,8 @@ function AddProduct(props) {
         <div className='container'>
           <div className='text-center mt-5'>
             {/* image Upload */}
-            <div class={styles.wrapper}>
-              <div class={`rounded-circle ${styles.btnimg}`}>
+            <div className={styles.wrapper}>
+              <div className={`rounded-circle ${styles.btnimg}`}>
                 <img
                   src={
                     image ? URL.createObjectURL(image) :

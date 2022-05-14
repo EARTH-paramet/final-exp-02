@@ -4,7 +4,8 @@ import { NavLink } from 'react-router-dom'
 import { signInWithGoogle, auth } from '../services/firebase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from './css/Profile.module.css'
-
+import firebase from '../services/firebase'
+import { doc, deleteDoc } from "firebase/firestore";
 import NavBottomBar from './navigation/NavBottomBar'
 
 const Profile = (props) => {
@@ -90,6 +91,39 @@ const Profile = (props) => {
         >
           <button className='btn btn-outline-danger m-3'>sign out</button>
         </NavLink>
+        <button className='btn btn-outline-warning m-3' onClick={()=>{
+          const ref = firebase.firestore().collection('product')
+          var group ;
+          ref
+          .where('uid', '==', props.data.uid)
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              // console.log('group data=> ', doc.data())
+              group = doc.data().defaultGroup
+            })
+          ref
+          .doc(props.data.uid)
+          .collection(`group${group}`)
+          .onSnapshot((querySnapshot) => {
+            const items = []
+            querySnapshot.forEach((doc) => {
+              
+                items.push(doc.data())
+              
+                if(doc.data().barcode==""){
+                }else{
+                  ref.doc(props.data.uid).collection(`group${group}`).doc(doc.id).delete();
+                console.log(doc.data())
+                }
+              
+            })
+            // setDataProduct(items)
+            // console.log('Output_dataUser', dataUser)
+          })
+        })
+       
+        }}>delete product</button>
       </section>
       {/* <footer>
         <NavBottomBar />
