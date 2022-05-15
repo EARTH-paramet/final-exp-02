@@ -15,11 +15,11 @@ const initialState = {
         // }
     ],
     masterProduct: [
-        {
-            barcode: "9770012345673",
-            name: "coke",
-            category: "water",
-        },
+        // {
+        //     barcode: "9770012345673",
+        //     name: "coke",
+        //     category: "water",
+        // },
     ],
 };
 export default (state = initialState, action) => {
@@ -29,6 +29,11 @@ export default (state = initialState, action) => {
                 ...state,
                 productData: action.payload,
             };
+            case "ADD_MASTER_PRODUCT":
+                return {
+                    ...state,
+                    masterProduct: action.payload,
+                };
         case "CHECK_PRODUCT":
             return {
                 ...state,

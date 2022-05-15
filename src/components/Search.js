@@ -17,9 +17,9 @@ const Search = (props) => {
     } else if (props.dataFilter.sort == "descName") {
       setSortSelect({ field: "name", sort: "desc" });
     } else if (props.dataFilter.sort == "ascAdd") {
-      setSortSelect({ field: "date", sort: "asc" });
+      setSortSelect({ field: "dateCreate", sort: "desc" });
     } else if (props.dataFilter.sort == "descAdd") {
-      setSortSelect({ field: "date", sort: "desc" });
+      setSortSelect({ field: "dateCreate", sort: "asc" });
     }else if(props.dataFilter.sort == "ascDate"){
       setSortSelect({ field: "date", sort: "asc" });
     }
@@ -32,6 +32,7 @@ const Search = (props) => {
           setGroup(doc.data().defaultGroup)
         });
 
+        // QRY: PRODUCT DATA
         ref
           .doc(props.data.uid)
           .collection(`group${groupRef.current}`)
@@ -49,13 +50,37 @@ const Search = (props) => {
                 console.log("search add items", doc.data());
               }
             });
-// console.log("items",items)
-console.log("TOTAL=> ",items)
+    console.log("TOTAL=> ",items)
             props.dispatch({
               type: "ADD_PRODUCT",
               payload: items,
             });
           });
+
+          // QRY: MASTER PRODUCT DATA
+          ref
+          .doc(props.data.uid)
+          .collection("masterProduct")
+          // .orderBy("barcode")
+          .onSnapshot((querySnapshot) => {
+            const items = [];
+            querySnapshot.forEach((doc) => {
+              console.log("search item=> ",doc.data());
+              // if (doc.data().barcode == "") {
+              //   console.log("MASTER",doc.data())
+              // }
+              //  else {
+                items.push({id: doc.id, value: doc.data()});
+                console.log("search add Master items", doc.data());
+              // }
+            });
+    console.log("TOTAL=> ",items)
+            props.dispatch({
+              type: "ADD_MASTER_PRODUCT",
+              payload: items,
+            });
+          });
+
       });
   }, [props.dataFilter.sort]);
 

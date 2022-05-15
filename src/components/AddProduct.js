@@ -24,12 +24,14 @@ function AddProduct(props) {
   //   'editData',
   //   editData.value.date.toDate().toLocaleString('en-CA').split(',')[0]
   // )
-  const [urlUpload, setUrlUpload, urlUploadRef] = useStateRef("")
+  const [urlUpload, setUrlUpload, urlUploadRef] = useStateRef()
+  const [createMaster, setCreateMaster, createMasterRef] = useStateRef(false)
   const [dataform, setDataform, dataformRef] = useStateRef({
     id: '',
     barcode: props.barcode,
     category: '',
     date: '',
+    dateCreate:'',
     image: '',
     name: '',
     note: '',
@@ -43,6 +45,25 @@ function AddProduct(props) {
   const ref = firebase.firestore().collection('product')
 
   useEffect(() => {
+    console.log("props.masterProduct",props.masterProduct)
+    if(!props.masterProduct){
+      setCreateMaster(true)
+    }else{
+      setImageDefault(props.masterProduct.image)
+      setDataform(
+        {
+          id: '',
+          barcode: props.masterProduct.barcode,
+          category: props.masterProduct.category,
+          date: '',
+          dateCreate:'',
+          image: props.masterProduct.image,
+          name: props.masterProduct.name,
+          note: '',
+        }
+      )
+      setCreateMaster(false)
+    }
     console.log(imageDefault)
     console.log(String(Timestamp.fromDate(new Date()).seconds))
     // if (dataform.image) {
@@ -78,10 +99,27 @@ function AddProduct(props) {
         barcode: dataformRef.current.barcode,
         category: dataformRef.current.category,
         date: dataformRef.current.date,
-        image: urlUploadRef.current,
+        dateCreate: Timestamp.fromDate(new Date()),
+        image: urlUploadRef.current ? urlUploadRef.current : dataformRef.current.image,
         name: dataformRef.current.name,
         note: dataformRef.current.note,
       })
+   
+    if(createMasterRef.current){
+      ref
+      .doc(props.dataUser.uid)
+      .collection("masterProduct")
+      .doc(String(Timestamp.fromDate(new Date()).seconds))
+      .set({
+        barcode: dataformRef.current.barcode,
+        category: dataformRef.current.category,
+        // date: dataformRef.current.date,
+        dateCreate: Timestamp.fromDate(new Date()),
+        image: urlUploadRef.current,
+        name: dataformRef.current.name,
+        // note: dataformRef.current.note,
+      })
+    }else;
     navigate('/')
   }
   const handleClick = () => {
