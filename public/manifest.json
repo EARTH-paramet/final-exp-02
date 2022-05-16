@@ -32,8 +32,13 @@
       "icons": [
         {
           "src": "AddProduct.png",
-          "sizes": "512x512",
-          "type": "image/png"
+          "type": "image/png",
+          "sizes": "192x192"
+        },
+        {
+          "src": "AddProduct.png",
+          "type": "image/png",
+          "sizes": "512x512"
         }
       ]
     }
