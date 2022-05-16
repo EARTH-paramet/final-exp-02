@@ -26,13 +26,13 @@
   "background_color": "#FFE333",
   "shortcuts": [
     {
-      "name": "fridge-page",
-      "short_name": "fridge",
-      "url": "/fridge",
+      "name": "Add product",
+      "short_name": "add-product",
+      "url": "/scan",
       "icons": [
         {
-          "src": "logo.png",
-          "sizes": "192x192",
+          "src": "AddProduct.png",
+          "sizes": "512x512",
           "type": "image/png"
         }
       ]

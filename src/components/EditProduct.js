@@ -256,6 +256,7 @@ function EditProduct(props) {
                 </select> */}
                 <Select
                   styles={customStyles}
+                  isSearchable={false}
                   options={options}
                   // defaultValue={{ value: 'Meat', label: 'Meat' }}
                   defaultValue={options.filter(

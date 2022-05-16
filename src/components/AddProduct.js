@@ -292,6 +292,7 @@ function AddProduct(props) {
                 </select> */}
                 <Select
                   styles={customStyles}
+                  isSearchable={false}
                   options={options}
                   defaultValue={options.filter(
                     ({ value }) => value === dataform.category
