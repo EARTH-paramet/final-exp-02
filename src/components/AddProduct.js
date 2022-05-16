@@ -7,8 +7,11 @@ import firebase from '../services/firebase'
 import { storage } from '../services/firebase'
 import { useNavigate } from 'react-router-dom'
 import useStateRef from 'react-usestateref'
+import Select from 'react-select'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from './css/AddEditProduct.module.css'
+import defaultImg from './assets/default-img-product.jpg'
 
 import ImageUpload from './input/ImageUpload'
 import { Timestamp } from 'firebase/firestore'
@@ -30,38 +33,34 @@ function AddProduct(props) {
     id: '',
     barcode: props.barcode,
     category: '',
-    date: '',
-    dateCreate:'',
+    date: new Date().toLocaleString('en-CA').split(',')[0],
+    dateCreate: '',
     image: '',
     name: '',
     note: '',
   })
   const dateName = Date.now()
   const [image, setImage] = useState(null)
-  const [imageDefault, setImageDefault] = useState(
-    'https://via.placeholder.com/140'
-  )
+  const [imageDefault, setImageDefault] = useState(defaultImg)
   const [group, setGroup, groupRef] = useStateRef('null')
   const ref = firebase.firestore().collection('product')
 
   useEffect(() => {
-    console.log("props.masterProduct",props.masterProduct)
-    if(!props.masterProduct){
+    console.log('props.masterProduct', props.masterProduct)
+    if (!props.masterProduct) {
       setCreateMaster(true)
-    }else{
+    } else {
       setImageDefault(props.masterProduct.image)
-      setDataform(
-        {
-          id: '',
-          barcode: props.masterProduct.barcode,
-          category: props.masterProduct.category,
-          date: '',
-          dateCreate:'',
-          image: props.masterProduct.image,
-          name: props.masterProduct.name,
-          note: '',
-        }
-      )
+      setDataform({
+        id: '',
+        barcode: props.masterProduct.barcode,
+        category: props.masterProduct.category,
+        date: '',
+        dateCreate: '',
+        image: props.masterProduct.image,
+        name: props.masterProduct.name,
+        note: '',
+      })
       setCreateMaster(false)
     }
     console.log(imageDefault)
@@ -100,26 +99,28 @@ function AddProduct(props) {
         category: dataformRef.current.category,
         date: dataformRef.current.date,
         dateCreate: Timestamp.fromDate(new Date()),
-        image: urlUploadRef.current ? urlUploadRef.current : dataformRef.current.image,
+        image: urlUploadRef.current
+          ? urlUploadRef.current
+          : dataformRef.current.image,
         name: dataformRef.current.name,
         note: dataformRef.current.note,
       })
-   
-    if(createMasterRef.current){
+
+    if (createMasterRef.current) {
       ref
-      .doc(props.dataUser.uid)
-      .collection("masterProduct")
-      .doc(String(Timestamp.fromDate(new Date()).seconds))
-      .set({
-        barcode: dataformRef.current.barcode,
-        category: dataformRef.current.category,
-        // date: dataformRef.current.date,
-        dateCreate: Timestamp.fromDate(new Date()),
-        image: urlUploadRef.current,
-        name: dataformRef.current.name,
-        // note: dataformRef.current.note,
-      })
-    }else;
+        .doc(props.dataUser.uid)
+        .collection('masterProduct')
+        .doc(String(Timestamp.fromDate(new Date()).seconds))
+        .set({
+          barcode: dataformRef.current.barcode,
+          category: dataformRef.current.category,
+          // date: dataformRef.current.date,
+          dateCreate: Timestamp.fromDate(new Date()),
+          image: urlUploadRef.current,
+          name: dataformRef.current.name,
+          // note: dataformRef.current.note,
+        })
+    } else;
     navigate('/')
   }
   const handleClick = () => {
@@ -154,23 +155,72 @@ function AddProduct(props) {
   }
 
   const handle = (e) => {
-    const newdata = { ...dataform };
-    if(e.target.id == "date"){
+    const newdata = { ...dataform }
+    if (e.target.id == 'date') {
       newdata[e.target.id] = Timestamp.fromDate(new Date(e.target.value))
       console.log(Timestamp.fromDate(new Date(e.target.value)))
-    }else{
-      newdata[e.target.id] = e.target.value;
+    } else {
+      newdata[e.target.id] = e.target.value
     }
-    
-    setDataform(newdata);
-    console.log("newdata=> ", newdata);
-  };
 
+    setDataform(newdata)
+    console.log('newdata=> ', newdata)
+  }
+  // Select Category
+  const handleChangeCategory = (e) => {
+    const newdata = { ...dataform }
+    newdata.category = e.value
+    setDataform(newdata)
+    console.log('newdata=> ', newdata)
+  }
+  const options = [
+    { value: 'Meat', label: 'Meat' },
+    { value: 'Fruit', label: 'Fruit' },
+    { value: 'Vegetable', label: 'Vegetable' },
+  ]
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      border: '1px solid #ffc300',
+      borderRadius: '20px',
+      boxShadow: state.isFocused ? '0 0 0 0.25rem #ffc300' : 'none',
+      '&:hover': {
+        border: '1px solid #ffc300',
+        boxShadow: '0 0 0 0.25rem #ffc300',
+      },
+    }),
+    // indicatorSeparator: (provided) => ({
+    //   ...provided,
+    //   background: 'red',
+    // }),
+    dropdownIndicator: (provided) => ({
+      ...provided,
+      color: '#ffc300',
+      '&:hover': {
+        color: '#ffc300',
+      },
+    }),
+    menu: (provided) => ({
+      ...provided,
+      borderRadius: '5px 5px 20px 20px',
+    }),
+    menuList: (provided) => ({
+      ...provided,
+      borderRadius: '5px 5px 20px 20px',
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      // backgroundColor: state.isSelected ? '#ffc300' : '#fff',
+      backgroundColor: '#fff',
+      color: state.isSelected ? '#ffc300' : '#000',
+    }),
+  }
+  // Select Category
   return (
     <>
-      <header>
+      <header className={styles.navbar}>
         <div className='container'>
-          <div className='row mt-3'>
+          <div className='row mt-2'>
             <div className='col-2 py-1'>
               <NavLink to='/'>
                 <FontAwesomeIcon icon='fa-solid fa-arrow-left-long' size='xl' />
@@ -186,28 +236,21 @@ function AddProduct(props) {
           </div>
         </div>
       </header>
-      <section style={{ marginBottom: '100px' }}>
+      <section className={styles.SectionForm}>
         <div className='container'>
           <div className='text-center mt-5'>
             {/* image Upload */}
             <div className={styles.wrapper}>
               <div className={`rounded-circle ${styles.btnimg}`}>
                 <img
-                  src={
-                    image ? URL.createObjectURL(image) :
-                    imageDefault
-                  }
+                  src={image ? URL.createObjectURL(image) : imageDefault}
                   alt='upload'
                   width='140'
                   height='140'
                   className='rounded-circle'
                 />
               </div>
-              <input
-                type='file'
-                accept='image/*'
-                 onChange={handleChange}
-              />
+              <input type='file' accept='image/*' onChange={handleChange} />
             </div>
 
             {/* <ImageUpload image={dataform.image} id={dataform.id} date={editData.value.date} value={dataform}/> */}
@@ -232,7 +275,31 @@ function AddProduct(props) {
               </div>
               <div className='mb-3'>
                 <label className='form-label fw-bold'>Category</label>
-                <input
+                {/* <select
+                  onChange={(e) => handle(e)}
+                  id='category'
+                  class={`form-select ${styles.selectMenu}`}
+                  defaultValue={dataform.category}
+                >
+                  <option selected hidden>
+                    Open this select menu
+                  </option>
+                  <option defaultValue='Meat' style={{ borderRadius: '25px' }}>
+                    Meat
+                  </option>
+                  <option defaultValue='Fruit'>Fruit</option>
+                  <option defaultValue='Vegetable'>Vegetable</option>
+                </select> */}
+                <Select
+                  styles={customStyles}
+                  options={options}
+                  defaultValue={options.filter(
+                    ({ value }) => value === dataform.category
+                  )}
+                  // id='category'
+                  onChange={(e) => handleChangeCategory(e)}
+                />
+                {/* <input
                   onChange={(e) => handle(e)}
                   id='category'
                   type='text'
@@ -242,7 +309,7 @@ function AddProduct(props) {
                     borderRadius: '20px',
                     border: '1px solid rgb(255 195 0)',
                   }}
-                />
+                /> */}
               </div>
               <div className='mb-3'>
                 <label className='form-label fw-bold'>Description</label>

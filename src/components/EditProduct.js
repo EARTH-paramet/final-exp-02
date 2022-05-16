@@ -7,6 +7,7 @@ import firebase from '../services/firebase'
 import { storage } from '../services/firebase'
 import { useNavigate } from 'react-router-dom'
 import useStateRef from 'react-usestateref'
+import Select from 'react-select'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from './css/AddEditProduct.module.css'
@@ -127,7 +128,56 @@ function EditProduct(props) {
     setDataform(newdata)
     console.log('newdata=> ', newdata)
   }
-
+  // Select Category
+  const handleChangeCategory = (e) => {
+    const newdata = { ...dataform }
+    newdata.category = e.value
+    setDataform(newdata)
+    console.log('newdata=> ', newdata)
+  }
+  const options = [
+    { value: 'Meat', label: 'Meat' },
+    { value: 'Fruit', label: 'Fruit' },
+    { value: 'Vegetable', label: 'Vegetable' },
+  ]
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      border: '1px solid #ffc300',
+      borderRadius: '20px',
+      boxShadow: state.isFocused ? '0 0 0 0.25rem #ffc300' : 'none',
+      '&:hover': {
+        border: '1px solid #ffc300',
+        boxShadow: '0 0 0 0.25rem #ffc300',
+      },
+    }),
+    // indicatorSeparator: (provided) => ({
+    //   ...provided,
+    //   background: 'red',
+    // }),
+    dropdownIndicator: (provided) => ({
+      ...provided,
+      color: '#ffc300',
+      '&:hover': {
+        color: '#ffc300',
+      },
+    }),
+    menu: (provided) => ({
+      ...provided,
+      borderRadius: '5px 5px 20px 20px',
+    }),
+    menuList: (provided) => ({
+      ...provided,
+      borderRadius: '5px 5px 20px 20px',
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      // backgroundColor: state.isSelected ? '#ffc300' : '#fff',
+      backgroundColor: '#fff',
+      color: state.isSelected ? '#ffc300' : '#000',
+    }),
+  }
+  // Select Category
   return (
     <>
       <header className={styles.navbar}>
@@ -187,7 +237,7 @@ function EditProduct(props) {
               </div>
               <div className='mb-3'>
                 <label className='form-label fw-bold'>Category</label>
-                <select
+                {/* <select
                   onChange={(e) => handle(e)}
                   id='category'
                   class='form-select'
@@ -203,7 +253,17 @@ function EditProduct(props) {
                   <option defaultValue='Meat'>Meat</option>
                   <option defaultValue='Fruit'>Fruit</option>
                   <option defaultValue='Vegetable'>Vegetable</option>
-                </select>
+                </select> */}
+                <Select
+                  styles={customStyles}
+                  options={options}
+                  // defaultValue={{ value: 'Meat', label: 'Meat' }}
+                  defaultValue={options.filter(
+                    ({ value }) => value === dataform.category
+                  )}
+                  // id='category'
+                  onChange={(e) => handleChangeCategory(e)}
+                />
                 {/* <input
                   onChange={(e) => handle(e)}
                   id='category'

@@ -22,6 +22,7 @@
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.2",
     "react-scripts": "^5.0.0",
+    "react-select": "^5.3.2",
     "react-usestateref": "^1.0.8",
     "reactjs-line-login": "^1.2.3",
     "reactstrap": "^9.0.1",
