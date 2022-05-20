@@ -1,0 +1,33 @@
+.navbar {
+  overflow: hidden;
+  background-color: rgb(255, 255, 255);
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  width: 100%;
+  padding: 10px 10px 0px 10px;
+}
+
+.SectionList {
+  padding: 16px;
+  margin-top: 60px;
+  margin-bottom: 80px;
+}
+
+/* in ListHistory */
+.boxHistory {
+  border-radius: 18px;
+  height: 54px;
+}
+
+.item {
+  background-color: #d2d2d0;
+  border: 1px solid #ffe087;
+  box-sizing: border-box;
+  border-radius: 12px;
+  align-items: center;
+}
+.itemText {
+  font-weight: 700;
+  font-size: 15px;
+}

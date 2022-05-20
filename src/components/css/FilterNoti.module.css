@@ -1,0 +1,39 @@
+.itemFridge {
+  border-radius: 18px;
+  height: 40px;
+  padding: 0px 10px;
+}
+
+.btnReset,
+.btnReset:hover,
+.btnReset:focus {
+  background: #fff8e4;
+  color: #fccf50;
+  border-radius: 40px;
+  border: 1px solid #fff8e4;
+  /* justify-content: center;
+  align-items: center; */
+}
+
+.btnReset:focus,
+.btnReset:active:hover {
+  box-shadow: 0 0 0 0.25rem #ffc300;
+}
+
+.btnFilter {
+  border-radius: 24px;
+  border: 1px solid #e3e5e5;
+}
+
+.btnFilter:focus,
+.btnFilter:active:hover {
+  box-shadow: 0 0 0 0.25rem #ffc300;
+}
+
+.btnFilter.active {
+  background: #fff8e4;
+  color: #fccf50;
+  border-radius: 40px;
+  /* border: 1px solid #fff8e4; */
+  box-shadow: 0 0 0 0.25rem #ffc300;
+}

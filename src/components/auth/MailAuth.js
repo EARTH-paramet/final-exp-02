@@ -1,51 +1,55 @@
 import React, { useEffect } from 'react'
+import { Route, Routes } from 'react-router-dom'
+import { connect } from 'react-redux'
 import { signInWithGoogle, auth } from '../../services/firebase'
+
 import EditProduct from '../EditProduct'
 import Home from '../Home'
 import Scanner from '../Scanner'
-import { Route, Routes } from 'react-router-dom'
-import { connect } from 'react-redux'
 import Profile from '../Profile'
 import Auth from './Auth'
 import Category from '../Category'
 import NavBottomBar from '../navigation/NavBottomBar'
 import Fridge from '../Fridge'
-import firebase from "../../services/firebase";
+import firebase from '../../services/firebase'
+
+import History from '../History'
+import Notification from '../Notification'
 
 const MailAuth = (props) => {
-  const userFire = firebase.firestore().collection("users");
+  const userFire = firebase.firestore().collection('users')
 
-  useEffect(()=>{
+  useEffect(() => {
     firebase.auth().onAuthStateChanged((userData) => {
       // setUser(userData);
-      console.log("userData", userData);
+      console.log('userData', userData)
       if (!userData) {
-          
       } else {
         userFire
-          .where("uid", "==", userData.uid)
+          .where('uid', '==', userData.uid)
           .onSnapshot((querySnapshot) => {
-            console.log(querySnapshot.data);
+            console.log(querySnapshot.data)
             querySnapshot.forEach((doc) => {
-              console.log("data", doc.data());
+              console.log('data', doc.data())
               props.dispatch({
-                type: "SIGN_IN",
+                type: 'SIGN_IN',
                 payload: doc.data(),
-              });
-            });
-          });
+              })
+            })
+          })
       }
-    });
-  },[])
+    })
+  }, [])
 
-  const BarButtom = ()=>{
-    if(props.data.scanner){
-      return(<></>)
-    }else return(
-      <footer>
-        <NavBottomBar />
-      </footer>
-    )
+  const BarButtom = () => {
+    if (props.data.scanner) {
+      return <></>
+    } else
+      return (
+        <footer>
+          <NavBottomBar />
+        </footer>
+      )
   }
   return (
     <div className=''>
@@ -71,6 +75,8 @@ const MailAuth = (props) => {
         <Route exact path='/edit/:id' element={<EditProduct />} />
         <Route path='/scan' element={<Scanner />} />
         <Route path='/profile' element={<Profile />} />
+        <Route path='/history' element={<History />} />
+        <Route path='/notification' element={<Notification />} />
       </Routes>
       <BarButtom />
       {/* {props.data.status ? (

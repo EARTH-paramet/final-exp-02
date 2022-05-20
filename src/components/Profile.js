@@ -5,21 +5,19 @@ import { signInWithGoogle, auth } from '../services/firebase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from './css/Profile.module.css'
 import firebase from '../services/firebase'
-import { doc, deleteDoc } from "firebase/firestore";
+import { doc, deleteDoc } from 'firebase/firestore'
 import NavBottomBar from './navigation/NavBottomBar'
 
 const Profile = (props) => {
   const [dataProfile, setDataProfile] = useState()
   const [loading, setLoading] = useState(false)
   useEffect(() => {
-   
-      props.dispatch({
-        type: 'SCANNER_OFF',
-      })
+    props.dispatch({
+      type: 'SCANNER_OFF',
+    })
 
     setDataProfile(props.data)
     setLoading(true)
-    
   }, [])
   console.log(dataProfile)
   return (
@@ -27,18 +25,18 @@ const Profile = (props) => {
       <header className={styles.top}>
         <div className='container'>
           <div className='row'>
-            {/* <div className='col-6 mt-2'>
-              <NavLink to='/'>
+            <div className='col-6 mt-2'>
+              {/* <NavLink to='/'>
                 <FontAwesomeIcon icon='fa-solid fa-arrow-left-long' size='xl' />
-              </NavLink>
-            </div> */}
-            {/* <div className='col-6'>
-              <NavLink to='/'>
-                <h2 className='text-end'>
-                  <FontAwesomeIcon icon='fa-solid fa-gear' size='xl' />
-                </h2>
-              </NavLink>
-            </div> */}
+              </NavLink> */}
+            </div>
+            <div className='col-6 mt-3'>
+              <h2 className='text-end'>
+                <NavLink to='/notification'>
+                  <FontAwesomeIcon icon='fa-solid fa-bell' size='lg' />
+                </NavLink>
+              </h2>
+            </div>
           </div>
         </div>
       </header>
@@ -66,7 +64,9 @@ const Profile = (props) => {
                     <div className='col-8 text-end'></div>
                   </div>
                   <div className='row mb-3'>
-                    <div className='col-4 text-start'>History</div>
+                    <div className='col-4 text-start'>
+                      <NavLink to='/history'>History</NavLink>
+                    </div>
                     <div className='col-8 text-end'></div>
                   </div>
                   {/* <div className='row'> */}
@@ -91,39 +91,45 @@ const Profile = (props) => {
         >
           <button className='btn btn-outline-danger m-3'>sign out</button>
         </NavLink>
-        <button className='btn btn-outline-warning m-3' onClick={()=>{
-          const ref = firebase.firestore().collection('product')
-          var group ;
-          ref
-          .where('uid', '==', props.data.uid)
-          .get()
-          .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-              // console.log('group data=> ', doc.data())
-              group = doc.data().defaultGroup
-            })
-          ref
-          .doc(props.data.uid)
-          .collection(`group${group}`)
-          .onSnapshot((querySnapshot) => {
-            const items = []
-            querySnapshot.forEach((doc) => {
-              
-                items.push(doc.data())
-              
-                if(doc.data().barcode==""){
-                }else{
-                  ref.doc(props.data.uid).collection(`group${group}`).doc(doc.id).delete();
-                console.log(doc.data())
-                }
-              
-            })
-            // setDataProduct(items)
-            // console.log('Output_dataUser', dataUser)
-          })
-        })
-       
-        }}>delete product</button>
+        <button
+          className='btn btn-outline-warning m-3'
+          onClick={() => {
+            const ref = firebase.firestore().collection('product')
+            var group
+            ref
+              .where('uid', '==', props.data.uid)
+              .get()
+              .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                  // console.log('group data=> ', doc.data())
+                  group = doc.data().defaultGroup
+                })
+                ref
+                  .doc(props.data.uid)
+                  .collection(`group${group}`)
+                  .onSnapshot((querySnapshot) => {
+                    const items = []
+                    querySnapshot.forEach((doc) => {
+                      items.push(doc.data())
+
+                      if (doc.data().barcode == '') {
+                      } else {
+                        ref
+                          .doc(props.data.uid)
+                          .collection(`group${group}`)
+                          .doc(doc.id)
+                          .delete()
+                        console.log(doc.data())
+                      }
+                    })
+                    // setDataProduct(items)
+                    // console.log('Output_dataUser', dataUser)
+                  })
+              })
+          }}
+        >
+          delete product
+        </button>
       </section>
       {/* <footer>
         <NavBottomBar />
