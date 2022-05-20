@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button, Modal, ModalBody } from "reactstrap";
 import firebase from "../services/firebase";
 import { Firestore } from "firebase/firestore";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./css/Fridge.module.css";
-// import './css/MyBootstrap.css'
 
 import SvgFridge from "./navigation/SvgFridge";
+import useStateRef from "react-usestateref";
 
 const ListFridge = (props) => {
+  let navigate = useNavigate();
+
   const [modalOpen, setModalOpen] = useState(false);
   const [modalData, setModalData] = useState({});
   const toggle = () => setModalOpen(!modalOpen);
@@ -20,25 +22,18 @@ const ListFridge = (props) => {
 
   const [loading, setLoading] = useState(true);
   const [edit, setEdit] = useState(false);
-  // const [lengthData, setLengthData] = useState([]);
-  const lengthData = []
-  const [dataFridge, setDataFridge] = useState([
+  const [dataDefault, setDataDefault] = useStateRef([
     {
       group: "1",
-      qtyProduct: "",
-      default: false,
     },
     {
       group: "2",
-      qtyProduct: "",
-      default: false,
     },
     {
       group: "3",
-      qtyProduct: "",
-      default: false,
     },
   ]);
+  const [dataFridge, setDataFridge] = useState([]);
   useEffect(() => {
     ref
       .where("uid", "==", props.data.uid)
@@ -46,59 +41,55 @@ const ListFridge = (props) => {
       .then((querySnapshot) => {
         let group = "null";
         querySnapshot.forEach((doc) => {
+          setDataFridge([]);
           console.log(doc.data());
           group = doc.data().defaultGroup;
         });
-        // setDataFridge(
-        //   dataFridge.map((val)=>{
-        //     ref
-        //     .doc(props.data.uid)
-        //     .collection(`group${val.group}`)
-        //     .onSnapshot((querySnapshot) => {
-        //       const items = [];
-        //       querySnapshot.forEach((doc) => {
-        //         if (doc.data().barcode == "") {
-        //         } else if (doc.data().date == null) {
-        //         } else {
-        //           items.push(doc.id);
-        //         }
-        //       });
-        //       console.log(items)
-        //       console.log(items.length)
-        //   return {...dataFridge,qtyProduct:items.length}
-        //       // setDataFridge(
-        //       //   dataFridge.map((val) => {
-        //       //     return val.group == group
-        //       //       ? {...dataFridge,qtyProduct:items.length}
-        //       //       : dataFridge;
-        //       //   })
-        //       //   )
-        //     });
-        //   })
-        // )
-
-        setDataFridge(
-          dataFridge.map((val,index) => {
-            
-            return val.group == group
-              ? {
-                  group: val.group,
-                  qtyProduct:lengthData,
-                  default: true,
+        dataDefault.map((val) => {
+          ref
+            .doc(props.data.uid)
+            .collection(`group${val.group}`)
+            .get()
+            .then((querySnapshot) => {
+              let qty = 0;
+              querySnapshot.forEach((doc) => {
+                if (doc.data().barcode == "") {
+                } else {
+                  qty++;
                 }
-              : {
-                  group: val.group,
-                  qtyProduct:lengthData,
-                  default: false,
-                };
-          })
-        );
+              });
+              if (val.group == group) {
+               
+                  setDataFridge((oldData) => [
+                    ...oldData,
+                    {
+                      group: val.group,
+                      qtyProduct: qty,
+                      default: true,
+                    },
+                  ]);
+                console.log("count if");
+              } else {
+               
+                  setDataFridge((oldData) => [
+                    ...oldData,
+                    {
+                      group: val.group,
+                      qtyProduct: qty,
+                      default: false,
+                    },
+                  ]);
+                  console.log("count else");
+              }
+            });
+        });
+        // }
         setLoading(false);
-        console.log(dataFridge);
+
+       
       });
-      console.log("lengthData",lengthData);
   }, [edit]);
-  //   console.log("Output",ref)
+
   if (dataFridge.length !== 0) {
     console.log("Output_dataUser", dataFridge);
   } else {
@@ -170,25 +161,25 @@ const ListFridge = (props) => {
               <div className="row my-4">
                 <h6 className="col-8 fw-bold">Total Food :</h6>
                 <h6 className="col-4 text-end text-warning">
-                  {modalData.group}
+                  {modalData.qtyProduct}
                 </h6>
               </div>
-              <div className="row my-4">
+              {/* <div className="row my-4">
                 <h6 className="col-8 fw-bold">Notification :</h6>
                 <h6 className="col-4 text-end text-warning">
-                  {/* {modalData.noti} */}
+                  {modalData.noti}
                   <div className={styles.switch}>
-                    {/* <input
+                    <input
                       type="checkbox"
                       id="switch"
                       className={styles.switchInput}
                       onClick={(e) => handleNoti()}
                       checked={test ? true : false}
-                    /> */}
+                    />
                     <label for="switch" className={styles.switchLabel} />
                   </div>
                 </h6>
-              </div>
+              </div> */}
 
               <div className="row py-2">
                 <Button
@@ -206,6 +197,7 @@ const ListFridge = (props) => {
                     });
                     setEdit(!edit);
                     toggle();
+                    navigate("/");
                   }}
                 >
                   Default
