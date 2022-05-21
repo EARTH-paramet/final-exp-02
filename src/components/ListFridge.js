@@ -205,7 +205,7 @@ const ListFridge = (props) => {
                     ref.doc(props.data.uid).set({
                       defaultGroup: `${modalData.group}`,
                       uid: props.data.uid,
-                    });
+                    })
                     props.dispatch({
                       type: "ADD_PRODUCT",
                       payload: [],

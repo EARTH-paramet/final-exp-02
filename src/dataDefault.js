@@ -1,10 +1,12 @@
-export const addGroup = {
+  export const defaultData = {
     barcode: "",
     name: "",
     category: "",
     date: "",
+    dateCreate: "",
+    image: "",
     note: "",
-  };    
+  };  
   export const categoryMeat_one = {
     name: "Meat",
     qty: 0,

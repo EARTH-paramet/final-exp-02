@@ -10,7 +10,6 @@ import {
 import axios from 'axios'
 import jwt_decode from 'jwt-decode'
 import {
-  addGroup,
   categoryFruit_one,
   categoryMeat_one,
   categoryVeget_one,
@@ -20,6 +19,7 @@ import {
   categoryFruit_three,
   categoryMeat_three,
   categoryVeget_three,
+  defaultData,
 } from '../../dataDefault'
 
 const Auth = (props) => {
@@ -128,14 +128,12 @@ const Auth = (props) => {
         defaultGroup: '1',
         uid: user.user.uid,
         subUser: decoded.sub,
-        notificationGroup1: true,
-        notificationGroup2: true,
-        notificationGroup3: true,
       })
-      groupFire.collection('group1').doc(`${date}`).set(addGroup)
-      groupFire.collection('group2').doc(`${date}`).set(addGroup)
-      groupFire.collection('group3').doc(`${date}`).set(addGroup)
-      groupFire.collection('masterProduct').doc(`${date}`).set(addGroup)
+      groupFire.collection('group1').doc(`${date}`).set(defaultData)
+      groupFire.collection('group2').doc(`${date}`).set(defaultData)
+      groupFire.collection('group3').doc(`${date}`).set(defaultData)
+      groupFire.collection('history').doc(`${date}`).set(defaultData)
+      groupFire.collection('masterProduct').doc(`${date}`).set(defaultData)
       categoryFire.doc(`${date}`).set(categoryMeat_one)
       categoryFire.doc(`${date + 1}`).set(categoryFruit_one)
       categoryFire.doc(`${date + 2}`).set(categoryVeget_one)

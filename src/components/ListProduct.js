@@ -7,17 +7,18 @@ import { Timestamp } from 'firebase/firestore'
 
 import defaultImg from './assets/default-img-product.jpg'
 import styles from './css/Home.module.css'
+import useStateRef from 'react-usestateref'
 // import "./css/MyBootstrap.css";
 
 const ListProduct = ({ data, product }) => {
-  let group = 'null'
+  const [group, setGroup] = useState()
   const [modalOpen, setModalOpen] = useState(false)
   const [modalData, setModalData] = useState({})
   const [modalIndex, setModalIndex] = useState()
   const toggle = () => setModalOpen(!modalOpen)
   const ref = firebase.firestore().collection('product')
-  const [dataProduct, setDataProduct] = useState([])
-  const [loading, setLoading] = useState(false)
+  const ref2 = firebase.firestore().collection('test')
+  const [dataProduct, setDataProduct, dataProductRef] = useStateRef([])
 
   // date format
   const options = {
@@ -31,8 +32,8 @@ const ListProduct = ({ data, product }) => {
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          // console.log('group data=> ', doc.data())
-          group = doc.data().defaultGroup
+
+          setGroup(doc.data().defaultGroup)
         })
         ref
           .doc(data.uid)
@@ -40,27 +41,20 @@ const ListProduct = ({ data, product }) => {
           .onSnapshot((querySnapshot) => {
             const items = []
             querySnapshot.forEach((doc) => {
-              // console.log(doc.id)
               if (doc.data().barcode == '') {
                 items.push('null')
+              
               } else {
                 items.push(doc.data())
-                // items.push(doc.data())
-                // console.log('items', doc.data())
+            
               }
             })
-
             setDataProduct(items)
-            // console.log('Output_dataUser', dataUser)
+            
           })
       })
-  }, [])
-  //   console.log("Output",ref)
-  // if (dataProduct.length !== 0) {
-  //   console.log('Output_dataProduct', dataProduct)
-  // } else {
-  //   console.log('null')
-  // }
+  }, [product.productData])
+
   const DateFunc = ({ date, item }) => {
     const timeStampNow = firebase.firestore.Timestamp.fromDate(
       new Date()
@@ -70,7 +64,6 @@ const ListProduct = ({ data, product }) => {
     if (date < dateToday) {
       return (
         <small className='opacity-50 text-nowrap' style={{ color: 'red' }}>
-          {/* {item.date.toDate().toLocaleString().split(',')[0]} */}
           {item.date.toDate().toLocaleString('en-AU', options)}
         </small>
       )
@@ -80,7 +73,6 @@ const ListProduct = ({ data, product }) => {
     } else if (date >= dateToday + 86400) {
       return (
         <small className='opacity-50 text-nowrap'>
-          {/* {item.date.toDate().toLocaleString().split(',')[0]} */}
           {item.date.toDate().toLocaleString('en-AU', options)}
         </small>
       )
@@ -89,8 +81,32 @@ const ListProduct = ({ data, product }) => {
     }
   }
 
+  const moveToHistory = ()=>{
+    const productMove = product.productData[modalIndex]
+
+    console.log("value",productMove)
+    console.log("value")
+    console.log(data.uid)
+    console.log(group)
+    console.log(product.productData[modalIndex].id)
+    ref.doc(data.uid).collection(`group${group}`).doc(productMove.id).delete().then(()=>{
+      console.log("successfully deleted! ")
+      ref.doc(data.uid).collection('history').doc(String(Timestamp.fromDate(new Date()).seconds)).set({
+        barcode: productMove.value.barcode,
+        category: productMove.value.category,
+        date: productMove.value.date,
+        dateCreate: Timestamp.fromDate(new Date()),
+        image: productMove.value.image,
+        name: productMove.value.name,
+        note: productMove.value.note,
+        name:"Test"
+      }).then(()=>setModalOpen(false))
+    }).catch((error)=>{ console.log("Error removing document:", error)
+    })
+  }
+
   const TextAddData = () => {
-    if (dataProduct == 'null') {
+    if (dataProductRef.current == "null") {
       return (
         <div className={styles.textCenter}>
           <h1>เพิ่มรายการอาหาร</h1>
@@ -102,8 +118,8 @@ const ListProduct = ({ data, product }) => {
   }
   return (
     <div className='container'>
-      {product.productData?(<div>
         <TextAddData />
+  
       {product.productData.map((item, index) => (
         <div className={`row my-3 ${styles.boxProduct}`} key={index}>
           { console.log("item.value.date.seconds",item.value)}
@@ -186,6 +202,8 @@ const ListProduct = ({ data, product }) => {
                   className='w-100 py-3'
                   color='warning text-white fw-bold'
                   style={{ borderRadius: '16px' }}
+                  onClick={moveToHistory}
+                  // ()=>console.log(product.productData[modalIndex])
                 >
                   Remove
                 </Button>
@@ -194,9 +212,6 @@ const ListProduct = ({ data, product }) => {
           </ModalBody>
         </Modal>
       </div>
-      </div>):(<div>
-        LOADING
-      </div>)}
     </div>
   )
 }
