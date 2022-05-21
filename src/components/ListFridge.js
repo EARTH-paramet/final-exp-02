@@ -22,18 +22,23 @@ const ListFridge = (props) => {
 
   const [loading, setLoading] = useState(true);
   const [edit, setEdit] = useState(false);
-  const [dataDefault, setDataDefault] = useStateRef([
-    {
-      group: "1",
-    },
-    {
-      group: "2",
-    },
-    {
-      group: "3",
-    },
-  ]);
-  const [dataFridge, setDataFridge] = useState([]);
+  const [qtyProduct, setQtyProduct ,qtyProductRef] = useStateRef()
+  const initialState = [ {
+    group: "1",
+    qtyProduct,
+    defaul: false,
+  },
+  {
+    group: "2",
+    qtyProduct,
+    defaul: false,
+  },
+  {
+    group: "3",
+    qtyProduct,
+    defaul: false,
+  },]
+  const [dataFridge, setDataFridge ,dataFridgeRef] = useStateRef(initialState);
   useEffect(() => {
     ref
       .where("uid", "==", props.data.uid)
@@ -42,51 +47,65 @@ const ListFridge = (props) => {
         let group = "null";
         querySnapshot.forEach((doc) => {
           setDataFridge([]);
-          console.log(doc.data());
           group = doc.data().defaultGroup;
         });
-        dataDefault.map((val) => {
+
+
+        dataFridge.map((val, index) => {
+          let newArr = [...dataFridgeRef.current];
+         
+          const byGroup = (index+1).toString()
+          console.log("00000000000000000000000",val)
+          console.log("00000000000000000000000",byGroup)
           ref
             .doc(props.data.uid)
-            .collection(`group${val.group}`)
+            .collection(`group${byGroup}`)
             .get()
             .then((querySnapshot) => {
-              let qty = 0;
+          var qty = 0
+          console.log("GGGGGGGGGGGGG",val)
+          console.log("GGGGGGGGGGGGG",byGroup)
+
               querySnapshot.forEach((doc) => {
                 if (doc.data().barcode == "") {
                 } else {
-                  qty++;
+                  qty++
                 }
               });
-              if (val.group == group) {
-               
-                  setDataFridge((oldData) => [
-                    ...oldData,
-                    {
-                      group: val.group,
-                      qtyProduct: qty,
-                      default: true,
-                    },
-                  ]);
-                console.log("count if");
-              } else {
-               
-                  setDataFridge((oldData) => [
-                    ...oldData,
-                    {
-                      group: val.group,
-                      qtyProduct: qty,
-                      default: false,
-                    },
-                  ]);
-                  console.log("count else");
-              }
+              // if (byGroup == group) {
+              //   setDataFridge(oldData=>[...oldData,{
+              //     group: byGroup,
+              //     qtyProduct: qty,
+              //     default: true,
+              //    }])
+              //   // newArr[index] = {
+              //   //   group: byGroup,
+              //   //   qtyProduct: qty,
+              //   //   default: true,
+              //   // };
+              //   // setDataFridge(newArr)
+              // } else {
+                setDataFridge(oldData=>[...oldData,{
+                    group: val.group,
+                    qtyProduct: qty,
+                    default: group == byGroup ? true : false,
+                   }])
+                // newArr[index] = {
+                //   group: byGroup,
+                //   qtyProduct: qty,
+                //   default: false,
+                // };
+                // setDataFridge(newArr)
+  
+              // }
+              
+            //  setQtyProduct(qty)
+            
+              
             });
+            
         });
-        // }
         setLoading(false);
-
-       
       });
   }, [edit]);
 
@@ -96,10 +115,6 @@ const ListFridge = (props) => {
     console.log("null");
   }
 
-  const [test, setTest] = useState(true);
-  const handleNoti = (e) => {
-    setTest(!test);
-  };
   return (
     <div className="container">
       {loading ? (
@@ -127,7 +142,7 @@ const ListFridge = (props) => {
                   className={`d-flex w-100 justify-content-between ${styles.itemText}`}
                 >
                   <div>
-                    <p className="mb-1">Fridge {index + 1}</p>
+                    <p className="mb-1">Fridge {item.group}</p>
                     <Button
                       className={styles.btnDefault}
                       style={item.default ? {} : { backgroundColor: "#c6c6c6" }}

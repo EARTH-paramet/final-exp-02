@@ -48,14 +48,14 @@ const Auth = (props) => {
     })
     getLineConfig()
     lineFire.onSnapshot((querySnapshot) => {
-      var url = window.location.origin
+      var url = ''
       console.log('public url: ', url)
 
       console.log(querySnapshot.data)
-      /*querySnapshot.forEach((doc) => {
+      querySnapshot.forEach((doc) => {
         console.log('data config', doc.data().redirectUri)
         url = doc.data().redirectUri;
-      })*/
+      })
       setLine_config({
         response_type: 'code',
         client_id: '1657064324',

@@ -104,7 +104,7 @@ function AddProduct(props) {
           : dataformRef.current.image,
         name: dataformRef.current.name,
         note: dataformRef.current.note,
-      })
+      }).then(()=> navigate('/'))
 
     if (createMasterRef.current) {
       ref
@@ -119,9 +119,10 @@ function AddProduct(props) {
           image: urlUploadRef.current,
           name: dataformRef.current.name,
           // note: dataformRef.current.note,
-        })
+        }).then(()=> navigate('/'))
+   
+
     } else;
-    navigate('/')
   }
   const handleClick = () => {
     if (image) {
@@ -332,7 +333,7 @@ function AddProduct(props) {
                   onChange={(e) => handle(e)}
                   id='date'
                   type='date'
-                  defaultValue={dataform.date.toLocaleString('en-CA').split(',')[0]}
+                  defaultValue={dataform.date.toDate().toLocaleString('en-CA').split(',')[0]}
                   className='form-control'
                   style={{
                     borderRadius: '20px',
