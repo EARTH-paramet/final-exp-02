@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { signInWithGoogle, auth } from '../../services/firebase'
-
 import EditProduct from '../EditProduct'
 import Home from '../Home'
 import Scanner from '../Scanner'

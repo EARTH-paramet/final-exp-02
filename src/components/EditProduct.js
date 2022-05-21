@@ -138,7 +138,7 @@ function EditProduct(props) {
   const options = [
     { value: 'Meat', label: 'Meat' },
     { value: 'Fruit', label: 'Fruit' },
-    { value: 'Vegetable', label: 'Vegetable' },
+    { value: 'Veget', label: 'Vegetable' },
   ]
   const customStyles = {
     control: (provided, state) => ({

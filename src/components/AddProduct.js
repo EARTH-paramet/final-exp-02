@@ -33,7 +33,7 @@ function AddProduct(props) {
     id: '',
     barcode: props.barcode,
     category: '',
-    date: new Date().toLocaleString('en-CA').split(',')[0],
+    date: Timestamp.fromDate(new Date()),
     dateCreate: '',
     image: '',
     name: '',
@@ -55,7 +55,7 @@ function AddProduct(props) {
         id: '',
         barcode: props.masterProduct.barcode,
         category: props.masterProduct.category,
-        date: '',
+        date: dataformRef.current.date,
         dateCreate: '',
         image: props.masterProduct.image,
         name: props.masterProduct.name,
@@ -176,7 +176,7 @@ function AddProduct(props) {
   const options = [
     { value: 'Meat', label: 'Meat' },
     { value: 'Fruit', label: 'Fruit' },
-    { value: 'Vegetable', label: 'Vegetable' },
+    { value: 'Veget', label: 'Vegetable' },
   ]
   const customStyles = {
     control: (provided, state) => ({
@@ -332,7 +332,7 @@ function AddProduct(props) {
                   onChange={(e) => handle(e)}
                   id='date'
                   type='date'
-                  defaultValue={dataform.date}
+                  defaultValue={dataform.date.toLocaleString('en-CA').split(',')[0]}
                   className='form-control'
                   style={{
                     borderRadius: '20px',
