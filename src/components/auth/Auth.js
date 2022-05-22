@@ -127,7 +127,7 @@ const Auth = (props) => {
       groupFire.set({
         defaultGroup: '1',
         uid: user.user.uid,
-        subUser: decoded.sub,
+        line_sub: decoded.sub,
       })
       groupFire.collection('group1').doc(`${date}`).set(defaultData)
       groupFire.collection('group2').doc(`${date}`).set(defaultData)

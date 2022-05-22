@@ -1,22 +1,42 @@
-import { useEffect } from 'react'
+import { useEffect,useState } from 'react'
 import { connect } from 'react-redux'
+import { NavLink } from 'react-router-dom'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import styles from './css/History.module.css'
 
 import ListHistory from './ListHistory'
 
 const History = (props) => {
+  const [dataProfile, setDataProfile] = useState()
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
     props.dispatch({
-      type: 'SCANNER_OFF',
-    })
+      type: "SCANNER_ON",
+    });
+    setDataProfile(props.data)
+    setLoading(true)
   }, [])
+  const closeScanner = () => {
+    props.dispatch({
+      type: "SCANNER_ON",
+    });
+  }
+
   return (
     <>
-      <header className={styles.navbar}>
+      {loading ? (
+        <div>
+          <header className={styles.navbar}>
         <div className='row mt-2'>
           <div className='col-6'>
-            <h2>APP NAME</h2>
+          <NavLink to="/profile" onClick={closeScanner}>
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-arrow-left-long"
+                    size="xl"
+                    style={{ color: "#000" }}
+                  />
+                </NavLink>
           </div>
           <div className='col-6 '>
             <h2 className='text-end'></h2>
@@ -24,9 +44,16 @@ const History = (props) => {
         </div>
       </header>
       <section className={styles.SectionList}>
-        <ListHistory />
+        <ListHistory profile={dataProfile} />
       </section>
+        </div>
+      ):(<></>)}
     </>
   )
 }
-export default connect()(History)
+const mapStateToProps = (state) => {
+  return {
+    data: state.dataUser,
+  }
+}
+export default connect(mapStateToProps)(History)

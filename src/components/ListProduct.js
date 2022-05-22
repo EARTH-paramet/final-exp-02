@@ -17,7 +17,6 @@ const ListProduct = ({ data, product }) => {
   const [modalIndex, setModalIndex] = useState()
   const toggle = () => setModalOpen(!modalOpen)
   const ref = firebase.firestore().collection('product')
-  const ref2 = firebase.firestore().collection('test')
   const [dataProduct, setDataProduct, dataProductRef] = useStateRef([])
 
   // date format
@@ -99,7 +98,6 @@ const ListProduct = ({ data, product }) => {
         image: productMove.value.image,
         name: productMove.value.name,
         note: productMove.value.note,
-        name:"Test"
       }).then(()=>setModalOpen(false))
     }).catch((error)=>{ console.log("Error removing document:", error)
     })

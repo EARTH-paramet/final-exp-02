@@ -204,6 +204,7 @@ const ListFridge = (props) => {
                   onClick={() => {
                     ref.doc(props.data.uid).set({
                       defaultGroup: `${modalData.group}`,
+                      line_sub: props.data.sub,
                       uid: props.data.uid,
                     })
                     props.dispatch({

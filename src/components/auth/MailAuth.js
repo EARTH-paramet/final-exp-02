@@ -74,7 +74,7 @@ const MailAuth = (props) => {
         <Route exact path='/edit/:id' element={<EditProduct />} />
         <Route path='/scan' element={<Scanner />} />
         <Route path='/profile' element={<Profile />} />
-        <Route path='/history' element={<History />} />
+        <Route path='/history' element={props.data.uid?<History />:<Auth/>} />
         <Route path='/notification' element={<Notification />} />
       </Routes>
       <BarButtom />
