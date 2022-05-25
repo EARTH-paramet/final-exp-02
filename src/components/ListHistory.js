@@ -19,8 +19,6 @@ const ListHistory = (props) => {
   }
   const ref = firebase.firestore().collection("product");
   const [dataProduct, setDataProduct, dataProductRef] = useStateRef([])
-  const [dataDefault, setDataDefault, dataDefaultRef] = useStateRef(props.dataUser)
-  const [dataProfile, setDataProfile, dataProfileRef] = useStateRef(props.profile)
   const [loading, setLoading] = useState(false)
   useEffect(() => {
     

@@ -22,7 +22,7 @@ const FilterNoti = (props) => {
   const [modalOpen, setModalOpen] = useState(false)
   //   const [modalData, setModalData] = useState({})
   const toggle = () => setModalOpen(!modalOpen)
-  const [sortSelect, setSortSelect] = useState('ascName')
+  const [fridgeSelect, setFridgeSelect] = useState('group1')
 
   const [classF1, setClassF1] = useState(
     `${styles.btnFilter} w-100 py-2 fw-bold`
@@ -38,16 +38,16 @@ const FilterNoti = (props) => {
   const classActive = `${styles.btnFilter} w-100 py-2 fw-bold ${styles.active}`
 
   useEffect(() => {
-    const filter = props.dataFilter.sort
-    if (filter == 'filter1') {
+    const filter = props.dataFilter.fridgeNotification
+    if (filter == 'group1') {
       setClassF1(classActive)
       setClassF2(classDefault)
       setClassF3(classDefault)
-    } else if (filter == 'filter2') {
+    } else if (filter == 'group2') {
       setClassF1(classDefault)
       setClassF2(classActive)
       setClassF3(classDefault)
-    } else if (filter == 'filter3') {
+    } else if (filter == 'group3') {
       setClassF1(classDefault)
       setClassF2(classDefault)
       setClassF3(classActive)
@@ -56,12 +56,12 @@ const FilterNoti = (props) => {
       setClassF2(classDefault)
       setClassF3(classDefault)
     }
-  }, [props.dataFilter.sort])
+  }, [props.dataFilter.fridgeNotification])
   // console.log(sortSelect)
   const handleClick_apply = () => {
     props.dispatch({
-      type: 'SET_FILTER',
-      payload: sortSelect,
+      type: 'SET_FILTER_FRIDGE',
+      payload: fridgeSelect,
     })
     toggle()
   }
@@ -83,7 +83,7 @@ const FilterNoti = (props) => {
                 <h6 className='col-4'>
                   <Button
                     className={`${styles.btnReset} w-100 fw-bold`}
-                    onClick={() => setSortSelect('ascDate')}
+                    onClick={() => setFridgeSelect('group1')}
                   >
                     Reset
                   </Button>
@@ -95,7 +95,7 @@ const FilterNoti = (props) => {
                     id='test'
                     className={classF1}
                     color='ligth text-black'
-                    //   onClick={() => setSortSelect('ascName')}
+                    onClick={() => setFridgeSelect('group1')}
                   >
                     Fridge 1
                   </Button>
@@ -104,7 +104,7 @@ const FilterNoti = (props) => {
                   <Button
                     className={classF2}
                     color='ligth text-black'
-                    //   onClick={() => setSortSelect('descName')}
+                    onClick={() => setFridgeSelect('group2')}
                   >
                     Fridge 2
                   </Button>
@@ -113,7 +113,7 @@ const FilterNoti = (props) => {
                   <Button
                     className={classF3}
                     color='ligth text-black'
-                    //   onClick={() => setSortSelect('descName')}
+                    onClick={() => setFridgeSelect('group3')}
                   >
                     Fridge 3
                   </Button>
@@ -124,7 +124,7 @@ const FilterNoti = (props) => {
               <MyCalendar className='d-flex justify-content-center text-center'>
                 <Calendar
                   value={selectedDay}
-                  onChange={setSelectedDay}
+                  onChange={(e)=>{console.log(new Date(e.year,e.month,e.day))}}
                   colorPrimary='#ffc107'
                   calendarClassName='responsive-calendar' // added this
                   //   shouldHighlightWeekends

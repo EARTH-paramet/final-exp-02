@@ -87,7 +87,10 @@ const ListFridge = (props) => {
 
   if (dataFridge.length !== 0) {
     dataFridge.sort((a, b) => {
-      return a.group > b.group ? 1 : -1
+      console.log("TTT",1)
+      console.log("AAAA",a)
+      console.log("BBBB",b)
+      // return a.group > b.group ? 1 : -1
     })
     console.log('Output_dataUser', dataFridge)
   } else {

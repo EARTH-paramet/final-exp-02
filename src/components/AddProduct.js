@@ -104,6 +104,7 @@ function AddProduct(props) {
           : dataformRef.current.image,
         name: dataformRef.current.name,
         note: dataformRef.current.note,
+        notification: "0"
       }).then(()=> navigate('/'))
 
     if (createMasterRef.current) {

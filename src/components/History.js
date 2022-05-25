@@ -8,13 +8,13 @@ import styles from './css/History.module.css'
 import ListHistory from './ListHistory'
 
 const History = (props) => {
-  const [dataProfile, setDataProfile] = useState()
+  // const [dataProfile, setDataProfile] = useState()
   const [loading, setLoading] = useState(false)
   useEffect(() => {
     props.dispatch({
       type: "SCANNER_ON",
     });
-    setDataProfile(props.data)
+    // setDataProfile(props.data)
     setLoading(true)
   }, [])
   const closeScanner = () => {
@@ -44,7 +44,7 @@ const History = (props) => {
         </div>
       </header>
       <section className={styles.SectionList}>
-        <ListHistory profile={dataProfile} />
+        <ListHistory/>
       </section>
         </div>
       ):(<></>)}
