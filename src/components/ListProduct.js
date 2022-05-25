@@ -98,6 +98,7 @@ const ListProduct = ({ data, product }) => {
         image: productMove.value.image,
         name: productMove.value.name,
         note: productMove.value.note,
+        fridge: `${group}`
       }).then(()=>setModalOpen(false))
     }).catch((error)=>{ console.log("Error removing document:", error)
     })
