@@ -42,13 +42,19 @@ const ListHistory = (props) => {
     <div className='container'>
       {loading ? (
         <>
-          {dataProductRef.current.map((item, index) => (
-            <div className={`row my-3 ${styles.boxHistory}`} key={index}>
-              {console.log('item.value.date.seconds', item)}
-              <a
-                href='#'
-                className={`list-group-item d-flex gap-3 ${styles.item}`}
-                aria-current='true'
+          <div className={`row ${styles.boxHistory}`}>
+            {dataProductRef.current.map((item, index) => (
+              // <div className={`row my-3 ${styles.boxHistory}`}>
+              // {console.log('item.value.date.seconds', item)}
+              // <a
+              //   href='#'
+              //   className={`mb-3 list-group-item d-flex gap-3 ${styles.item}`}
+              //   aria-current='true'
+              //   key={index}
+              // >
+              <div
+                className={`mb-3 list-group-item d-flex gap-3 ${styles.item}`}
+                key={index}
               >
                 <img
                   src={item.image ? item.image : defaultImg}
@@ -61,16 +67,40 @@ const ListHistory = (props) => {
                   className={`d-flex w-100 justify-content-between ${styles.itemText}`}
                 >
                   <div>
-                    <p className='mb-0'>{item.name}</p>
+                    <p className='mb-0'>{item.name} 123456789 123456789</p>
+
+                    <p className='row g-3 mb-0' style={{ color: '#7F8E7F' }}>
+                      <div className='col-1'>
+                        <SvgFridge size='xs' />
+                      </div>
+                      <div className='col-9'>Fridge {item.fridge}</div>
+                    </p>
                   </div>
-                  <small className='opacity-50 text-nowrap'>
+                  {/* <div className='opacity-50 text-nowrap py-3'>
+                    <FontAwesomeIcon
+                      icon='fa-solid fa-ellipsis-vertical'
+                      size='xl'
+                    />
+                  </div> */}
+                  {/* <div className='d-flex flex-column'>
+                    <div>
+                      <p className='mb-0'>{item.name} 12345689</p>
+                    </div>
+                    <div>
+                      <p className='mb-0'>fridge {item.fridge}</p>
+                    </div>
+                  </div> */}
+                  <small className='opacity-50 text-nowrap my-auto'>
                     {item.date.toDate().toLocaleString('en-AU', options)}
                   </small>
+
                   {/* <DateFunc date={item.value.date.seconds} item={item.value} /> */}
                 </div>
-              </a>
-            </div>
-          ))}
+              </div>
+              // </a>
+              // </div>
+            ))}
+          </div>
         </>
       ) : (
         <></>

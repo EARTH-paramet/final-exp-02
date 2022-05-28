@@ -48,21 +48,21 @@ const Auth = (props) => {
     })
     getLineConfig()
     lineFire.onSnapshot((querySnapshot) => {
-      var url = ''
+      var url = window.location.origin
       console.log('public url: ', url)
 
       console.log(querySnapshot.data)
       querySnapshot.forEach((doc) => {
         console.log('data config', doc.data().redirectUri)
-        url = doc.data().redirectUri;
+        // url = doc.data().redirectUri
       })
       setLine_config({
         response_type: 'code',
-        client_id: '1657064324',
+        client_id: '1657167004',
         redirect_uri: `${url}`,
         state: '12345abcde',
         scope: 'profile%20openid%20email',
-        client_secret: '10b64197e0054249ea4497198acc6ace',
+        client_secret: 'e2d6dcbe259def573552438896651a3f',
       })
       if (params.code) {
         axios
@@ -199,11 +199,11 @@ const Auth = (props) => {
       })
       setLine_config({
         response_type: 'code',
-        client_id: '1657064324',
+        client_id: '1657167004',
         redirect_uri: `${url}`,
         state: '12345abcde',
         scope: 'profile%20openid%20email',
-        client_secret: '10b64197e0054249ea4497198acc6ace',
+        client_secret: 'e2d6dcbe259def573552438896651a3f',
       })
     })
   }
