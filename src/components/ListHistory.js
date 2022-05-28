@@ -67,7 +67,7 @@ const ListHistory = (props) => {
                   className={`d-flex w-100 justify-content-between ${styles.itemText}`}
                 >
                   <div>
-                    <p className='mb-0'>{item.name} 123456789 123456789</p>
+                    <p className='mb-0'>{item.name}</p>
 
                     <p className='row g-3 mb-0' style={{ color: '#7F8E7F' }}>
                       <div className='col-1'>
