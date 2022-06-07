@@ -91,7 +91,7 @@ const Profile = (props) => {
         >
           <button className='btn btn-outline-danger m-3'>sign out</button>
         </NavLink>
-        <button
+        {/* <button
           className='btn btn-outline-warning m-3'
           onClick={() => {
             const ref = firebase.firestore().collection('product')
@@ -129,7 +129,7 @@ const Profile = (props) => {
           }}
         >
           delete product
-        </button>
+        </button> */}
       </section>
       {/* <footer>
         <NavBottomBar />
