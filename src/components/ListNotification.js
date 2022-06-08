@@ -17,6 +17,7 @@ const ListNotification = (props) => {
   };
   const ref = firebase.firestore().collection("product");
   const [dataProduct, setDataProduct, dataProductRef] = useStateRef([]);
+  const [group, setGroup, groupRef] = useStateRef();
   const [date, setDate, dateRef] = useStateRef(new Date());
   const [loading, setLoading] = useState(false);
 
@@ -28,6 +29,16 @@ const ListNotification = (props) => {
         "date Timestamp :",
         firebase.firestore.Timestamp.fromDate(dateRef.current).seconds
       );
+    }
+
+    if (props.dataFilter.fridgeNotification == "group1") {
+      setGroup("Fridge 1");
+    } else if (props.dataFilter.fridgeNotification == "group2") {
+      setGroup("Fridge 2");
+    } else if (props.dataFilter.fridgeNotification == "group3") {
+      setGroup("Fridge 3");
+    } else {
+      setGroup("Fridge");
     }
     ref
       .doc(props.dataUser.uid)
@@ -48,7 +59,10 @@ const ListNotification = (props) => {
           }
         });
         setDataProduct(items);
-        console.log("data",firebase.firestore.Timestamp.fromDate(dateRef.current).seconds)
+        console.log(
+          "data",
+          firebase.firestore.Timestamp.fromDate(dateRef.current).seconds
+        );
         setLoading(true);
       });
   }, [props.dataFilter]);
@@ -57,7 +71,8 @@ const ListNotification = (props) => {
     const timeStampNow = firebase.firestore.Timestamp.fromDate(
       dateRef.current
     ).seconds;
-    const dateToday = parseInt(timeStampNow / 86400) * 86400 - 60 * 60 * 7;
+    const dateToday =
+      parseInt(timeStampNow / 86400) * 86400 - 60 * 60 * 7;
     console.log("date=>", dateToday);
     if (date < dateToday) {
       return (
@@ -91,11 +106,23 @@ const ListNotification = (props) => {
       return <></>;
     }
   };
-
+  
   return (
     <div className="container">
       {loading ? (
         <>
+          <div className="row">
+            <div className="col-6">
+              <p>{groupRef.current}</p>
+            </div>
+            <div className="col-6">
+              <p>
+                {firebase.firestore.Timestamp.fromDate(dateRef.current)
+                  .toDate()
+                  .toLocaleString("en-AU", options)}
+              </p>
+            </div>
+          </div>
           {dataProductRef.current.map((item, index) => (
             <>
               <div className={`row my-3 ${styles.boxProduct}`} key={index}>
