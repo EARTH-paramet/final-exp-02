@@ -23,6 +23,7 @@ const ListFridge = (props) => {
   const [loading, setLoading] = useState(true)
   const [edit, setEdit] = useState(false)
   const [qtyProduct, setQtyProduct, qtyProductRef] = useStateRef()
+  const [timer, setTimer, timerRef] = useStateRef(true)
   const initialState = [
     {
       group: '1',
@@ -85,18 +86,19 @@ const ListFridge = (props) => {
 
   if (dataFridge.length !== 0) {
     dataFridge.sort((a, b) => {
-      console.log("TTT",1)
-      console.log("AAAA",a)
-      console.log("BBBB",b)
+      return a.group > b.group ? 1 : -1
     })
     console.log('Output_dataUser', dataFridge)
   } else {
     console.log('null')
   }
-
+  setTimeout(() => {
+    console.log('Hello Mateo!');
+    setTimer(false)
+}, 500);
   return (
     <div className='container'>
-      {loading ? (
+      {timerRef.current? (
         <div></div>
       ) : (
         <div>
