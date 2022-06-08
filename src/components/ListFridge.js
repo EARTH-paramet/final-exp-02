@@ -93,7 +93,6 @@ const ListFridge = (props) => {
     console.log('null')
   }
   setTimeout(() => {
-    console.log('Hello Mateo!');
     setTimer(false)
 }, 500);
   return (
