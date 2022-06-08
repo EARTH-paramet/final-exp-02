@@ -56,14 +56,12 @@ const ListFridge = (props) => {
           let newArr = [...dataFridgeRef.current]
 
           const byGroup = (index + 1).toString()
-          // console.log('00000000000000000000000', byGroup)
           ref
             .doc(props.data.uid)
             .collection(`group${byGroup}`)
             .get()
             .then((querySnapshot) => {
               var qty = 0
-              // console.log('GGGGGGGGGGGGG', byGroup)
 
               querySnapshot.forEach((doc) => {
                 if (doc.data().barcode == '') {
@@ -90,7 +88,6 @@ const ListFridge = (props) => {
       console.log("TTT",1)
       console.log("AAAA",a)
       console.log("BBBB",b)
-      // return a.group > b.group ? 1 : -1
     })
     console.log('Output_dataUser', dataFridge)
   } else {
@@ -161,22 +158,7 @@ const ListFridge = (props) => {
                   {modalData.qtyProduct}
                 </h6>
               </div>
-              {/* <div className="row my-4">
-                <h6 className="col-8 fw-bold">Notification :</h6>
-                <h6 className="col-4 text-end text-warning">
-                  {modalData.noti}
-                  <div className={styles.switch}>
-                    <input
-                      type="checkbox"
-                      id="switch"
-                      className={styles.switchInput}
-                      onClick={(e) => handleNoti()}
-                      checked={test ? true : false}
-                    />
-                    <label for="switch" className={styles.switchLabel} />
-                  </div>
-                </h6>
-              </div> */}
+              
 
               <div className='row py-2'>
                 <Button
@@ -200,18 +182,7 @@ const ListFridge = (props) => {
                 >
                   Default
                 </Button>
-                {/* <Button
-                  className='w-100 py-3 fw-bold'
-                  color='warning text-white'
-                  style={{ borderRadius: '16px' }}
-                >
-                  Share&nbsp;&nbsp;
-                  <FontAwesomeIcon
-                    icon='fa-solid fa-share-nodes'
-                    size='xl'
-                    style={{ color: 'black' }}
-                  />
-                </Button> */}
+               
               </div>
             </div>
           </ModalBody>
