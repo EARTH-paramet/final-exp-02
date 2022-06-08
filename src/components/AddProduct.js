@@ -18,15 +18,7 @@ import { Timestamp } from 'firebase/firestore'
 
 function AddProduct(props) {
   let navigate = useNavigate()
-  // const [editData, setEditData] = useState(
-  //   props.data.productData[useParams().id]
-  // )
-  // console.log('editData', editData.value)
-  // console.log('editData', editData.id)
-  // console.log(
-  //   'editData',
-  //   editData.value.date.toDate().toLocaleString('en-CA').split(',')[0]
-  // )
+
   const [urlUpload, setUrlUpload, urlUploadRef] = useStateRef()
   const [createMaster, setCreateMaster, createMasterRef] = useStateRef(false)
   const [dataform, setDataform, dataformRef] = useStateRef({
@@ -43,6 +35,7 @@ function AddProduct(props) {
   const [image, setImage] = useState(null)
   const [imageDefault, setImageDefault] = useState(defaultImg)
   const [group, setGroup, groupRef] = useStateRef('null')
+  const [manualCode, setManualCode, manualCodeRef] = useStateRef("0000")
   const ref = firebase.firestore().collection('product')
 
   useEffect(() => {
@@ -65,12 +58,7 @@ function AddProduct(props) {
     }
     console.log(imageDefault)
     console.log(String(Timestamp.fromDate(new Date()).seconds))
-    // if (dataform.image) {
-    //   setImageDefault(dataform.image)
-    // } else {
-    //   console.log('image not found')
-    // }
-
+ 
     ref
       .where('uid', '==', props.dataUser.uid)
       .get()
@@ -94,8 +82,19 @@ function AddProduct(props) {
       .doc(props.dataUser.uid)
       .collection(`group${groupRef.current}`)
       .doc(String(Timestamp.fromDate(new Date()).seconds))
-      .set({
-        barcode: dataformRef.current.barcode,
+      .set(props.mn ? {
+        barcode:manualCodeRef.current,
+        category: dataformRef.current.category,
+        date: dataformRef.current.date,
+        dateCreate: Timestamp.fromDate(new Date()),
+        image: urlUploadRef.current
+          ? urlUploadRef.current
+          : dataformRef.current.image,
+        name: dataformRef.current.name,
+        note: dataformRef.current.note,
+        notification: "0"
+      }: {
+        barcode:dataformRef.current.barcode,
         category: dataformRef.current.category,
         date: dataformRef.current.date,
         dateCreate: Timestamp.fromDate(new Date()),
@@ -112,8 +111,16 @@ function AddProduct(props) {
         .doc(props.dataUser.uid)
         .collection('masterProduct')
         .doc(String(Timestamp.fromDate(new Date()).seconds))
-        .set({
-          barcode: dataformRef.current.barcode,
+        .set(props.mn ? {
+          barcode: manualCodeRef.current,
+          category: dataformRef.current.category,
+          // date: dataformRef.current.date,
+          dateCreate: Timestamp.fromDate(new Date()),
+          image: urlUploadRef.current,
+          name: dataformRef.current.name,
+          // note: dataformRef.current.note,
+        }:{
+          barcode:  dataformRef.current.barcode,
           category: dataformRef.current.category,
           // date: dataformRef.current.date,
           dateCreate: Timestamp.fromDate(new Date()),
@@ -191,10 +198,7 @@ function AddProduct(props) {
         boxShadow: '0 0 0 0.25rem #ffc300',
       },
     }),
-    // indicatorSeparator: (provided) => ({
-    //   ...provided,
-    //   background: 'red',
-    // }),
+   
     dropdownIndicator: (provided) => ({
       ...provided,
       color: '#ffc300',
@@ -261,6 +265,23 @@ function AddProduct(props) {
           </div>
           <div className='mx-3 mb-3'>
             <form>
+              {props.mn ? (<>
+                <div className='mb-3'>
+                <label className='form-label fw-bold'>Barcode</label>
+                <input
+                  onChange={(e) =>{
+                    setManualCode(e.target.value)
+                    console.log(manualCodeRef.current)
+                  }}
+                  type='text'
+                  className='form-control'
+                  style={{
+                    borderRadius: '20px',
+                    border: '1px solid rgb(255 195 0)',
+                  }}
+                />
+              </div>
+              </>):(<></>)}
               <div className='mb-3'>
                 <label className='form-label fw-bold'>Name</label>
                 <input
@@ -302,17 +323,7 @@ function AddProduct(props) {
                   // id='category'
                   onChange={(e) => handleChangeCategory(e)}
                 />
-                {/* <input
-                  onChange={(e) => handle(e)}
-                  id='category'
-                  type='text'
-                  defaultValue={dataform.category}
-                  className='form-control'
-                  style={{
-                    borderRadius: '20px',
-                    border: '1px solid rgb(255 195 0)',
-                  }}
-                /> */}
+             
               </div>
               <div className='mb-3'>
                 <label className='form-label fw-bold'>Description</label>

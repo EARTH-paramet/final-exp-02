@@ -17,10 +17,10 @@ const FilterNoti = (props) => {
     day: new Date().getDate(),
   }
   const [selectedDay, setSelectedDay] = useState(defaultValue)
+  const [dayFormat, setDayFormat, dayFormatRef] = useStateRef(new Date())
   console.log(selectedDay)
   // calendar
   const [modalOpen, setModalOpen] = useState(false)
-  //   const [modalData, setModalData] = useState({})
   const toggle = () => setModalOpen(!modalOpen)
   const [fridgeSelect, setFridgeSelect] = useState('group1')
 
@@ -63,6 +63,10 @@ const FilterNoti = (props) => {
       type: 'SET_FILTER_FRIDGE',
       payload: fridgeSelect,
     })
+    props.dispatch({
+      type: 'SET_FILTER_DATE',
+      payload: dayFormatRef.current,
+    })
     toggle()
   }
   return (
@@ -70,7 +74,6 @@ const FilterNoti = (props) => {
       <FontAwesomeIcon
         icon='fa-solid fa-filter'
         onClick={() => {
-          //   setModalData(item)
           toggle()
         }}
       />
@@ -124,7 +127,16 @@ const FilterNoti = (props) => {
               <MyCalendar className='d-flex justify-content-center text-center'>
                 <Calendar
                   value={selectedDay}
-                  onChange={(e)=>{console.log(new Date(e.year,e.month,e.day))}}
+                  onChange={(e)=>{
+                    console.log(new Date(e.year,e.month,e.day))
+                    console.log(e.year,e.month,e.day)
+                    setDayFormat(new Date(e.year,e.month-1,e.day+2))
+                    setSelectedDay({
+                      year: e.year,
+                      month: e.month,
+                      day: e.day,
+                    })
+                  }}
                   colorPrimary='#ffc107'
                   calendarClassName='responsive-calendar' // added this
                   //   shouldHighlightWeekends

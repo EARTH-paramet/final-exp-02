@@ -94,20 +94,16 @@ const Scanner = (props) => {
             <div className="row">
               <div
                 className={`col text-center text-white ${styles.description}`}
+                onClick={()=>setChecked("Manual_barcode")}
               >
-                <FontAwesomeIcon icon="fa-solid fa-camera" /> point your camera
-                at barcode
+                <FontAwesomeIcon icon="fa-solid fa-camera" /> manual barcode click me
+                
               </div>
+             
             </div>
           </div>
 
-          {/* {checked == 'New_Data' ? (
-          <div className='row'>
-            <div className={styles.popupAddProduct}>
-              <div className={`col-12 ${styles.center}`}>ไปเพิ่มข้อมูล</div>
-            </div>
-          </div>
-        ) : checked == 'Master_Data' ? null : null} */}
+         
         </section>
       </div>
     );
@@ -115,14 +111,21 @@ const Scanner = (props) => {
     return (
       <div>
         {/* <h1>มีข้อมูลเก่า map หา master</h1> */}
-        <AddProduct barcode={dataRef.current} masterProduct={masterProductRef.current} />
+        <AddProduct barcode={dataRef.current} masterProduct={masterProductRef.current} mn={false}/>
       </div>
     );
   } else if (checked == "New_Data") {
     return (
       <div>
         {/* <h1>ไม่มีข้อมูลเก่า สร้างใหม่เลย</h1> */}
-        <AddProduct barcode={dataRef.current}  masterProduct={false}/>
+        <AddProduct barcode={dataRef.current}  masterProduct={false} mn={false}/>
+      </div>
+    );
+  } else if (checked == "Manual_barcode") {
+    return (
+      <div>
+        {/* <h1>ไม่มีข้อมูลเก่า สร้างใหม่เลย</h1> */}
+        <AddProduct barcode={dataRef.current}  masterProduct={false} mn={true}/>
       </div>
     );
   } else {
