@@ -42,7 +42,7 @@ const History = (props) => {
                 className='col-8 text-center fw-bold'
                 style={{ fontSize: '22px' }}
               >
-                History
+                History test git
               </div>
               <div className='col-2'>
                 <h2 className='text-end'></h2>
