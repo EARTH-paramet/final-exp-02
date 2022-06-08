@@ -27,7 +27,7 @@ const ListNotification = (props) => {
       setDate(props.dataFilter.dateNotification);
       console.log(
         "date Timestamp :",
-        firebase.firestore.Timestamp.fromDate(dateRef.current).seconds
+        firebase.firestore.Timestamp.fromDate(dateRef.current).seconds - (86400 * 2)
       );
     }
 
@@ -74,7 +74,7 @@ const ListNotification = (props) => {
     const dateToday =
       parseInt(timeStampNow / 86400) * 86400 - 60 * 60 * 7;
     console.log("date=>", dateToday);
-    if (date < dateToday) {
+    if (date <= dateToday + (86400 * 2)) {
       return (
         <>
           <a
