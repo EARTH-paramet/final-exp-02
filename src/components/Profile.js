@@ -55,12 +55,14 @@ const Profile = (props) => {
                     <div className='col-4 text-start'>Email</div>
                     <div className='col-8 text-end'>{props.data.email}</div>
                   </div>
-                  <div className='row mb-3'>
+                  {/* <div className='row mb-3'>
                     <div className='col-4 text-start'>Phone Number</div>
                     <div className='col-8 text-end'>{props.data.phone}</div>
-                  </div>
+                  </div> */}
                   <div className='row mb-3'>
-                    <div className='col-4 text-start'>Feedback</div>
+                    <div className='col-4 text-start'>
+                      <NavLink to='/feedback'>Feedback</NavLink>
+                      </div>
                     <div className='col-8 text-end'></div>
                   </div>
                   <div className='row mb-3'>
