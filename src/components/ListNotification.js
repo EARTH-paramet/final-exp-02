@@ -53,7 +53,7 @@ const ListNotification = (props) => {
           } else {
             if (
               doc.data().date.seconds <=
-              firebase.firestore.Timestamp.fromDate(dateRef.current).seconds
+              firebase.firestore.Timestamp.fromDate(dateRef.current).seconds + 86400
             ) {
               items.push(doc.data());
             } else;
@@ -68,13 +68,8 @@ const ListNotification = (props) => {
       });
   }, [props.dataFilter]);
 
-  const DateFunc = ({ date, item }) => {
-    const timeStampNow = firebase.firestore.Timestamp.fromDate(
-      dateRef.current
-    ).seconds;
-    const dateToday = parseInt(timeStampNow / 86400) * 86400 - 60 * 60 * 7;
-    console.log("date=>", dateToday);
-    if (date - 86400 * 2 <= dateToday) {
+  const DateFunc = ({ date, item }) => {    
+    if (date) {
       return (
         <>
           <a
