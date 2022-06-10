@@ -18,6 +18,7 @@ const ListProduct = ({ data, product }) => {
   const toggle = () => setModalOpen(!modalOpen)
   const ref = firebase.firestore().collection('product')
   const [dataProduct, setDataProduct, dataProductRef] = useStateRef([])
+  const [groupNow, setGroupNow, groupNowRef] = useStateRef("Fridge")
 
   // date format
   const options = {
@@ -26,6 +27,15 @@ const ListProduct = ({ data, product }) => {
     day: '2-digit',
   }
   useEffect(() => {
+    if(product.byGroup == "1"){
+      setGroupNow("Fridge 1")
+    }else if(product.byGroup == "2"){
+      setGroupNow("Fridge 2")
+    }else if(product.byGroup == "3"){
+      setGroupNow("Fridge 3")
+    }else{
+      setGroupNow("Fridge")
+    }
     ref
       .where('uid', '==', data.uid)
       .get()
@@ -117,10 +127,15 @@ const ListProduct = ({ data, product }) => {
   }
   return (
     <div className='container'>
+      <div className="row mt-2">
+            <div className="col-6">
+              <p>{groupNowRef.current} </p>
+            </div>              
+          </div>
         <TextAddData />
   
       {product.productData.map((item, index) => (
-        <div className={`row my-3 ${styles.boxProduct}`} key={index}>
+        <div className={`row mb-3 ${styles.boxProduct}`} key={index}>
           { console.log("item.value.date.seconds",item.value)}
           <a
             href='#'

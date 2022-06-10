@@ -33,6 +33,27 @@ const Search = (props) => {
         });
 
         // QRY: PRODUCT DATA
+        if(groupRef.current == "1"){
+          props.dispatch({
+            type: "EDIT_GROUP",
+            payload: "1",
+          });
+        }else if(groupRef.current == "2"){
+          props.dispatch({
+            type: "EDIT_GROUP",
+            payload: "2",
+          });
+        }else if(groupRef.current == "3"){
+          props.dispatch({
+            type: "EDIT_GROUP",
+            payload: "3",
+          });
+        }else{
+          props.dispatch({
+            type: "EDIT_GROUP",
+            payload: "1",
+          });
+        }
         ref
           .doc(props.data.uid)
           .collection(`group${groupRef.current}`)
@@ -82,6 +103,8 @@ const Search = (props) => {
           });
 
       });
+      
+     
   }, [props.dataFilter.sort]);
 
   const handleChange = (e) => {
@@ -155,6 +178,7 @@ const mapStateToProps = (state) => {
   return {
     data: state.dataUser,
     dataFilter: state.dataFilter,
+    dataProduct: state.dataProduct
   };
 };
 

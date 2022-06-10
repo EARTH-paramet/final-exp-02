@@ -176,6 +176,10 @@ const ListFridge = (props) => {
                       type: 'ADD_PRODUCT',
                       payload: [],
                     })
+                    props.dispatch({
+                      type: 'EDIT_GROUP',
+                      payload: `${modalData.group}`,
+                    })
                     setEdit(!edit)
                     toggle()
                     navigate('/')

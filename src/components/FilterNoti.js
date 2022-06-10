@@ -130,7 +130,7 @@ const FilterNoti = (props) => {
                   onChange={(e)=>{
                     console.log(new Date(e.year,e.month,e.day))
                     console.log(e.year,e.month,e.day)
-                    setDayFormat(new Date(e.year,e.month-1,e.day+2))
+                    setDayFormat(new Date(e.year,e.month-1,e.day))
                     setSelectedDay({
                       year: e.year,
                       month: e.month,

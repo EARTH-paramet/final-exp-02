@@ -21,6 +21,8 @@ import {
   categoryVeget_three,
   defaultData,
 } from '../../dataDefault'
+import image_logo from '../assets/RD_Logo-1.png'
+
 
 const Auth = (props) => {
   const [line_config, setLine_config, line_configRef] = useStateRef({
@@ -221,15 +223,15 @@ const Auth = (props) => {
             <div className='page'>
               <div className='container '>
                 <div className='row position-absolute top-50 start-50 translate-middle m-0'>
-                  <div className='col'>
+                  <div className='col text-center'>
                     {/* <img src="logo.png" className="rounded mx-auto d-block" alt="..." /> */}
-
-                    <h2 className='text-center'>Welcome to</h2>
-                    <h2 className='text-center '>APP NAME</h2>
-                    <div className='text-center mt-3'>
+                    <img src={image_logo} alt='logo' width={150} />
+                    <h6 className='text-center'>Welcome to</h6>
+                    <h5 className='text-center'>Notifying Expired Date App</h5>
+                    <div className='text-center mt-1'>
                       <br />
                       <button
-                        className='btn mt-2'
+                        className='btn '
                         style={{ backgroundColor: '#07E30A', color: 'white' }}
                         onClick={handleClick_lineLogin}
                       >
