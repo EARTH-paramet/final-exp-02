@@ -225,14 +225,14 @@ const Auth = (props) => {
                 <div className='row position-absolute top-50 start-50 translate-middle m-0'>
                   <div className='col text-center'>
                     {/* <img src="logo.png" className="rounded mx-auto d-block" alt="..." /> */}
-                    <img src={image_logo} alt='logo' width={150} />
-                    <h6 className='text-center'>Welcome to</h6>
-                    <h5 className='text-center'>Notifying Expired Date App</h5>
+                    <img src={image_logo} alt='logo' width={400} />
+                    <h2 className='text-center'>Welcome to</h2>
+                    <h5 className='text-center'  style={{fontWeight:'300',color:'gray'}}>Notifying Expired Date App</h5>
                     <div className='text-center mt-1'>
                       <br />
                       <button
-                        className='btn '
-                        style={{ backgroundColor: '#07E30A', color: 'white' }}
+                        className='btn'
+                        style={{ backgroundColor: '#07E30A', color: 'white', borderRadius:'15px'}}
                         onClick={handleClick_lineLogin}
                       >
                         LINE Login
