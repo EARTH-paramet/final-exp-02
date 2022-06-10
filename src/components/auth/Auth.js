@@ -227,7 +227,7 @@ const Auth = (props) => {
                     {/* <img src="logo.png" className="rounded mx-auto d-block" alt="..." /> */}
                     <img className='pl-3 pr-3' src={image_logo} alt='logo' width={400} />
                     <h2 className='text-center'>Welcome to</h2>
-                    <div className='text-center'  style={{fontSize:'15px', fontWeight:'300',color:'gray'}}>Start Getting Notifications for Foods' Expiration Date</div>
+                    <div className='text-center'  style={{fontSize:'13px', fontWeight:'300',color:'gray'}}>Start Getting Notifications for Foods' Expiration Date</div>
                     <div className='text-center mt-1'>
                       <br />
                       <button
