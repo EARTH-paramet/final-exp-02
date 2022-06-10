@@ -221,13 +221,13 @@ const Auth = (props) => {
         <div>
           <div className='wrapper'>
             <div className='page'>
-              <div className='container '>
+              <div className='container'>
                 <div className='row position-absolute top-50 start-50 translate-middle m-0'>
                   <div className='col text-center'>
                     {/* <img src="logo.png" className="rounded mx-auto d-block" alt="..." /> */}
-                    <img src={image_logo} alt='logo' width={400} />
+                    <img className='pl-3 pr-3' src={image_logo} alt='logo' width={400} />
                     <h2 className='text-center'>Welcome to</h2>
-                    <h6 className='text-center'  style={{fontWeight:'300',color:'gray'}}>Start Getting Notifications for Foods' Expiration Date</h6>
+                    <div className='text-center'  style={{fontSize:'15px', fontWeight:'300',color:'gray'}}>Start Getting Notifications for Foods' Expiration Date</div>
                     <div className='text-center mt-1'>
                       <br />
                       <button
